@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#5AA9E6</color>
+    <color name="black70">#B3000000</color> <!--nero con 70% di opacità -->
+    <color name="green80">#CC63D168</color> <!-- verde con 80% di opacità -->
+    <color name="grey">#8D8D8D</color>
+    <color name="magenta">#FF6392</color>
 </resources>

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">DocDoc</string>
+
+    <!-- stringhe per pulsanti -->
+    <string name="continua">Continua</string>
+    <string name="indietro">Indietro</string>
+    <string name="elimina">Elimina</string>
+    <string name="entra">Entra</string>
+    <string name="registrati">Registrati</string>
+
+    <!-- stringhe per hints (placholders) -->
+    <string name="inserisci_nome">"Inserisci il tuo nome..."</string>
+    <string name="inserisci_cognome">Inserisci il tuo cognome...</string>
+    <string name="inserisci_email">Inserisci la tua email...</string>
+    <string name="inserisci_pw">Inserisci la tua password...</string>
+    <string name="conferma_pw">Conferma la tua password...</string>
+    <string name="inserisci_CF">Inserisci il tuo codice fiscale...</string>
+    <string name="inserisci_tel">Inserisci il tuo numero di telefono...</string>
 </resources>

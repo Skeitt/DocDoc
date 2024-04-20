@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="style_EditText" parent="@style/Theme.DocDoc">
+        <item name = "android:layout_width">240dp</item>
+        <item name = "android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black70</item>
+        <item name= "android:textColorHint">@color/grey</item>
+        <item name = "android:shadowColor"> @color/black</item>
+        <item name = "android:elevation" > 5dp</item>
+        <item name = "android:padding"> 8dp</item>
+        <item name = "android:background">@drawable/rounded_rectangle</item>
+        <item name = "android:backgroundTint">@color/white</item>
+        <item name = "android:hint">"Placeholder"</item>
+        <item name= "android:radius">100dp</item> <!--sovrascritto attributo-->
+    </style>
+    <style name="style_TextView" parent="@style/Theme.DocDoc">
+        <item name = "android:layout_width">240dp</item>
+        <item name = "android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black70</item>
+        <item name = "android:shadowColor"> @color/black</item>
+        <item name = "android:elevation" > 5dp</item>
+        <item name = "android:padding"> 8dp</item>
+        <item name = "android:background">@drawable/rounded_rectangle</item>
+        <item name = "android:backgroundTint">@color/white</item>
+        <item name="android:text">@string/app_name</item>
+        <!--        <item name = "android:hint">"Placeholder"</item>-->
+        <item name= "android:radius">100dp</item> <!--sovrascritto attributo-->
+    </style>
+    <style name="style_Button" parent="@style/Theme.DocDoc">
+        <item name = "android:layout_width">100dp</item>
+        <item name = "android:layout_height">40dp</item>
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+
+        <item name = "android:padding" > 0dp</item>
+
+        <item name = "android:background">@drawable/rounded_rectangle</item>
+    </style>
+    <style name="style_Button.green">
+        <item name = "android:backgroundTint">@color/green80</item>
+    </style>
+    <style name="style_Button.blue">
+        <item name = "android:backgroundTint">@color/blue</item>
+    </style>
+    <style name="style_Button.magenta">
+        <item name = "android:backgroundTint">@color/magenta</item>
+        <item name = "android:layout_width">200dp</item>
+    </style>
+    <style name="style_ListView">
+        <item name = "android:layout_width">240dp</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:shadowColor"> @color/black</item>
+        <item name = "android:elevation" > 5dp</item>
+        <item name = "android:padding"> 8dp</item>
+        <item name = "android:background">@drawable/rounded_rectangle</item>
+        <item name = "android:backgroundTint">@color/white</item>
+        <item name = "android:hint">"Placeholder"</item>
+        <item name= "android:radius">20dp</item>
+    </style>
+</resources>
