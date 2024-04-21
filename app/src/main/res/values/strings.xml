@@ -16,6 +16,7 @@
     <string name="pw_2">Conferma password</string>
     <string name="cf">Codice Fiscale</string>
     <string name="tel">Numero di telefono</string>
+    <string name="res">Indirizzo di residenza</string>
 
     <!-- stringhe per hints (placholders) -->
     <string name="inserisci_nome">Inserisci il tuo nome&#8230;</string> <!-- &#8230; rappresenta ... altrimenti si ottiene warning -->
@@ -25,4 +26,5 @@
     <string name="conferma_pw">Conferma la tua password&#8230;</string>
     <string name="inserisci_CF">Inserisci il tuo codice fiscale&#8230;</string>
     <string name="inserisci_tel">Inserisci il tuo numero di telefono&#8230;</string>
+    <string name="inserisci_res">Inserisci il tuo indirizzo&#8230;</string>
 </resources>
