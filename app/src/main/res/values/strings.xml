@@ -8,12 +8,21 @@
     <string name="entra">Entra</string>
     <string name="registrati">Registrati</string>
 
+    <!-- stringhe per label -->
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="email">Email</string>
+    <string name="pw">Password</string>
+    <string name="pw_2">Conferma password</string>
+    <string name="cf">Codice Fiscale</string>
+    <string name="tel">Numero di telefono</string>
+
     <!-- stringhe per hints (placholders) -->
-    <string name="inserisci_nome">"Inserisci il tuo nome..."</string>
-    <string name="inserisci_cognome">Inserisci il tuo cognome...</string>
-    <string name="inserisci_email">Inserisci la tua email...</string>
-    <string name="inserisci_pw">Inserisci la tua password...</string>
-    <string name="conferma_pw">Conferma la tua password...</string>
-    <string name="inserisci_CF">Inserisci il tuo codice fiscale...</string>
-    <string name="inserisci_tel">Inserisci il tuo numero di telefono...</string>
+    <string name="inserisci_nome">Inserisci il tuo nome&#8230;</string> <!-- &#8230; rappresenta ... altrimenti si ottiene warning -->
+    <string name="inserisci_cognome">Inserisci il tuo cognome&#8230;</string>
+    <string name="inserisci_email">Inserisci la tua email&#8230;</string>
+    <string name="inserisci_pw">Inserisci la tua password&#8230;</string>
+    <string name="conferma_pw">Conferma la tua password&#8230;</string>
+    <string name="inserisci_CF">Inserisci il tuo codice fiscale&#8230;</string>
+    <string name="inserisci_tel">Inserisci il tuo numero di telefono&#8230;</string>
 </resources>

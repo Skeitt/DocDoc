@@ -7,4 +7,5 @@
     <color name="green80">#CC63D168</color> <!-- verde con 80% di opacità -->
     <color name="grey">#8D8D8D</color>
     <color name="magenta">#FF6392</color>
+    <color name = "transparent">#00000000</color>
 </resources>

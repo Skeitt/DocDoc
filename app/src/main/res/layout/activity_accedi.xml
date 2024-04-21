@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.widget.ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.TextView
+        android:id="@+id/label_nome"
+        style="@style/style_Label"
+        android:layout_marginTop="10dp"
+        android:text="@string/nome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"/>
+
+    <android.widget.EditText
+        style="@style/style_EditText"
+        android:id="@+id/edit_nome"
+        android:hint="@string/inserisci_nome"
+        app:layout_constraintTop_toBottomOf="@id/label_nome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <android.widget.TextView
+        style="@style/style_Label"
+        android:id="@+id/label_cognome"
+        android:layout_marginTop="10dp"
+        android:text="@string/cognome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_nome" />
+
+    <android.widget.EditText
+        style="@style/style_EditText"
+        android:id="@+id/edit_cognome"
+        android:hint="@string/inserisci_cognome"
+        app:layout_constraintTop_toBottomOf="@id/label_cognome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <android.widget.GridLayout
+        style="@style/style_layout_doppio_button"
+        android:id="@+id/grid_doppio_button"
+        android:columnCount="2"
+        android:rowCount="1"
+
+        android:layout_marginTop="10dp"
+        android:text="@string/entra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_cognome">
+
+        <android.widget.Button
+                style="@style/style_Button.blue"
+                android:text="@string/registrati"
+                android:layout_column="0"
+                android:layout_row="0"/>
+
+        <android.widget.Button
+            style="@style/style_Button.green"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/entra" />
+
+    </android.widget.GridLayout>
+
+    <android.widget.Button
+        style="@style/style_Button.magenta"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_marginTop="10dp"
+        android:text="@string/entra"
+        app:layout_constraintTop_toBottomOf="@id/grid_doppio_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
