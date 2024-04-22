@@ -42,4 +42,9 @@
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>
     <string name="sono_medico">Sono un medico</string>
+
+    <!-- stringhe per pulsanti home -->
+    <string name="prenota">prenota</string>
+    <string name="home">Home</string>
+    <string name="Profilo">Profilo</string>
 </resources>
