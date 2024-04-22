@@ -17,6 +17,9 @@
     <string name="cf">Codice Fiscale</string>
     <string name="tel">Numero di telefono</string>
     <string name="res">Indirizzo di residenza</string>
+    <string name="locazione_ambulatorio">Dove si trova l\'ambulatorio</string>
+    <string name="medico">Chi è il tuo medico?</string>
+
 
     <!-- stringhe per hints (placholders) -->
     <string name="inserisci_nome">Inserisci il tuo nome&#8230;</string> <!-- &#8230; rappresenta ... altrimenti si ottiene warning -->
@@ -27,4 +30,10 @@
     <string name="inserisci_CF">Inserisci il tuo codice fiscale&#8230;</string>
     <string name="inserisci_tel">Inserisci il tuo numero di telefono&#8230;</string>
     <string name="inserisci_res">Inserisci il tuo indirizzo&#8230;</string>
+    <string name="inserisci_medico">Seleziona il tuo medico&#8230;</string>
+    <string name="inserisci_amb">Inserisci l\'indirizzo&#8230;</string>
+
+    <!-- stringhe per radio button -->
+    <string name="sono_paziente">Sono un paziente</string>
+    <string name="sono_medico">Sono un medico</string>
 </resources>

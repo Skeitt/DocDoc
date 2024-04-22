@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.widget.TextView
+        android:id="@+id/label_ambulatorio"
+        style="@style/style_Label"
+        android:text="@string/locazione_ambulatorio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.EditText
+        android:id="@+id/edit_ambulatorio"
+        style="@style/style_EditText"
+        android:hint="@string/inserisci_amb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_ambulatorio" />
+
+    <android.widget.TextView
+        android:id="@+id/label_tel"
+        style="@style/style_Label"
+        android:text="@string/tel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_ambulatorio" />
+
+    <android.widget.EditText
+        android:id="@+id/edit_tel"
+        style="@style/style_EditText"
+        android:hint="@string/inserisci_tel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_tel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
