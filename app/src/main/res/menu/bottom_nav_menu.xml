@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_prenotazione"
+        android:title="@string/prenota"
+        android:icon="@drawable/button_aggiungi"/>
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/button_home"/>
+    <item
+        android:id="@+id/profilo"
+        android:title="@string/Profilo"
+        android:icon="@drawable/button_profilo"/>
+</menu>
