@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/modifica_profilo"
     android:background="@drawable/gradient_background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/registrati"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -44,5 +44,12 @@
 
     </android.widget.GridLayout>
 
+    <android.widget.Button
+        style="@style/style_Button.magenta"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_doppio_button"
+        android:text="@string/elimina_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

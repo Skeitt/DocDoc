@@ -7,6 +7,8 @@
     <string name="elimina">Elimina</string>
     <string name="entra">Entra</string>
     <string name="registrati">Registrati</string>
+    <string name="elimina_account">Elimina Account</string>
+
 
     <!-- stringhe per label -->
     <string name="nome">Nome</string>
@@ -19,6 +21,10 @@
     <string name="res">Indirizzo di residenza</string>
     <string name="locazione_ambulatorio">Dove si trova l\'ambulatorio</string>
     <string name="medico">Chi è il tuo medico?</string>
+    <string name="indirizzo_ambulatorio">Indirizzo ambulatorio</string>
+    <string name="tel_amb">Numero di telefono ambulatorio</string>
+    <string name="empty">null</string>
+
 
 
     <!-- stringhe per hints (placholders) -->
