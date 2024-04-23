@@ -9,6 +9,9 @@
     <string name="registrati">Registrati</string>
     <string name="elimina_account">Elimina Account</string>
     <string name="aggiungi_evento">Aggiungi un evento&#8230;</string>
+    <string name="seleziona_data">Seleziona una data</string>
+    <string name="seleziona_ora">Seleziona l\'ora</string>
+
 
 
     <!-- stringhe per label -->
@@ -27,6 +30,9 @@
     <string name="empty">null</string>
     <string name="Cart_clinica">Cartella clinica</string>
     <string name="Dati_pers">Dati personali</string>
+    <string name="data">Data</string>
+    <string name="ora">Ora</string>
+    <string name="descrizione">Descrizione</string>
 
 
 
@@ -41,6 +47,7 @@
     <string name="inserisci_res">Inserisci il tuo indirizzo&#8230;</string>
     <string name="inserisci_medico">Seleziona il tuo medico&#8230;</string>
     <string name="inserisci_amb">Inserisci l\'indirizzo&#8230;</string>
+    <string name="inserisci_descrizione">Inserisci una breve descrizione relativa alla visita da sostenere&#8230;</string>
 
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>
