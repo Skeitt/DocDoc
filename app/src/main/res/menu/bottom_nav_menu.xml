@@ -3,13 +3,13 @@
     <item
         android:id="@+id/add_prenotazione"
         android:title="@string/prenota"
-        android:icon="@drawable/button_aggiungi"/>
+        android:icon="@drawable/ic_aggiungi"/>
     <item
         android:id="@+id/home"
         android:title="@string/home"
-        android:icon="@drawable/button_home"/>
+        android:icon="@drawable/ic_home"/>
     <item
         android:id="@+id/profilo"
         android:title="@string/Profilo"
-        android:icon="@drawable/button_profilo"/>
+        android:icon="@drawable/ic_profilo"/>
 </menu>
