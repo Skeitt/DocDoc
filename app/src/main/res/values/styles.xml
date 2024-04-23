@@ -38,14 +38,16 @@
         <item name = "android:elevation" > 5dp</item>
         <item name = "android:padding"> 8dp</item>
         <item name = "android:backgroundTint">#00000000</item>
+        <item name = "android:layout_marginTop">10dp</item>
     </style>
     <style name="style_Button" parent="@style/Theme.DocDoc">
         <item name = "android:layout_width">100dp</item>
         <item name = "android:layout_height">40dp</item>
-
+        <item name = "android:paddingStart">10dp</item>
+        <item name = "android:paddingEnd">10dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
-
+        <item name = "android:layout_marginTop">10dp</item>
         <item name = "android:padding" > 0dp</item>
 
         <item name = "android:background">@drawable/rounded_rectangle</item>
@@ -59,6 +61,10 @@
     <style name="style_Button.magenta">
         <item name = "android:backgroundTint">@color/magenta</item>
         <item name = "android:layout_width">200dp</item>
+    </style>
+    <style name="style_Button.aggiungiEvento">
+        <item name = "android:backgroundTint">@color/white</item>
+        <item name = "android:layout_width">240dp</item>
     </style>
     <style name="style_ListView">
         <item name = "android:layout_width">240dp</item>

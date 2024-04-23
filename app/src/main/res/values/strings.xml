@@ -8,6 +8,7 @@
     <string name="entra">Entra</string>
     <string name="registrati">Registrati</string>
     <string name="elimina_account">Elimina Account</string>
+    <string name="aggiungi_evento">Aggiungi un evento&#8230;</string>
 
 
     <!-- stringhe per label -->
@@ -24,6 +25,8 @@
     <string name="indirizzo_ambulatorio">Indirizzo ambulatorio</string>
     <string name="tel_amb">Numero di telefono ambulatorio</string>
     <string name="empty">null</string>
+    <string name="Cart_clinica">Cartella clinica</string>
+    <string name="Dati_pers">Dati personali</string>
 
 
 
