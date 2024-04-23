@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.widget.TextView
+        android:id="@+id/label_dati_personali"
+        style="@style/style_Label"
+        android:text="@string/Dati_pers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.TextView
+        android:id="@+id/tv_dati_personali"
+        style="@style/style_TextView"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_dati_personali" />
+
+    <android.widget.TextView
+        android:id="@+id/label_ambulatorio"
+        style="@style/style_Label"
+        android:text="@string/ambulatorio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dati_personali" />
+
+    <android.widget.TextView
+        android:id="@+id/tv_mal_e_farm"
+        style="@style/style_TextView"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_ambulatorio" />
+
+    <fragment
+        android:layout_width="240dp"
+        android:layout_height="300dp"
+        android:id="@+id/maps"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_mal_e_farm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

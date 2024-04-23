@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/evento"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lista_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/style_Label"
+        android:id = "@+id/motivo_visita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        style="@style/style_Label"
+        android:id = "@+id/desc_visita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        style="@style/style_Label"
+        android:id = "@+id/data_e_ora_visita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
