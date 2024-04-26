@@ -9,6 +9,7 @@
     <string name="registrati">Registrati</string>
     <string name="elimina_account">Elimina Account</string>
     <string name="aggiungi_evento">Aggiungi un evento&#8230;</string>
+    <string name="aggiungi_file">Aggiungi un file&#8230;</string>
     <string name="seleziona_data">Seleziona una data</string>
     <string name="seleziona_ora">Seleziona l\'ora</string>
 
@@ -34,6 +35,8 @@
     <string name="ora">Ora</string>
     <string name="descrizione">Descrizione</string>
     <string name="ambulatorio">Ambulatorio</string>
+    <string name="motivo">Motivo</string>
+    <string name="file_inseriti">File inseriti</string>
 
 
 
@@ -49,6 +52,8 @@
     <string name="inserisci_medico">Seleziona il tuo medico&#8230;</string>
     <string name="inserisci_amb">Inserisci l\'indirizzo&#8230;</string>
     <string name="inserisci_descrizione">Inserisci una breve descrizione relativa alla visita da sostenere&#8230;</string>
+    <string name="inserisci_descrizione1">Inserisci una breve descrizione&#8230;</string>
+    <string name="inserisci_malattia">Inserisci una malattia&#8230;</string>
 
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>
