@@ -13,6 +13,7 @@
     <string name="seleziona_data">Seleziona una data</string>
     <string name="seleziona_ora">Seleziona l\'ora</string>
     <string name="salva">Salva</string>
+    <string name="disponibilita">Slot Disponibile</string>
 
 
 
@@ -40,6 +41,7 @@
     <string name="file_inseriti">File inseriti</string>
     <string name="farmaci">Farmaci</string>
     <string name="malattie">Malattie</string>
+    <string name="orario_random">10:00</string>
 
 
 

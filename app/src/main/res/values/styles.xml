@@ -64,6 +64,7 @@
     </style>
     <style name="style_Button.aggiungiEvento">
         <item name = "android:backgroundTint">@color/white</item>
+        <item name = "android:textColor">@color/black</item>
         <item name = "android:layout_width">240dp</item>
     </style>
     <style name="style_ListView">

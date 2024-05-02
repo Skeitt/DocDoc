@@ -1,0 +1,17 @@
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <android.widget.TextView
+        style="@style/style_Label"
+        android:text="@string/orario_random"
+        android:textColor="@color/black"
+        android:layout_margin="2dp"/>
+
+    <android.widget.Button
+        style="@style/style_Button.aggiungiEvento"
+        android:text="@string/disponibilita"
+        android:textAlignment="textStart"
+        android:layout_marginTop="0dp"/>
+</android.widget.LinearLayout>
