@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.widget.TextView
+        android:id="@+id/label_malattie"
+        style="@style/style_Label"
+        android:text="@string/malattie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.EditText
+        android:id="@+id/edit_malattie"
+        style="@style/style_EditText"
+        android:hint="@string/inserisci_malattia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_malattie" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_malattie"
+        android:scrollbars="vertical"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_malattie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.widget.TextView
+        android:id="@+id/label_farmaci"
+        style="@style/style_Label"
+        android:text="@string/farmaci"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_malattie" />
+
+    <android.widget.EditText
+        android:id="@+id/edit_farmaci"
+        style="@style/style_EditText"
+        android:hint="@string/inserisci_farmaco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_farmaci" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_farmaci"
+        android:scrollbars="vertical"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_farmaci"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.widget.GridLayout
+        style="@style/style_layout_doppio_button"
+        android:id="@+id/grid_doppio_button"
+        android:columnCount="2"
+        android:rowCount="1"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_farmaci">
+
+        <android.widget.Button
+            style="@style/style_Button.blue"
+            android:text="@string/indietro"
+            android:layout_column="0"
+            android:layout_row="0"/>
+
+        <android.widget.Button
+            style="@style/style_Button.green"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/salva" />
+
+    </android.widget.GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

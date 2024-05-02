@@ -12,6 +12,7 @@
     <string name="aggiungi_file">Aggiungi un file&#8230;</string>
     <string name="seleziona_data">Seleziona una data</string>
     <string name="seleziona_ora">Seleziona l\'ora</string>
+    <string name="salva">Salva</string>
 
 
 
@@ -37,6 +38,8 @@
     <string name="ambulatorio">Ambulatorio</string>
     <string name="motivo">Motivo</string>
     <string name="file_inseriti">File inseriti</string>
+    <string name="farmaci">Farmaci</string>
+    <string name="malattie">Malattie</string>
 
 
 
@@ -54,6 +57,7 @@
     <string name="inserisci_descrizione">Inserisci una breve descrizione relativa alla visita da sostenere&#8230;</string>
     <string name="inserisci_descrizione1">Inserisci una breve descrizione&#8230;</string>
     <string name="inserisci_malattia">Inserisci una malattia&#8230;</string>
+    <string name="inserisci_farmaco">Inserisci un farmaco&#8230;</string>
 
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>
