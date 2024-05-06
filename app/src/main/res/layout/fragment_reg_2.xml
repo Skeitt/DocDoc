@@ -68,21 +68,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_CF" />
 
-    <android.widget.TextView
-        android:id="@+id/label_res"
-        style="@style/style_Label"
-        android:text="@string/res"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_CF" />
-
-    <android.widget.EditText
-        android:id="@+id/edit_res"
-        style="@style/style_EditText"
-        android:hint="@string/inserisci_res"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_res" />
     
     <android.widget.RadioGroup
         android:id="@+id/radio_group"
@@ -92,7 +77,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_res">
+        app:layout_constraintTop_toBottomOf="@+id/edit_CF">
 
         <android.widget.RadioButton
             android:id="@+id/radio_paziente"

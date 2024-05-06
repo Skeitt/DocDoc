@@ -7,11 +7,27 @@
     >
 
     <android.widget.TextView
+        android:id="@+id/label_res"
+        style="@style/style_Label"
+        android:text="@string/res"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.EditText
+        android:id="@+id/edit_res"
+        style="@style/style_EditText"
+        android:hint="@string/inserisci_res"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_res" />
+
+    <android.widget.TextView
         style="@style/style_Label"
         android:id="@+id/sel_med"
         android:text="@string/medico"
 
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_res"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
