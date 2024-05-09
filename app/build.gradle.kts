@@ -37,9 +37,21 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
+
+    val lifecycle_version = "2.7.0"
+    val activity_version = "1.9.0"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+
+    //Activity
+    implementation("androidx.activity:activity-ktx:$activity_version")
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
