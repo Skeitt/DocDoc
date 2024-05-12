@@ -2,10 +2,10 @@ package com.example.docdoc.uistate
 
 data class SignUpUiState(
     val isSignedUp: Boolean = false,
-    val error: String? = null,
+    val isError: Boolean = false,
 ) {
     companion object {
         fun success() = SignUpUiState(isSignedUp = true)
-        fun error(toString: String) = SignUpUiState(error = toString)
+        fun error(flag: Boolean) = SignUpUiState(isError = flag)
     }
 }
