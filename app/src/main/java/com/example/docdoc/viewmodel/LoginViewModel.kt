@@ -21,7 +21,6 @@ class LoginViewModel : ViewModel() {
     /** Funzione che gestisce lo stato del login */
     fun login(email: String, password: String){
         viewModelScope.launch {
-            _uiState.value = LoginUiState.loading()
             val access = repository.signIn(email, password)
             if (access) {
                 _uiState.value = LoginUiState.loggedIn()

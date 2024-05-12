@@ -30,38 +30,16 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.uiState.collect {
-                if (it.isLoading){
-                    //disabilito l'interfaccia utente
-                    disableUI()
-                } else {
-                    //abilito l'inerfaccia utente
-                    enableUI()
-                }
                 if (it.isLoggedIn){
                     startActivity( Intent(this@LoginActivity,MainActivity::class.java) )
                     finish()
                 }
                 if (it.isError){
-                    enableUI()
                     Toast.makeText(this@LoginActivity, "Errore nel Login!!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-    }
-
-    private fun disableUI(){
-        viewBinding.editEmail.isEnabled = false
-        viewBinding.editPw.isEnabled = false
-        viewBinding.accediButton.isEnabled = false
-        viewBinding.registratiButton.isEnabled = false
-    }
-
-    private fun enableUI(){
-        viewBinding.editEmail.isEnabled = true
-        viewBinding.editPw.isEnabled = true
-        viewBinding.accediButton.isEnabled = true
-        viewBinding.registratiButton.isEnabled = true
     }
 
     /** nel momento in cui lancio l'activity se l'utente è già loggato lancio la Main Activity */
@@ -93,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
     /** al click del pulsante: registrati viene aperta l'activity della registrazione */
     private fun signUpOnClick(): View.OnClickListener{
         return View.OnClickListener {
-            //startActivity( Intent(this, SignUpActivity::class.java) )
+            startActivity( Intent(this, SignUpActivity::class.java) )
         }
     }
 
