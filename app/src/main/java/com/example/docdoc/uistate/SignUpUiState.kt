@@ -6,6 +6,6 @@ data class SignUpUiState(
 ) {
     companion object {
         fun success() = SignUpUiState(isSignedUp = true)
-        fun error(flag: Boolean) = SignUpUiState(isError = flag)
+        fun error() = SignUpUiState(isError = true)
     }
 }

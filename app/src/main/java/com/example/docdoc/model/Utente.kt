@@ -1,11 +1,11 @@
 package com.example.docdoc.model
 
 data class Utente(
-    val uid: String = "",
+    var uid: String? = null,
     var nome: String? = null,
     var cognome: String? = null,
     var sesso: String? = null,
-    var email: String = "",
+    var email: String? = null,
     var codiceFiscale: String? = null,
     var dataDiNascita: String? = null,
     var numDiTelefono: String? = null,

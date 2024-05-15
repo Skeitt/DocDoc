@@ -49,7 +49,7 @@ class InputValidator() {
     @return restituisce True nel caso in cui l'indirizzo soddisfi il pattern  */
     fun isValidIndirizzo(indirizzo : String): Boolean
     {
-        val regex = Regex("^[a-zA-Z0-9\\s',.#-]+\$\n")
+        val regex = Regex("^[a-zA-Z0-9\\s',.#-]+\$")
         return indirizzo.isNotEmpty() && regex.matches(indirizzo)
     }
 }

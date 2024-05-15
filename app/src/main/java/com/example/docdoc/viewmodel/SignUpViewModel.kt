@@ -5,16 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.docdoc.model.Utente
+import com.example.docdoc.repository.AuthRepository
+import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.SignUpRepository
 import com.example.docdoc.uistate.SignUpUiState
+import com.example.docdoc.util.CodiceFiscaleUtil
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
+    // util
+    private val cfUtil = CodiceFiscaleUtil()
+
     // repository
     private val signUpRepository = SignUpRepository()
+    private val dbRepository = AuthRepository()
+    private val firestoreRepository = FirestoreRepository()
 
     // LiveData per il form di registrazione
-    private val _user = MutableLiveData<Utente>()
+    private val _user = MutableLiveData<Utente>(Utente())
     val user: LiveData<Utente> get() = _user
 
     // LiveData per lo stato dell'UI
@@ -61,7 +69,7 @@ class SignUpViewModel : ViewModel() {
 
     fun setDataDiNascita(dataDiNascita : String)
     {
-        user.value?.dataDiNascita = dataDiNascita
+        _user.value?.dataDiNascita = dataDiNascita
     }
 
     fun setIndirizzo(indirizzo : String)
@@ -69,20 +77,40 @@ class SignUpViewModel : ViewModel() {
         _user.value?.indirizzo = indirizzo
     }
 
-    fun getUid()
+    fun setUid(uid : String)
     {
-        // TODO: accedi al database e assegna lo uid
+        _user.value?.uid = uid
+    }
+
+    // TODO: implementare la lista dei medici e di conseguenza la seguente funzione
+    fun setUidMedico(uidMedico : String)
+    {
+        _user.value?.uidMedico = uidMedico
     }
     fun signUp()
     {
         viewModelScope.launch{
-            if(signUpRepository.signUp(_user.value!!.email, _password.value!! ))
+            if(signUpRepository.signUp(_user.value?.email!!, _password.value!!))
             {
-                // TODO: memorizzare l'utente con i suoi dati nel database
+                // setting dei parametri estratti dal codice fiscale
+                setSesso(cfUtil.estraiSesso(_user.value?.codiceFiscale!!))
+                setDataDiNascita(cfUtil.estraiDataDiNascita(_user.value?.dataDiNascita!!))
+                setUid(dbRepository.getCurrentUserUid())
+                // inserimento dei dati dell'utente su Firestore
+                if (firestoreRepository.addUserData(_user.value!!))
+                {
+                    _signupUiState.value = SignUpUiState.success()
+                }
+                else
+                {
+                    _signupUiState.value = SignUpUiState.error()
+                    // TODO: va eliminato l'utente in authentication
+                }
             }
             else
             {
-                _signupUiState.value = SignUpUiState.error(true)
+                // se l'autenticazione non va a buon fine
+                _signupUiState.value = SignUpUiState.error()
             }
         }
     }

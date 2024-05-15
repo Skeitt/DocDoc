@@ -53,7 +53,7 @@ class FragmentReg2Paz : Fragment() {
         return View.OnClickListener {
             if(!inputValidator.isValidIndirizzo(binding.editRes.text.toString()))
             {
-                Toast.makeText(context, "Indirizzo del formato non valido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Formato dell'indirizzo non valido", Toast.LENGTH_SHORT).show()
             }
             else{
                 viewModel.signUp()
