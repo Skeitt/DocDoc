@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.docdoc.model.Utente
-import com.example.docdoc.repository.AuthRepository
 import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.SignUpRepository
 import com.example.docdoc.uistate.SignUpUiState
@@ -18,7 +17,6 @@ class SignUpViewModel : ViewModel() {
 
     // repository
     private val signUpRepository = SignUpRepository()
-    private val dbRepository = AuthRepository()
     private val firestoreRepository = FirestoreRepository()
 
     // LiveData per il form di registrazione
@@ -95,7 +93,7 @@ class SignUpViewModel : ViewModel() {
                 // setting dei parametri estratti dal codice fiscale
                 setSesso(cfUtil.estraiSesso(_user.value?.codiceFiscale!!))
                 setDataDiNascita(cfUtil.estraiDataDiNascita(_user.value?.dataDiNascita!!))
-                setUid(dbRepository.getCurrentUserUid())
+                setUid(signUpRepository.getCurrentUserUid())
                 // inserimento dei dati dell'utente su Firestore
                 if (firestoreRepository.addUserData(_user.value!!))
                 {
