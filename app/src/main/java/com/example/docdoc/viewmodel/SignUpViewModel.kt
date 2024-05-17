@@ -27,61 +27,6 @@ class SignUpViewModel : ViewModel() {
     // LiveData per la password
     private val _password = MutableLiveData<String>()
     val password: LiveData<String> get() = _password
-
-    fun setEmail(email: String){
-        _user.value?.email = email
-    }
-
-    fun setPassword(password: String)
-    {
-        _password.value = password
-    }
-
-    fun setNome(nome : String)
-    {
-        _user.value?.nome = nome
-    }
-
-    fun setCognome(cognome : String)
-    {
-        _user.value?.cognome = cognome
-    }
-
-    fun setSesso(sesso : String)
-    {
-        _user.value?.sesso = sesso
-    }
-
-    fun setNumDiTelefono(numDiTelefono : String)
-    {
-        _user.value?.numDiTelefono = numDiTelefono
-    }
-
-    fun setCodiceFiscale(codiceFiscale : String)
-    {
-        _user.value?.codiceFiscale = codiceFiscale
-    }
-
-    fun setDataDiNascita(dataDiNascita : String)
-    {
-        _user.value?.dataDiNascita = dataDiNascita
-    }
-
-    fun setIndirizzo(indirizzo : String)
-    {
-        _user.value?.indirizzo = indirizzo
-    }
-
-    fun setUid(uid : String)
-    {
-        _user.value?.uid = uid
-    }
-
-    // TODO: implementare la lista dei medici e di conseguenza la seguente funzione
-    fun setUidMedico(uidMedico : String)
-    {
-        _user.value?.uidMedico = uidMedico
-    }
     fun signUp()
     {
         viewModelScope.launch{
@@ -108,6 +53,88 @@ class SignUpViewModel : ViewModel() {
                 // se l'autenticazione non va a buon fine
                 _signupUiState.value = SignUpUiState.error()
             }
+        }
+    }
+    fun setEmail(email: String){
+        // let permette di eseguire il codice solo se _user.value non è null
+        // infatti non avrebbe senso aggiornare il LiveData e quindi mandare una notifica alla ui
+        _user.value?.let {
+            it.email = email
+            // riassegna il LiveData in modo che invii una notifica alla ui
+            // (non basta solamente riassegnare un parametro di _user)
+            _user.value = it
+        }
+    }
+
+    fun setPassword(password: String)
+    {
+        _password.value = password
+    }
+
+    fun setNome(nome : String)
+    {
+        _user.value?.let {
+            it.nome = nome
+            _user.value = it
+        }
+    }
+
+    fun setCognome(cognome : String)
+    {
+        _user.value?.let {
+            it.cognome = cognome
+            _user.value = it
+        }
+    }
+
+    fun setSesso(sesso : String)
+    {
+        _user.value?.let {
+            it.sesso = sesso
+            _user.value = it
+        }
+    }
+
+    fun setNumDiTelefono(numDiTelefono : String)
+    {
+        _user.value?.let {
+            it.numDiTelefono = numDiTelefono
+            _user.value = it
+        }
+    }
+
+    fun setCodiceFiscale(codiceFiscale: String) {
+        _user.value?.let {
+            it.codiceFiscale = codiceFiscale
+            _user.value = it
+        }
+    }
+
+    fun setDataDiNascita(dataDiNascita: String) {
+        _user.value?.let {
+            it.dataDiNascita = dataDiNascita
+            _user.value = it
+        }
+    }
+
+    fun setIndirizzo(indirizzo: String) {
+        _user.value?.let {
+            it.indirizzo = indirizzo
+            _user.value = it
+        }
+    }
+    fun setUid(uid: String) {
+        _user.value?.let {
+            it.uid = uid
+            _user.value = it
+        }
+    }
+    // TODO: implementare la lista dei medici e di conseguenza la seguente funzione
+    fun setUidMedico(uidMedico : String)
+    {
+        _user.value?.let {
+            it.uidMedico = uidMedico
+            _user.value = it
         }
     }
 }

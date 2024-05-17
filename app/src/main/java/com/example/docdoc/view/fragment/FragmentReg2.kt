@@ -16,6 +16,8 @@ import com.example.docdoc.viewmodel.SignUpViewModel
 class FragmentReg2 : Fragment() {
 
     private lateinit var binding: FragmentReg2Binding
+    /** il viewmodel appartiene all'activity in cui è contenuto il fragment ed
+    è condiviso tra tutti i fragment */
     private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
@@ -48,6 +50,7 @@ class FragmentReg2 : Fragment() {
         binding.editTel.addTextChangedListener {
             viewModel.setNumDiTelefono(it.toString())
         }
+
         return binding.root
     }
 
@@ -59,17 +62,21 @@ class FragmentReg2 : Fragment() {
 
     private fun goToNextFragment(): View.OnClickListener? {
         return View.OnClickListener {
-            if (!inputValidator.isValidCodiceFiscale(binding.editCF.text.toString()))
-            {
-                Toast.makeText(context, "Formato codice del fiscale non valido", Toast.LENGTH_SHORT).show()
-            }
-            else if (!inputValidator.isValidNumeroDiTelefono(binding.editTel.text.toString()))
+            if (!inputValidator.isValidNumeroDiTelefono(binding.editTel.text.toString()))
             {
                 Toast.makeText(context, "Formato del numero di telefono non valido", Toast.LENGTH_SHORT).show()
             }
+            else if (!inputValidator.isValidCodiceFiscale(binding.editCF.text.toString()))
+            {
+                Toast.makeText(context, "Formato codice del fiscale non valido", Toast.LENGTH_SHORT).show()
+            }
+            else if(binding.editNome.text.isEmpty() || binding.editCognome.text.isEmpty()){
+                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+            }
             else if (binding.radioPaziente.isChecked) {
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Paz)
-            } else {
+            }
+            else {
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Med)
             }
         }

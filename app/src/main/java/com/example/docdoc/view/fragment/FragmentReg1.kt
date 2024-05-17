@@ -19,6 +19,8 @@ import com.example.docdoc.viewmodel.SignUpViewModel
 class FragmentReg1 : Fragment() {
 
     private lateinit var binding: FragmentReg1Binding
+    /** il viewmodel appartiene all'activity in cui è contenuto il fragment ed
+    è condiviso tra tutti i fragment */
     private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
