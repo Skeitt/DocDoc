@@ -12,9 +12,6 @@ import com.example.docdoc.util.CodiceFiscaleUtil
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
-    // util
-    private val cfUtil = CodiceFiscaleUtil()
-
     // repository
     private val signUpRepository = SignUpRepository()
     private val firestoreRepository = FirestoreRepository()
@@ -90,9 +87,10 @@ class SignUpViewModel : ViewModel() {
         viewModelScope.launch{
             if(signUpRepository.signUp(_user.value?.email!!, _password.value!!))
             {
-                // setting dei parametri estratti dal codice fiscale
-                setSesso(cfUtil.estraiSesso(_user.value?.codiceFiscale!!))
-                setDataDiNascita(cfUtil.estraiDataDiNascita(_user.value?.dataDiNascita!!))
+                // setting dei parametri estratti dal codice fiscale nell'oggeetto _user
+                setSesso(CodiceFiscaleUtil.estraiSesso(_user.value?.codiceFiscale!!))
+                setDataDiNascita(CodiceFiscaleUtil.estraiDataDiNascita(_user.value?.codiceFiscale!!))
+                // setting dello uid dello user appena registrato (e loggato)
                 setUid(signUpRepository.getCurrentUserUid())
                 // inserimento dei dati dell'utente su Firestore
                 if (firestoreRepository.addUserData(_user.value!!))

@@ -10,39 +10,18 @@ class FirestoreRepository {
 
     private val USERS_COLLECTION = "users"
 
-    suspend fun addUserData(user: Utente) : Boolean {
-        val userMap = getUserMap(user)
+    /** @brief funzione che aggiunge i dati di un utente al database Firestore
+    * @param user utente che si vuole aggiungere alla collection "users"
+    * @return true se l'aggiunta va a buon fine */
+    suspend fun addUserData(user: Utente): Boolean {
         return try {
             db.collection(USERS_COLLECTION)
-                .add(userMap)
+                .document(user.uid!!)
+                .set(user)
                 .await()
-                true
-        }
-        catch(e : Exception)
-        {
+            true
+        } catch (e: Exception) {
             false
         }
-    }
-
-    fun getUserMap(user: Utente) : HashMap<String,String?>
-    {
-        val userMap = hashMapOf(
-            "uid" to user.uid,
-            "nome" to user.nome,
-            "cognome" to user.cognome,
-            "cf" to user.codiceFiscale,
-            "sesso" to user.sesso,
-            "email" to user.email,
-            "dataDiNascita" to user.dataDiNascita,
-            "numDiTelefono" to user.numDiTelefono,
-            "ruolo" to user.ruolo,
-        )
-        if (user.ruolo == "dottore") {
-            userMap["indirizzoAmbulatorio"] = user.indirizzo
-        } else {
-            userMap["indirizzoDiResidenza"] = user.indirizzo
-            userMap["uidMedico"] = user.uidMedico
-        }
-        return userMap
     }
 }

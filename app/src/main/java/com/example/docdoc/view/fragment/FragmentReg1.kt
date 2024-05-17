@@ -1,17 +1,20 @@
 package com.example.docdoc
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.docdoc.databinding.FragmentReg1Binding
 import com.example.docdoc.util.InputValidator
+import com.example.docdoc.view.activity.SignUpActivity
 import com.example.docdoc.viewmodel.SignUpViewModel
+
 
 class FragmentReg1 : Fragment() {
 
@@ -23,7 +26,6 @@ class FragmentReg1 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentReg1Binding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -65,7 +67,8 @@ class FragmentReg1 : Fragment() {
     private fun goToLogin(): View.OnClickListener? {
         // si torna all'activity precedente ovvero il Login
         return View.OnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().startActivity(Intent(requireActivity(), SignUpActivity::class.java))
+            requireActivity().finish()
         }
     }
 }

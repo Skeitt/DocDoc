@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.example.docdoc.databinding.ActivityAccediBinding
-import com.example.docdoc.viewmodel.LoginViewModel
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.docdoc.databinding.ActivityAccediBinding
 import com.example.docdoc.util.InputValidator
+import com.example.docdoc.viewmodel.LoginViewModel
 import kotlinx.coroutines.launch
+
 
 /** Activity per il login */
 class LoginActivity : AppCompatActivity() {
@@ -30,12 +31,13 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.uiState.collect {
-                if (it.isLoggedIn){
-                    startActivity( Intent(this@LoginActivity,MainActivity::class.java) )
+                if (it.isLoggedIn) {
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }
-                if (it.isError){
-                    Toast.makeText(this@LoginActivity, "Errore nel Login!!", Toast.LENGTH_SHORT).show()
+                if (it.isError) {
+                    Toast.makeText(this@LoginActivity, "Errore nel Login!!", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -52,26 +54,27 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /** al click del pulsante: entra viene effettuato il login controllando la correttezza dei campi */
-    private fun loginOnClick(): View.OnClickListener{
+    private fun loginOnClick(): View.OnClickListener {
         return View.OnClickListener {
             val email = viewBinding.editEmail.text.toString()
             val password = viewBinding.editPw.text.toString()
-            if(inputValidator.isValidEmail(email)){
-                if(inputValidator.isValidPassword(password)){
+            if (inputValidator.isValidEmail(email)) {
+                if (inputValidator.isValidPassword(password)) {
                     viewModel.login(email, password)
-                }else{
+                } else {
                     Toast.makeText(this, "Password non valida", Toast.LENGTH_SHORT).show()
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "Email non valida", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     /** al click del pulsante: registrati viene aperta l'activity della registrazione */
-    private fun signUpOnClick(): View.OnClickListener{
+    private fun signUpOnClick(): View.OnClickListener {
         return View.OnClickListener {
-            startActivity( Intent(this, SignUpActivity::class.java) )
+            startActivity(Intent(this, SignUpActivity::class.java))
+            finish()
         }
     }
 
