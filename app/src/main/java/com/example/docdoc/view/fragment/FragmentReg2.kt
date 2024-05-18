@@ -21,6 +21,10 @@ class FragmentReg2 : Fragment() {
     private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
+    private val EMPTY_FIELD_ERROR = "Compila il campo"
+    private val TEL_ERROR = "Formato del numero di telefono non valido"
+    private val CF_ERROR = "Formato del codice fiscale non valido"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,16 +66,21 @@ class FragmentReg2 : Fragment() {
 
     private fun goToNextFragment(): View.OnClickListener? {
         return View.OnClickListener {
+            if(inputValidator.isFieldEmpty(binding.editNome.text.toString()))
+            {
+                binding.editNome.error = EMPTY_FIELD_ERROR
+            }
+            else if(inputValidator.isFieldEmpty(binding.editCognome.text.toString()))
+            {
+                binding.editCognome.error = EMPTY_FIELD_ERROR
+            }
             if (!inputValidator.isValidNumeroDiTelefono(binding.editTel.text.toString()))
             {
-                Toast.makeText(context, "Formato del numero di telefono non valido", Toast.LENGTH_SHORT).show()
+                binding.editTel.error = TEL_ERROR
             }
             else if (!inputValidator.isValidCodiceFiscale(binding.editCF.text.toString()))
             {
-                Toast.makeText(context, "Formato codice del fiscale non valido", Toast.LENGTH_SHORT).show()
-            }
-            else if(binding.editNome.text.isEmpty() || binding.editCognome.text.isEmpty()){
-                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+                binding.editCF.error = CF_ERROR
             }
             else if (binding.radioPaziente.isChecked) {
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Paz)

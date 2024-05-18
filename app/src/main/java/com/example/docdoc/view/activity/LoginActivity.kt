@@ -20,6 +20,9 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
     private val inputValidator = InputValidator()
 
+    private val EMAIL_ERROR = "Email non valida"
+    private val PASSWORD_ERROR = "Password non valida"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityAccediBinding.inflate(layoutInflater)
@@ -62,10 +65,10 @@ class LoginActivity : AppCompatActivity() {
                 if (inputValidator.isValidPassword(password)) {
                     viewModel.login(email, password)
                 } else {
-                    Toast.makeText(this, "Password non valida", Toast.LENGTH_SHORT).show()
+                    viewBinding.editPw.error = PASSWORD_ERROR
                 }
             } else {
-                Toast.makeText(this, "Email non valida", Toast.LENGTH_SHORT).show()
+                viewBinding.editEmail.error = EMAIL_ERROR
             }
         }
     }

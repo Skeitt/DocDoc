@@ -20,6 +20,8 @@ class FragmentReg2Paz : Fragment() {
     private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
+    private val ADDRESS_ERROR = "Formato dell'indirizzo non valido"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,7 +57,7 @@ class FragmentReg2Paz : Fragment() {
         return View.OnClickListener {
             if(!inputValidator.isValidIndirizzo(binding.editRes.text.toString()))
             {
-                Toast.makeText(context, "Formato dell'indirizzo non valido", Toast.LENGTH_SHORT).show()
+                binding.editRes.error = ADDRESS_ERROR
             }
             else{
                 viewModel.signUp()

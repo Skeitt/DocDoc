@@ -52,4 +52,8 @@ class InputValidator() {
         val regex = Regex("^[a-zA-Z0-9\\s',.#-]+\$")
         return indirizzo.isNotEmpty() && regex.matches(indirizzo)
     }
+
+    fun isFieldEmpty(text : String): Boolean{
+        return text.isEmpty()
+    }
 }

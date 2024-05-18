@@ -24,6 +24,9 @@ class FragmentReg1 : Fragment() {
     private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
+    private val EMAIL_ERROR = "Formato email non valido"
+    private val PASSWORD_ERROR = "Formato password non valido\nLa password deve contenere almeno un carattere maiuscolo, minuscolo,un numero ed un carattere speciale tra @, $, %, ^, &, +, = e .\nInoltre deve contentere almeno 8 caratteri"
+    private val PASSWORD_MATCHING_ERROR  = "Le password non corrispondono"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,11 +58,11 @@ class FragmentReg1 : Fragment() {
     private fun onContinua(): View.OnClickListener? {
         return View.OnClickListener {
             if (!inputValidator.isValidEmail(binding.editEmail.text.toString())) {
-                Toast.makeText(context, "Formato email non valido", Toast.LENGTH_SHORT).show()
+                binding.editEmail.error = EMAIL_ERROR
             } else if (!inputValidator.isValidPassword(binding.editPw.text.toString())) {
-                Toast.makeText(context, "Formato password non valido", Toast.LENGTH_SHORT).show()
+                binding.editPw.error = PASSWORD_ERROR
             } else if (binding.editPw.text.toString() != binding.confPw.text.toString()) {
-                Toast.makeText(context, "Le password non corrispondono", Toast.LENGTH_SHORT).show()
+                binding.confPw.error = PASSWORD_MATCHING_ERROR
             } else {
                 findNavController().navigate(R.id.action_fragment1_to_fragment2)
             }
