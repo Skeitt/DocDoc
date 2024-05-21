@@ -1,8 +1,9 @@
 package com.example.docdoc.repository
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
 
 class SignUpRepository {
     private val firebaseAuth = Firebase.auth
@@ -11,13 +12,8 @@ class SignUpRepository {
      * @param email La mail con cui viene registrato l'utente
      * @param password La password con cui viene registrato l'utente
      */
-    suspend fun signUp(email: String, password: String): Boolean{
-        return try {
-            firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            true
-        } catch (e: Exception) {
-            false
-        }
+    fun signUp(email: String, password: String): Task<AuthResult> {
+        return firebaseAuth.createUserWithEmailAndPassword(email, password)
     }
 
     /** @brief funzione che restituisce lo uid dell'utente loggato

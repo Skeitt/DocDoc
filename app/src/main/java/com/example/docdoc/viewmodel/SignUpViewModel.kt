@@ -27,35 +27,30 @@ class SignUpViewModel : ViewModel() {
     // LiveData per la password
     private val _password = MutableLiveData<String>()
     val password: LiveData<String> get() = _password
-    fun signUp()
-    {
-        viewModelScope.launch{
-            if(signUpRepository.signUp(_user.value?.email!!, _password.value!!))
-            {
-                // setting dei parametri estratti dal codice fiscale nell'oggeetto _user
-                setSesso(CodiceFiscaleUtil.estraiSesso(_user.value?.codiceFiscale!!))
-                setDataDiNascita(CodiceFiscaleUtil.estraiDataDiNascita(_user.value?.codiceFiscale!!))
-                // setting dello uid dello user appena registrato (e loggato)
-                setUid(signUpRepository.getCurrentUserUid())
-                // inserimento dei dati dell'utente su Firestore
-                if (firestoreRepository.addUserData(_user.value!!))
-                {
-                    _signupUiState.value = SignUpUiState.success()
-                }
-                else
-                {
+    fun signUp() {
+        viewModelScope.launch {
+            signUpRepository.signUp(_user.value?.email!!, _password.value!!)
+                .addOnSuccessListener {
+                    // setting dei parametri estratti dal codice fiscale nell'oggeetto _user
+                    setSesso(CodiceFiscaleUtil.estraiSesso(_user.value?.codiceFiscale!!))
+                    setDataDiNascita(CodiceFiscaleUtil.estraiDataDiNascita(_user.value?.codiceFiscale!!))
+                    // setting dello uid dello user appena registrato (e loggato)
+                    setUid(signUpRepository.getCurrentUserUid())
+                    // inserimento dei dati dell'utente su Firestore
+                    firestoreRepository.addUserData(_user.value!!)
+                        .addOnSuccessListener {
+                            _signupUiState.value = SignUpUiState.success()
+                        }.addOnFailureListener {
+                            _signupUiState.value = SignUpUiState.error()
+                        }
+                }.addOnFailureListener {
+                    // se l'autenticazione non va a buon fine
                     _signupUiState.value = SignUpUiState.error()
-                    // TODO: va eliminato l'utente in authentication
                 }
-            }
-            else
-            {
-                // se l'autenticazione non va a buon fine
-                _signupUiState.value = SignUpUiState.error()
-            }
         }
     }
-    fun setEmail(email: String){
+
+    fun setEmail(email: String) {
         // let permette di eseguire il codice solo se _user.value non è null
         // infatti non avrebbe senso aggiornare il LiveData e quindi mandare una notifica alla ui
         _user.value?.let {
@@ -66,37 +61,32 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun setPassword(password: String)
-    {
+    fun setPassword(password: String) {
         _password.value = password
     }
 
-    fun setNome(nome : String)
-    {
+    fun setNome(nome: String) {
         _user.value?.let {
             it.nome = nome
             _user.value = it
         }
     }
 
-    fun setCognome(cognome : String)
-    {
+    fun setCognome(cognome: String) {
         _user.value?.let {
             it.cognome = cognome
             _user.value = it
         }
     }
 
-    fun setSesso(sesso : String)
-    {
+    fun setSesso(sesso: String) {
         _user.value?.let {
             it.sesso = sesso
             _user.value = it
         }
     }
 
-    fun setNumDiTelefono(numDiTelefono : String)
-    {
+    fun setNumDiTelefono(numDiTelefono: String) {
         _user.value?.let {
             it.numDiTelefono = numDiTelefono
             _user.value = it
@@ -123,15 +113,23 @@ class SignUpViewModel : ViewModel() {
             _user.value = it
         }
     }
+
     fun setUid(uid: String) {
         _user.value?.let {
             it.uid = uid
             _user.value = it
         }
     }
+
+    fun setRuolo(ruolo: String) {
+        _user.value?.let {
+            it.ruolo = ruolo
+            _user.value = it
+        }
+    }
+
     // TODO: implementare la lista dei medici e di conseguenza la seguente funzione
-    fun setUidMedico(uidMedico : String)
-    {
+    fun setUidMedico(uidMedico: String) {
         _user.value?.let {
             it.uidMedico = uidMedico
             _user.value = it
