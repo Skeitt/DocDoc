@@ -15,6 +15,7 @@
     <string name="salva">Salva</string>
     <string name="disponibilita">Slot Disponibile</string>
     <string name="accedi">Accedi</string>
+    <string name="profilo_medico">Profilo Medico</string>
 
 
 
@@ -61,6 +62,7 @@
     <string name="inserisci_descrizione1">Inserisci una breve descrizione&#8230;</string>
     <string name="inserisci_malattia">Inserisci una malattia&#8230;</string>
     <string name="inserisci_farmaco">Inserisci un farmaco&#8230;</string>
+    <string name="cerca_paziente">Cerca un paziente&#8230;</string>
 
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>

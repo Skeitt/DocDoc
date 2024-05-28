@@ -1,21 +1,70 @@
 package com.example.docdoc.view.activity
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.docdoc.R
+import com.example.docdoc.databinding.ActivityMainBinding
+import com.example.docdoc.model.Utente
+import com.example.docdoc.view.fragment.FragmentHomeMedico
+import com.example.docdoc.view.fragment.FragmentHomePaziente
+import com.example.docdoc.view.fragment.FragmentProfiloMedico
+import com.example.docdoc.view.fragment.FragmentProfiloPaziente
+import com.example.docdoc.viewmodel.UtenteViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: UtenteViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        // viewBinding
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        var utente: Utente? = null
+
+        viewModel.getCurrentUser()
+        lifecycleScope.launch{
+            viewModel.uiState.collect{
+                if(it.fetchData) {
+                    utente = viewModel.currentUser.value
+                    if (utente?.ruolo == "medico")
+                        impostaFragment(FragmentHomeMedico())
+                    else if (utente?.ruolo == "paziente")
+                        impostaFragment(FragmentHomePaziente())
+                }
+            }
         }
+
+        binding.menuInferiore.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> {
+                    if (utente?.ruolo == "medico")
+                        impostaFragment(FragmentHomeMedico())
+                    else if (utente?.ruolo == "paziente")
+                        impostaFragment(FragmentHomePaziente())
+                }
+                /*R.id.profilo -> {
+                    if (utente?.ruolo == "medico")
+                        impostaFragment(FragmentProfiloMedico())
+                    else if (utente?.ruolo == "paziente")
+                        impostaFragment(FragmentProfiloPaziente())
+                }*/
+                R.id.add_prenotazione -> {}
+                else -> {}
+            }
+            true
+        }
+    }
+    private fun impostaFragment(fragment : Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
