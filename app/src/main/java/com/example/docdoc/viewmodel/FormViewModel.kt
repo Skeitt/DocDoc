@@ -164,7 +164,6 @@ class FormViewModel : ViewModel() {
         }
     }
 
-    // TODO: implementare la lista dei medici e di conseguenza la seguente funzione
     fun setUidMedico(uidMedico: String) {
         _user.value?.let {
             it.uidMedico = uidMedico

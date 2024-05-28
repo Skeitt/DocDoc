@@ -1,6 +1,6 @@
 package com.example.docdoc.model
 
-open class Utente(
+data class Utente(
     var uid: String? = null,
     var nome: String? = null,
     var cognome: String? = null,
