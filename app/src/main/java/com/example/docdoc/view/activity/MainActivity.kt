@@ -8,10 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.docdoc.R
 import com.example.docdoc.databinding.ActivityMainBinding
 import com.example.docdoc.model.Utente
-import com.example.docdoc.view.fragment.FragmentHomeMedico
 import com.example.docdoc.view.fragment.FragmentHomePaziente
-import com.example.docdoc.view.fragment.FragmentProfiloMedico
-import com.example.docdoc.view.fragment.FragmentProfiloPaziente
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
 
@@ -34,9 +31,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.uiState.collect{
                 if(it.fetchData) {
                     utente = viewModel.currentUser.value
-                    if (utente?.ruolo == "medico")
-                        impostaFragment(FragmentHomeMedico())
-                    else if (utente?.ruolo == "paziente")
+                    if (utente?.ruolo == "paziente")
                         impostaFragment(FragmentHomePaziente())
                 }
             }
@@ -45,16 +40,12 @@ class MainActivity : AppCompatActivity() {
         binding.menuInferiore.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    if (utente?.ruolo == "medico")
-                        impostaFragment(FragmentHomeMedico())
-                    else if (utente?.ruolo == "paziente")
+                    if (utente?.ruolo == "paziente")
                         impostaFragment(FragmentHomePaziente())
                 }
                 /*R.id.profilo -> {
-                    if (utente?.ruolo == "medico")
+                    if (utente?.ruolo == "paziente")
                         impostaFragment(FragmentProfiloMedico())
-                    else if (utente?.ruolo == "paziente")
-                        impostaFragment(FragmentProfiloPaziente())
                 }*/
                 R.id.add_prenotazione -> {}
                 else -> {}
