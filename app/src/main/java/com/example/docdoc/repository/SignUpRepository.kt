@@ -21,6 +21,13 @@ class SignUpRepository {
      */
     fun getCurrentUserUid() : String
     {
-        return firebaseAuth.currentUser!!.uid
+        return firebaseAuth.currentUser?.uid!!
+    }
+
+    /** @brief funzione che restituisce la mail dell'utente loggato
+     * @return String che indica la mail dell'utente loggato
+     */
+    fun getCurrentUserEmail() : String{
+        return firebaseAuth.currentUser?.email!!
     }
 }

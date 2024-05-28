@@ -44,14 +44,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     /** nel momento in cui lancio l'activity se l'utente è già loggato lancio la Main Activity */
     override fun onStart() {
         super.onStart()
         if (viewModel.isLoggedIn()) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, FormActivity::class.java))
             finish()
         }
     }

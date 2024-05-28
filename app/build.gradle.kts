@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.lifecycle.compiler)
     val lifecycle_version = "2.7.0"
     val activity_version = "1.9.0"
 

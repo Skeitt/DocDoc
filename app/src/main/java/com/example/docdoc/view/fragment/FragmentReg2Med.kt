@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.docdoc.databinding.FragmentReg2MedBinding
 import com.example.docdoc.util.InputValidator
+import com.example.docdoc.viewmodel.FormViewModel
 import com.example.docdoc.viewmodel.SignUpViewModel
 
 class FragmentReg2Med : Fragment() {
@@ -18,7 +19,7 @@ class FragmentReg2Med : Fragment() {
     private lateinit var binding: FragmentReg2MedBinding
     /** il viewmodel appartiene all'activity in cui è contenuto il fragment ed
     è condiviso tra tutti i fragment */
-    private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
+    private val viewModel: FormViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
     private val ADDRESS_ERROR = "Formato dell'indirizzo non valido"
@@ -44,14 +45,6 @@ class FragmentReg2Med : Fragment() {
 
         return binding.root
     }
-
-    private fun goToPreviusFragment() : View.OnClickListener
-    {
-        return View.OnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
     private fun signUp(): View.OnClickListener? {
         return View.OnClickListener {
             if(!inputValidator.isValidIndirizzo(binding.editAmbulatorio.text.toString())){
@@ -59,9 +52,14 @@ class FragmentReg2Med : Fragment() {
             }
             else
             {
-                // TODO: implementare anche lo switch di schermata ecc...
-                viewModel.signUp()
+                viewModel.pushUserData()
             }
+        }
+    }
+    private fun goToPreviusFragment() : View.OnClickListener
+    {
+        return View.OnClickListener {
+            findNavController().popBackStack()
         }
     }
 }

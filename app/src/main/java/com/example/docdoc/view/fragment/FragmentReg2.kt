@@ -1,24 +1,30 @@
 package com.example.docdoc
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.docdoc.databinding.FragmentReg2Binding
 import com.example.docdoc.util.InputValidator
+import com.example.docdoc.view.activity.FormActivity
+import com.example.docdoc.view.activity.LoginActivity
+import com.example.docdoc.view.activity.MainActivity
+import com.example.docdoc.viewmodel.FormViewModel
 import com.example.docdoc.viewmodel.SignUpViewModel
+import java.text.Normalizer.Form
+
 
 class FragmentReg2 : Fragment() {
 
     private lateinit var binding: FragmentReg2Binding
     /** il viewmodel appartiene all'activity in cui è contenuto il fragment ed
     è condiviso tra tutti i fragment */
-    private val viewModel: SignUpViewModel by viewModels({ requireActivity() })
+    private val viewModel: FormViewModel by viewModels({ requireActivity() })
     private val inputValidator = InputValidator()
 
     private val EMPTY_FIELD_ERROR = "Compila il campo"
@@ -29,7 +35,6 @@ class FragmentReg2 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentReg2Binding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -39,7 +44,7 @@ class FragmentReg2 : Fragment() {
         //  Navigazione verso il prossimo fragment
         binding.buttonContinua.setOnClickListener(goToNextFragment())
         //  Ritorno al fragment precedente
-        binding.buttonIndietro.setOnClickListener(goToPreviusFragment())
+        binding.buttonIndietro.setOnClickListener(goToLogin())
 
         //  Aggiorna il ViewModel quando cambia il testo negli EditText
         binding.editNome.addTextChangedListener {
@@ -58,9 +63,10 @@ class FragmentReg2 : Fragment() {
         return binding.root
     }
 
-    private fun goToPreviusFragment(): View.OnClickListener? {
+    private fun goToLogin(): View.OnClickListener? {
         return View.OnClickListener {
-            findNavController().popBackStack()
+            requireActivity().startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            requireActivity().finish()
         }
     }
 
@@ -74,7 +80,7 @@ class FragmentReg2 : Fragment() {
             {
                 binding.editCognome.error = EMPTY_FIELD_ERROR
             }
-            if (!inputValidator.isValidNumeroDiTelefono(binding.editTel.text.toString()))
+            else if (!inputValidator.isValidNumeroDiTelefono(binding.editTel.text.toString()))
             {
                 binding.editTel.error = TEL_ERROR
             }
@@ -83,9 +89,11 @@ class FragmentReg2 : Fragment() {
                 binding.editCF.error = CF_ERROR
             }
             else if (binding.radioPaziente.isChecked) {
+                viewModel.setRuolo("Paziente")
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Paz)
             }
             else {
+                viewModel.setRuolo("Medico")
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Med)
             }
         }

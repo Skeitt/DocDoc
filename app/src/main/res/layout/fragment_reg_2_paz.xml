@@ -3,14 +3,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.docdoc.viewmodel.SignUpViewModel" />
+            type="com.example.docdoc.viewmodel.FormViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_reg_2_paz"
-        >
+        android:id="@+id/fragment_reg_2_paz">
 
         <android.widget.TextView
             android:id="@+id/label_res"
@@ -42,10 +41,24 @@
             android:id="@+id/search_medico"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
             android:queryHint="@string/inserisci_medico"
             android:background="@drawable/rounded_rectangle"
 
             app:layout_constraintTop_toBottomOf="@id/sel_med"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lista_medici"
+            android:layout_width="240dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:background="@drawable/rounded_rectangle"
+
+            app:layout_constraintTop_toBottomOf="@id/search_medico"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -58,7 +71,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_medico"
+            app:layout_constraintTop_toBottomOf="@+id/lista_medici"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <android.widget.Button

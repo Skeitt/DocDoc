@@ -5,7 +5,7 @@ data class SignUpUiState(
     val isError: Boolean = false,
 ) {
     companion object {
-        fun success() = SignUpUiState(isSignedUp = true)
-        fun error() = SignUpUiState(isError = true)
+        fun authSuccess() = SignUpUiState(isSignedUp = true)
+        fun authError() = SignUpUiState(isError = true)
     }
 }
