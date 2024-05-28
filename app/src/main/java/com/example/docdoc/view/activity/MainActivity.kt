@@ -1,6 +1,7 @@
 package com.example.docdoc.view.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import com.example.docdoc.R
 import com.example.docdoc.databinding.ActivityMainBinding
 import com.example.docdoc.model.Utente
 import com.example.docdoc.view.fragment.FragmentHomePaziente
+import com.example.docdoc.view.fragment.FragmentProfiloMedico
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
 
@@ -24,15 +26,18 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var utente: Utente? = null
+        var currentUser: Utente? = null
 
         viewModel.getCurrentUser()
         lifecycleScope.launch{
             viewModel.uiState.collect{
                 if(it.fetchData) {
-                    utente = viewModel.currentUser.value
-                    if (utente?.ruolo == "paziente")
+                    currentUser = viewModel.currentUser.value
+                    if (currentUser?.ruolo == "paziente") {
+                        binding.buttonProfiloMedico.visibility = View.VISIBLE
+                        binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(currentUser?.uidMedico!!))
                         impostaFragment(FragmentHomePaziente())
+                    }
                 }
             }
         }
@@ -40,11 +45,12 @@ class MainActivity : AppCompatActivity() {
         binding.menuInferiore.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    if (utente?.ruolo == "paziente")
+                    if (currentUser?.ruolo == "paziente")
+                        binding.buttonProfiloMedico.visibility = View.VISIBLE
                         impostaFragment(FragmentHomePaziente())
                 }
                 /*R.id.profilo -> {
-                    if (utente?.ruolo == "paziente")
+                    if (currentUser?.ruolo == "paziente")
                         impostaFragment(FragmentProfiloMedico())
                 }*/
                 R.id.add_prenotazione -> {}
@@ -57,5 +63,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    private fun goToDoctorProfile(uidMedico: String): View.OnClickListener?{
+        return View.OnClickListener {
+            viewModel.getUser(uidMedico)
+            impostaFragment(FragmentProfiloMedico())
+        }
     }
 }
