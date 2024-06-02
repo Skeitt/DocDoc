@@ -89,11 +89,11 @@ class FragmentReg2 : Fragment() {
                 binding.editCF.error = CF_ERROR
             }
             else if (binding.radioPaziente.isChecked) {
-                viewModel.setRuolo("Paziente")
+                viewModel.setPaziente()
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Paz)
             }
             else {
-                viewModel.setRuolo("Medico")
+                viewModel.setMedico()
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Med)
             }
         }

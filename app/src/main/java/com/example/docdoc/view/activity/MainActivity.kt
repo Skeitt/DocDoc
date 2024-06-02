@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.uiState.collect{
                 if(it.fetchData) {
                     currentUser = viewModel.currentUser.value
-                    if (currentUser?.ruolo == "paziente") {
+                    if (!(currentUser?.medico!!)) {
                         binding.buttonProfiloMedico.visibility = View.VISIBLE
                         binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(currentUser?.uidMedico!!))
-                        impostaFragment(FragmentHomePaziente())
                     }
+                    impostaFragment(FragmentHomePaziente())
                 }
             }
         }
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         binding.menuInferiore.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    if (currentUser?.ruolo == "paziente")
+                    if (!(currentUser?.medico!!))
                         binding.buttonProfiloMedico.visibility = View.VISIBLE
                         impostaFragment(FragmentHomePaziente())
                 }

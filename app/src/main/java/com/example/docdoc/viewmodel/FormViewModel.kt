@@ -33,10 +33,6 @@ class FormViewModel : ViewModel() {
 
     fun pushUserData()
     {
-        if(_user.value?.ruolo == "medico")
-        {
-            setUidMedico("")
-        }
         // setting dei parametri estratti dal codice fiscale nell'oggeetto _user
         setSesso(CodiceFiscaleUtil.estraiSesso(_user.value?.codiceFiscale!!))
         setDataDiNascita(CodiceFiscaleUtil.estraiDataDiNascita(_user.value?.codiceFiscale!!))
@@ -157,10 +153,18 @@ class FormViewModel : ViewModel() {
         }
     }
 
-    fun setRuolo(ruolo: String) {
+    fun setMedico() {
         _user.value?.let {
-            it.ruolo = ruolo
+            it.medico = true
             _user.value = it
+        }
+    }
+
+    fun setPaziente() {
+        _user.value?.let {
+            it.medico = false
+            _user.value = it
+            setUidMedico("")
         }
     }
 

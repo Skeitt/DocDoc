@@ -11,6 +11,7 @@ class FirestoreRepository {
     private val db = Firebase.firestore
 
     private val USERS_COLLECTION = "users"
+    private val BOOKING_COLLECTION = "prenotazioni"
 
     /** @brief funzione che aggiunge i dati di un utente al database Firestore
     * @param user utente che si vuole aggiungere alla collection "users"
@@ -33,5 +34,14 @@ class FirestoreRepository {
      */
     fun isInfoStored(uid: String): Task<DocumentSnapshot> {
         return db.collection(USERS_COLLECTION).document(uid).get()
+    }
+
+    /**
+     * @brief Questa funzione effettua una query per ottenere tutte le prenotazioni in un determinato giorno
+     * @param giorno indica il giorno della prenotazione
+     * @return restituisce una lista delle prenotazioni
+     */
+    fun getPrenotazioniPerGiorno(giorno: String): Task<QuerySnapshot> {
+        return db.collection(BOOKING_COLLECTION).whereEqualTo("data", giorno).get()
     }
 }
