@@ -21,8 +21,8 @@ class BookingListAdapter(private val bookingList: List<Prenotazione>, private va
         val currentItem = bookingList[position]
         holder.rvOrario.text = currentItem.orario
         if(currentItem.nomePaziente != null && currentItem.cognomePaziente != null){
-            val desc = currentItem.nomePaziente + " " + currentItem.cognomePaziente
-            holder.rvSlotDesc.text = desc
+            val text = currentItem.nomePaziente + " " + currentItem.cognomePaziente
+            holder.rvSlotDesc.text = text
         }
 
         holder.itemView.setOnClickListener{

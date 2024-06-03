@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.docdoc.R
 import com.example.docdoc.databinding.ActivityMainBinding
 import com.example.docdoc.model.Utente
-import com.example.docdoc.view.fragment.FragmentHomePaziente
+import com.example.docdoc.view.fragment.FragmentHome
 import com.example.docdoc.view.fragment.FragmentProfiloMedico
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
@@ -33,11 +33,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.uiState.collect{
                 if(it.fetchData) {
                     currentUser = viewModel.currentUser.value
-                    if (!(currentUser?.medico!!)) {
-                        binding.buttonProfiloMedico.visibility = View.VISIBLE
-                        binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(currentUser?.uidMedico!!))
-                    }
-                    impostaFragment(FragmentHomePaziente())
+                    impostaFragment(FragmentHome())
                 }
             }
         }
@@ -46,8 +42,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> {
                     if (!(currentUser?.medico!!))
-                        binding.buttonProfiloMedico.visibility = View.VISIBLE
-                        impostaFragment(FragmentHomePaziente())
+                        impostaFragment(FragmentHome())
                 }
                 /*R.id.profilo -> {
                     if (currentUser?.ruolo == "paziente")
@@ -63,12 +58,5 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
-    }
-
-    private fun goToDoctorProfile(uidMedico: String): View.OnClickListener?{
-        return View.OnClickListener {
-            viewModel.getUser(uidMedico)
-            impostaFragment(FragmentProfiloMedico())
-        }
     }
 }

@@ -63,6 +63,7 @@
     <string name="inserisci_malattia">Inserisci una malattia&#8230;</string>
     <string name="inserisci_farmaco">Inserisci un farmaco&#8230;</string>
     <string name="cerca_paziente">Cerca un paziente&#8230;</string>
+    <string name="prenota_a_questo_orario">Prenota a questo orario</string>
 
     <!-- stringhe per radio button -->
     <string name="sono_paziente">Sono un paziente</string>

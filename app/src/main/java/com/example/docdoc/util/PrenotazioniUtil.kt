@@ -21,7 +21,7 @@ class PrenotazioniUtil {
             "16:30" to 13,
         )
 
-        fun creaListaPrenotazioni(): ArrayList<Prenotazione> {
+        fun creaSlotPrenotazioni(): ArrayList<Prenotazione> {
             var lista = ArrayList<Prenotazione>()
             for (i in 9..12) {
                 lista.add(Prenotazione(orario = String.format("%02d:00", i)))
@@ -45,5 +45,19 @@ class PrenotazioniUtil {
                 ore.toInt() * 60 + minuti.toInt()
             })
         }
+
+        fun calcolaSlotDisponibili(listaPrenotazioni : ArrayList<Prenotazione>) : ArrayList<Prenotazione>
+        {
+            var slotDisponibili: ArrayList<Prenotazione> = creaSlotPrenotazioni()
+            for (prenotazione in listaPrenotazioni)
+            {
+                slotDisponibili.removeIf {
+                    it.orario == prenotazione.orario
+                }
+            }
+
+            return slotDisponibili
+        }
+
     }
 }

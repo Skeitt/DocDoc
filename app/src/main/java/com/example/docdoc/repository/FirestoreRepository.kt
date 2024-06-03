@@ -3,12 +3,13 @@ package com.example.docdoc.repository
 import com.example.docdoc.model.Utente
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class FirestoreRepository {
-    private val db = Firebase.firestore
+    val db = Firebase.firestore
 
     private val USERS_COLLECTION = "users"
     private val BOOKING_COLLECTION = "prenotazioni"
@@ -24,8 +25,9 @@ class FirestoreRepository {
      * @brief Questa funzione restituisce la lista dei medici registrati
      * @return rstituisce un document nel caso di successo oppure una exception
      */
-    fun getDoctorList(): Task<QuerySnapshot> {
-        return db.collection(USERS_COLLECTION).whereEqualTo("ruolo", "Medico").get()
+    fun getDoctorList(): Query {
+        return db.collection(USERS_COLLECTION)
+            .whereEqualTo("ruolo", "Medico")
     }
 
     /**
@@ -39,9 +41,10 @@ class FirestoreRepository {
     /**
      * @brief Questa funzione effettua una query per ottenere tutte le prenotazioni in un determinato giorno
      * @param giorno indica il giorno della prenotazione
-     * @return restituisce una lista delle prenotazioni
+     * @return Restituisce un oggetto di tipo Query
      */
-    fun getPrenotazioniPerGiorno(giorno: String): Task<QuerySnapshot> {
-        return db.collection(BOOKING_COLLECTION).whereEqualTo("data", giorno).get()
+    fun getPrenotazioniPerGiorno(giorno: String): Query {
+        return db.collection(BOOKING_COLLECTION)
+            .whereEqualTo("data", giorno)
     }
 }

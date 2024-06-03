@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_rectangle_green"
         android:padding="8dp"
-        android:text="@string/prenota"
+        android:text="@string/prenota_a_questo_orario"
         />
 
 

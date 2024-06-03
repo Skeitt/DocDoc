@@ -94,6 +94,7 @@ class FragmentReg2 : Fragment() {
             }
             else {
                 viewModel.setMedico()
+                viewModel.getListaMedici()
                 findNavController().navigate(R.id.action_fragment2_to_fragment2Med)
             }
         }

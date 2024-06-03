@@ -4,6 +4,7 @@ import com.example.docdoc.model.Utente
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -22,5 +23,10 @@ class UtenteRepository {
      * @param userId id dell'utente di cui si vogliono recuperare i dati */
     fun getUser(userId: String): Task<DocumentSnapshot> {
         return  db.collection(USERS_COLLECTION).document(userId).get()
+    }
+
+    fun getListaPazienti(): Query {
+        return db.collection(USERS_COLLECTION)
+            .whereEqualTo("ruolo", "Paziente")
     }
 }

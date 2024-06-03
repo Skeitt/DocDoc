@@ -8,6 +8,7 @@ import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.SignUpRepository
 import com.example.docdoc.uistate.FormUiState
 import com.example.docdoc.util.CodiceFiscaleUtil
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,28 +45,6 @@ class FormViewModel : ViewModel() {
             .addOnSuccessListener {
                 _formUiState.value = FormUiState.pushSuccess()
             }.addOnFailureListener {
-                _formUiState.value = FormUiState.error()
-            }
-    }
-
-    fun updateDoctorsList(){
-        firestoreRepository.getDoctorList()
-            .addOnSuccessListener { documents ->
-                val doctorsList = ArrayList<Utente>()
-                for (document in documents) {
-                    val medico = Utente(
-                        uid = document.id,
-                        nome = document.data["nome"] as String?,
-                        cognome = document.data["cognome"] as String?,
-                        indirizzo = document.data["indirizzo"] as String?
-                    )
-                    doctorsList.add(medico)
-                }
-                /** la lista dei medici è stata recuperata */
-                _medici.value = doctorsList // Assegna la lista di medici a _medici
-            }
-            .addOnFailureListener {
-                /** Get della lista dei medici non andata a buon fine */
                 _formUiState.value = FormUiState.error()
             }
     }
@@ -173,6 +152,41 @@ class FormViewModel : ViewModel() {
             it.uidMedico = uidMedico
             _user.value = it
         }
+    }
+
+    private fun setListaMedici(lista: ArrayList<Utente>){
+        _medici.value = (_medici.value ?: arrayListOf()).apply {
+            clear()
+            addAll(lista)
+        }
+    }
+
+    fun getListaMedici()
+    {
+        firestoreRepository.getDoctorList()
+            .addSnapshotListener{ documents, _->
+                if(documents != null)
+                {
+                    // aggiorno la lista dei pazienti
+                    setListaMedici(parseUtenti(documents))
+
+                }
+            }
+    }
+    private fun parseUtenti(documents: QuerySnapshot) :ArrayList<Utente>
+    {
+        val listaMedici = ArrayList<Utente>()
+        for(document in documents)
+        {
+            val utente = Utente(
+                uid = document.id,
+                nome = document.data["nome"] as String?,
+                cognome = document.data["cognome"] as String?,
+                indirizzo = document.data["indirizzo"] as String?
+            )
+            listaMedici.add(utente)
+        }
+        return listaMedici
     }
 
 }

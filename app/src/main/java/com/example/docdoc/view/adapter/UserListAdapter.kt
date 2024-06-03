@@ -1,6 +1,5 @@
 package com.example.docdoc.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.docdoc.R
 import com.example.docdoc.model.Utente
 
-class DoctorListAdapter(private val dataList: List<Utente>): RecyclerView.Adapter<DoctorListAdapter.ViewHolderClass>() {
+class UserListAdapter(private val dataList: List<Utente>): RecyclerView.Adapter<UserListAdapter.ViewHolderClass>() {
 
     var onItemClick: ((Utente) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_list_medico, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_list_user, parent, false)
         return ViewHolderClass(itemView)
     }
 

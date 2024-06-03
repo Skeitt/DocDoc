@@ -1,5 +1,7 @@
 package com.example.docdoc.viewmodel
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +12,7 @@ import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.UtenteUiState
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +36,9 @@ class UtenteViewModel : ViewModel() {
     private val _listaPrenotazioni = MutableLiveData<ArrayList<Prenotazione>>()
     val listaPrenotazioni: LiveData<ArrayList<Prenotazione>> get() = _listaPrenotazioni
 
+    // pazienti
+    private val _pazienti = MutableLiveData<ArrayList<Utente>>()
+    val pazienti: LiveData<ArrayList<Utente>> get() = _pazienti
 
     // StateFlow per la gestione dello stato dei dati dell'utente
     private val _uiState = MutableStateFlow(UtenteUiState())
@@ -40,6 +46,7 @@ class UtenteViewModel : ViewModel() {
 
     init {
         getPrenotazioniPerGiorno(giorno = "2024-05-31")
+        getListaPazienti()
     }
 
     /** @brief funzione che aggiorna il LiveData currentUser una volta che recupera l'utente nel Database */
@@ -77,30 +84,72 @@ class UtenteViewModel : ViewModel() {
      */
     fun getPrenotazioniPerGiorno(giorno : String){
         firestoreRepository.getPrenotazioniPerGiorno(giorno)
-            .addOnSuccessListener { documents ->
-                val bookingList = ArrayList<Prenotazione>()
-                for (document in documents) {
-                    val prenotazione = Prenotazione(
-                        pid = document.id,
-                        orario = document.data["orario"] as String,
-                        data = document.data["data"] as String,
-                        descrizione = document.data["descrizione"] as String,
-                        nomePaziente = document.data["nome"] as String,
-                        cognomePaziente = document.data["cognome"] as String
-                    )
-                    bookingList.add(prenotazione)
+            // lo snapshotlistener permette di osservare continuamente i risultati
+            .addSnapshotListener { documents, _->
+                if (documents != null) {
+                    // cambia la lista delle prenotazioni
+                    setListaPrenotazioni(ordinaListaPerOrario(parsePrenotazioni(documents)))
                 }
-                // cambia la lista delle prenotazioni
-                setListaPrenotazioni(ordinaListaPerOrario(bookingList))
             }
-            // TODO: aggiungere l'onfailureListener
     }
 
-    fun setListaPrenotazioni(lista: ArrayList<Prenotazione>){
+    fun getListaPazienti()
+    {
+        utenteRepository.getListaPazienti()
+            .addSnapshotListener{ documents, _->
+                if(documents != null)
+                {
+                    // aggiorno la lista dei pazienti
+                    setListaPazienti(parseUtenti(documents))
+                }
+            }
+    }
+
+    private fun setListaPrenotazioni(lista: ArrayList<Prenotazione>){
         _listaPrenotazioni.value = (_listaPrenotazioni.value ?: arrayListOf()).apply {
             clear()
             addAll(lista)
         }
+    }
+
+    private fun setListaPazienti(lista: ArrayList<Utente>){
+        _pazienti.value = (_pazienti.value ?: arrayListOf()).apply {
+            clear()
+            addAll(lista)
+        }
+    }
+
+    private fun parsePrenotazioni(documents: QuerySnapshot): ArrayList<Prenotazione>
+    {
+        val bookingList = ArrayList<Prenotazione>()
+        for (document in documents) {
+            val prenotazione = Prenotazione(
+                pid = document.id,
+                orario = document.data["orario"] as String,
+                data = document.data["data"] as String,
+                descrizione = document.data["descrizione"] as String,
+                nomePaziente = document.data["nome"] as String,
+                cognomePaziente = document.data["cognome"] as String
+            )
+            bookingList.add(prenotazione)
+        }
+        return bookingList
+    }
+
+    private fun parseUtenti(documents: QuerySnapshot) :ArrayList<Utente>
+    {
+        val listaPazienti = ArrayList<Utente>()
+        for(document in documents)
+        {
+            val utente = Utente(
+                uid = document.id,
+                nome = document.data["nome"] as String?,
+                cognome = document.data["cognome"] as String?,
+                indirizzo = document.data["indirizzo"] as String?
+            )
+        listaPazienti.add(utente)
+        }
+        return listaPazienti
     }
 
 }
