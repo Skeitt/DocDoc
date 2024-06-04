@@ -1,5 +1,6 @@
 package com.example.docdoc.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -36,6 +37,14 @@ class MainActivity : AppCompatActivity() {
                 if (it.fetchData) {
                     currentUser = viewModel.currentUser.value
                     impostaFragment(FragmentHome())
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.loginUiState.collect {
+                if(!it.isLoggedIn){
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    finish()
                 }
             }
         }

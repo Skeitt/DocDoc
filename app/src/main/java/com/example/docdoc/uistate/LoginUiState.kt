@@ -7,6 +7,7 @@ data class LoginUiState(
     //è un'istanza singola condivisa da tutte le istanze della classe
     companion object{
         fun loggedIn() = LoginUiState(isLoggedIn = true)
+        fun logOut() = LoginUiState(isLoggedIn = false)
         fun error() = LoginUiState(isError = true)
     }
 }

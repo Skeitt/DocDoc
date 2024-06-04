@@ -28,6 +28,7 @@ class FragmentProfiloMedico : Fragment() {
         if (viewModel.currentUser.value!!.medico!!) {
             //rendo visibile il pulsante per la modifica dei dati
             binding.buttonModificaProfilo.visibility = View.VISIBLE
+            binding.buttonLogout.visibility = View.VISIBLE
 
             //visualizzo nelle textView i dati del dottore che sono presenti all'interno di viewModel.currentUser
             viewModel.currentUser.observe(viewLifecycleOwner, Observer { user ->
@@ -39,6 +40,7 @@ class FragmentProfiloMedico : Fragment() {
             })
 
             binding.buttonModificaProfilo.setOnClickListener(goToEditProfile())
+            binding.buttonLogout.setOnClickListener{viewModel.logout()}
         }else{
             //visualizzo nelle textView i dati del dottore che sono presenti all'interno di viewModel.user
             viewModel.user.observe(viewLifecycleOwner, Observer { user ->

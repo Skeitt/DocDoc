@@ -7,13 +7,28 @@
         android:layout_height="match_parent"
         Nome:ignore="ExtraText">
 
+        <android.widget.Button
+            android:id="@+id/button_logout"
+            style="@style/style_Button.aggiungiEvento"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_logout"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/label_dati_personali"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <android.widget.TextView
             android:id="@+id/label_dati_personali"
             style="@style/style_Label"
             android:text="@string/Dati_pers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/button_logout" />
 
         <android.widget.Button
             android:id="@+id/button_modifica_profilo"
@@ -28,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/label_dati_personali"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/button_logout" />
 
         <android.widget.TextView
             android:id="@+id/tv_dati_personali"

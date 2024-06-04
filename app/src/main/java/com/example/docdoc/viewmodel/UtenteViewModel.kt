@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
 import com.example.docdoc.repository.FirestoreRepository
+import com.example.docdoc.repository.LoginRepository
 import com.example.docdoc.repository.UtenteRepository
+import com.example.docdoc.uistate.LoginUiState
 import com.example.docdoc.uistate.ModificaProfiloUiState
 import com.example.docdoc.uistate.UtenteUiState
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
@@ -24,6 +26,7 @@ class UtenteViewModel : ViewModel() {
 
     private val utenteRepository = UtenteRepository()
     private val firestoreRepository = FirestoreRepository()
+    private val loginRepository = LoginRepository()
 
     //LiveData per recuperare l'utente corrente nel DataBase
     private val _currentUser = MutableLiveData<Utente>()
@@ -57,6 +60,10 @@ class UtenteViewModel : ViewModel() {
     // StateFlow per la gestione dello stato dei dati dell'utente
     private val _dataUiState = MutableStateFlow(UtenteUiState())
     val dataUiState: StateFlow<UtenteUiState> = _dataUiState.asStateFlow()
+
+    // StateFlow per la gestione dello stato dei dati dell'utente
+    private val _loginUiState = MutableStateFlow(LoginUiState.loggedIn())
+    val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
 
     // StateFlow per la gestione dello stato della modifica dei dati dell'utente
     private val _modificaProfiloUiState = MutableStateFlow(ModificaProfiloUiState())
@@ -280,5 +287,11 @@ class UtenteViewModel : ViewModel() {
 
     fun setUser(user: Utente){
         _user.value = user
+    }
+
+    fun logout()
+    {
+        loginRepository.logout()
+        _loginUiState.value = LoginUiState.logOut()
     }
 }
