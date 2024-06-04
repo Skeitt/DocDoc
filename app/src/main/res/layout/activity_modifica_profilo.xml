@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/modifica_profilo"
     android:background="@drawable/gradient_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.activity.ModificaProfiloActivity">
 
-    <LinearLayout
-        android:id="@+id/container"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
+        android:background="@color/transparent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <android.widget.GridLayout
         style="@style/style_layout_doppio_button"
@@ -27,16 +29,18 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container">
 
         <android.widget.Button
             style="@style/style_Button.blue"
+            android:id="@+id/indietro_button"
             android:text="@string/indietro"
             android:layout_column="0"
             android:layout_row="0"/>
 
         <android.widget.Button
             style="@style/style_Button.green"
+            android:id="@+id/continua_button"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_marginStart="20dp"
@@ -46,6 +50,7 @@
 
     <android.widget.Button
         style="@style/style_Button.magenta"
+        android:id="@+id/elimina_account_button"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

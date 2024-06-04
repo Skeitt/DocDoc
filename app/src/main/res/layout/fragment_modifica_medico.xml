@@ -1,119 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
-    <android.widget.TextView
-        android:id="@+id/label_nome"
-        style="@style/style_Label"
-        android:text="@string/nome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.docdoc.viewmodel.UtenteViewModel" />
+    </data>
 
-    <android.widget.EditText
-        android:id="@+id/edit_nome"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_nome" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.widget.TextView
-        android:id="@+id/label_cognome"
-        style="@style/style_Label"
-        android:text="@string/cognome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_nome" />
+        <android.widget.TextView
+            android:id="@+id/label_nome"
+            style="@style/style_Label"
+            android:text="@string/nome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <android.widget.EditText
-        android:id="@+id/edit_cognome"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_cognome" />
+        <android.widget.EditText
+            android:id="@+id/edit_nome"
+            style="@style/style_EditText"
+            android:text="@{viewModel.editUser.nome}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_nome" />
 
-    <android.widget.TextView
-        android:id="@+id/label_CF"
-        style="@style/style_Label"
-        android:text="@string/cf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_cognome" />
+        <android.widget.TextView
+            android:id="@+id/label_cognome"
+            style="@style/style_Label"
+            android:text="@string/cognome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_nome" />
 
-    <android.widget.EditText
-        android:id="@+id/edit_CF"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_CF" />
+        <android.widget.EditText
+            android:id="@+id/edit_cognome"
+            style="@style/style_EditText"
+            android:text="@{viewModel.editUser.cognome}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_cognome" />
 
-    <android.widget.TextView
-        android:id="@+id/label_tel"
-        style="@style/style_Label"
-        android:text="@string/tel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_CF" />
+        <android.widget.TextView
+            android:id="@+id/label_CF"
+            style="@style/style_Label"
+            android:text="@string/cf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_cognome" />
 
-    <android.widget.EditText
-        android:id="@+id/edit_tel"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_tel" />
+        <android.widget.EditText
+            android:id="@+id/edit_CF"
+            style="@style/style_EditText"
+            android:text="@{viewModel.editUser.codiceFiscale}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_CF" />
 
-    <android.widget.TextView
-        android:id="@+id/label_res"
-        style="@style/style_Label"
-        android:text="@string/res"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_tel" />
+        <android.widget.TextView
+            android:id="@+id/label_ambulatorio"
+            style="@style/style_Label"
+            android:text="@string/indirizzo_ambulatorio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_CF" />
 
-    <android.widget.EditText
-        android:id="@+id/edit_res"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_res" />
+        <android.widget.EditText
+            android:id="@+id/edit_ambulatorio"
+            style="@style/style_EditText"
+            android:text="@{viewModel.editUser.indirizzo}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_ambulatorio" />
 
-    <android.widget.TextView
-        android:id="@+id/label_ambulatorio"
-        style="@style/style_Label"
-        android:text="@string/indirizzo_ambulatorio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_res" />
+        <android.widget.TextView
+            android:id="@+id/label_tel_amb"
+            style="@style/style_Label"
+            android:text="@string/tel_amb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_ambulatorio" />
 
-    <android.widget.EditText
-        android:id="@+id/edit_ambulatorio"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_ambulatorio" />
+        <android.widget.EditText
+            android:id="@+id/edit_tel_amb"
+            style="@style/style_EditText"
+            android:text="@{viewModel.editUser.numDiTelefono}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tel_amb" />
 
-    <android.widget.TextView
-        android:id="@+id/label_tel_amb"
-        style="@style/style_Label"
-        android:text="@string/tel_amb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_ambulatorio" />
-
-    <android.widget.EditText
-        android:id="@+id/edit_tel_amb"
-        style="@style/style_EditText"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_tel_amb" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

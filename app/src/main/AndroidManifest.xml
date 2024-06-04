@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".view.activity.FormActivity">
         </activity>
+        <activity android:name=".view.activity.ModificaProfiloActivity">
+        </activity>
     </application>
 
 </manifest>

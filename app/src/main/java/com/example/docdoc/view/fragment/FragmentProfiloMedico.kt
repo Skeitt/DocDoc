@@ -1,6 +1,7 @@
 package com.example.docdoc.view.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.docdoc.databinding.FragmentProfiloMedicoBinding
+import com.example.docdoc.view.activity.ModificaProfiloActivity
 import com.example.docdoc.viewmodel.UtenteViewModel
 
 class FragmentProfiloMedico : Fragment() {
@@ -23,17 +25,37 @@ class FragmentProfiloMedico : Fragment() {
     ): View? {
         binding = FragmentProfiloMedicoBinding.inflate(inflater, container, false)
 
-        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
-            user?.let {
-                // Popola le TextView con i dati del dottore
-                binding.tvDatiPersonali.text = "Nome: " + it.nome + "\nCognome: " + it.cognome +
-                        "\nNumero di Telefono: " + it.numDiTelefono + "\nCodice Fiscale: " +
-                        it.codiceFiscale + "\nData di Nascita: " + it.dataDiNascita
+        if (viewModel.currentUser.value!!.medico!!) {
+            //rendo visibile il pulsante per la modifica dei dati
+            binding.buttonModificaProfilo.visibility = View.VISIBLE
 
-                binding.indAmbulatorio.text = it.indirizzo
-            }
-        })
+            //visualizzo nelle textView i dati del dottore che sono presenti all'interno di viewModel.currentUser
+            viewModel.currentUser.observe(viewLifecycleOwner, Observer { user ->
+                // Popola le TextView con i dati del dottore
+                binding.tvDatiPersonali.setText("Nome: " + user.nome + "\nCognome: " + user.cognome +
+                        "\nNumero di Telefono Ambulatorio: " + user.numDiTelefono + "\nCodice Fiscale: " +
+                        user.codiceFiscale + "\nData di Nascita: " + user.dataDiNascita)
+                binding.indAmbulatorio.setText(user.indirizzo)
+            })
+
+            binding.buttonModificaProfilo.setOnClickListener(goToEditProfile())
+        }else{
+            //visualizzo nelle textView i dati del dottore che sono presenti all'interno di viewModel.user
+            viewModel.user.observe(viewLifecycleOwner, Observer { user ->
+                // Popola le TextView con i dati del dottore
+                binding.tvDatiPersonali.setText("Nome: " + user.nome + "\nCognome: " + user.cognome +
+                        "\nNumero di Telefono Ambulatorio: " + user.numDiTelefono + "\nCodice Fiscale: " +
+                        user.codiceFiscale + "\nData di Nascita: " + user.dataDiNascita)
+                binding.indAmbulatorio.setText(user.indirizzo)
+            })
+        }
 
         return binding.root
     }
+    fun goToEditProfile() : View.OnClickListener?{
+        return View.OnClickListener {
+            startActivity(Intent(activity, ModificaProfiloActivity::class.java))
+        }
+    }
+
 }

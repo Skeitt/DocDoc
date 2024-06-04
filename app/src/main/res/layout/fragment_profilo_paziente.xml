@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,6 +15,21 @@
             android:text="@string/Dati_pers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.widget.Button
+            android:id="@+id/button_modifica_profilo"
+            style="@style/style_Button.aggiungiEvento"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_modify"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.21"
+            app:layout_constraintStart_toEndOf="@+id/label_dati_personali"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.widget.TextView
@@ -30,6 +46,20 @@
             android:text="@string/Cart_clinica"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dati_personali" />
+
+        <android.widget.Button
+            android:id="@+id/button_edit_cartellaClinica"
+            style="@style/style_Button.aggiungiEvento"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:drawableTop="@drawable/ic_modify"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.175"
+            app:layout_constraintStart_toEndOf="@+id/label_cart_clin"
             app:layout_constraintTop_toBottomOf="@+id/tv_dati_personali" />
 
         <android.widget.TextView

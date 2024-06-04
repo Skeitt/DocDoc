@@ -11,6 +11,7 @@ import com.example.docdoc.databinding.ActivityMainBinding
 import com.example.docdoc.model.Utente
 import com.example.docdoc.view.fragment.FragmentHome
 import com.example.docdoc.view.fragment.FragmentProfiloMedico
+import com.example.docdoc.view.fragment.FragmentProfiloPaziente
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
 
@@ -29,9 +30,10 @@ class MainActivity : AppCompatActivity() {
         var currentUser: Utente? = null
 
         viewModel.getCurrentUser()
-        lifecycleScope.launch{
-            viewModel.uiState.collect{
-                if(it.fetchData) {
+        //viewModel.fetchMalattieFarmaciPaziente(currentUser?.uid!!)
+        lifecycleScope.launch {
+            viewModel.dataUiState.collect {
+                if (it.fetchData) {
                     currentUser = viewModel.currentUser.value
                     impostaFragment(FragmentHome())
                 }
@@ -41,20 +43,31 @@ class MainActivity : AppCompatActivity() {
         binding.menuInferiore.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    if (!(currentUser?.medico!!))
                         impostaFragment(FragmentHome())
                 }
-                /*R.id.profilo -> {
-                    if (currentUser?.ruolo == "paziente")
+
+                R.id.profilo -> {
+                    if (currentUser?.medico!!) {
                         impostaFragment(FragmentProfiloMedico())
-                }*/
+                    }else{
+                        impostaFragment(FragmentProfiloPaziente())
+                    }
+                }
+
                 R.id.add_prenotazione -> {}
                 else -> {}
             }
             true
         }
     }
-    private fun impostaFragment(fragment : Fragment){
+
+    override fun onStart() {
+        super.onStart()
+        //se viene riaperta la MainActivity riaggiorno il contenuto del viewModel.currentUser
+        viewModel.getCurrentUser()
+    }
+
+    private fun impostaFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
