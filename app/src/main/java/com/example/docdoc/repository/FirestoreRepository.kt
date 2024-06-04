@@ -27,7 +27,7 @@ class FirestoreRepository {
      */
     fun getDoctorList(): Query {
         return db.collection(USERS_COLLECTION)
-            .whereEqualTo("ruolo", "Medico")
+            .whereEqualTo("medico", true)
     }
 
     /**

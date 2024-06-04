@@ -27,6 +27,6 @@ class UtenteRepository {
 
     fun getListaPazienti(): Query {
         return db.collection(USERS_COLLECTION)
-            .whereEqualTo("ruolo", "Paziente")
+            .whereEqualTo("medico", false)
     }
 }

@@ -42,6 +42,7 @@ class FragmentReg2Paz : Fragment() {
 
         // viewModel
         binding.viewModel = viewModel
+        viewModel.getListaMedici()
 
         // recyclerView
         recyclerView = binding.listaMedici
