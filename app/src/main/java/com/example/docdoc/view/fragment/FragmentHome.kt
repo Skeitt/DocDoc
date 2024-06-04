@@ -64,11 +64,6 @@ class FragmentHome : Fragment() {
         )
         bookingRecyclerView.adapter = bookingListAdapter
 
-        viewModel.listaPrenotazioni.observe(viewLifecycleOwner){listaPrenotazioni ->
-            onListChange(listaPrenotazioni, isMedico)
-        }
-        setOnViewChange(isMedico)
-
         /** RICERCA DEI PAZIENTI */
         searchList = arrayListOf<Utente>()
 
@@ -77,15 +72,16 @@ class FragmentHome : Fragment() {
         )
         pazientiRecyclerView.adapter = pazienteListAdapter
 
+        setOnViewChange(isMedico)
         setSearchingAlgo()
-        setOsservatorePazienti()
+        setObserver(isMedico)
 
         return binding.root
     }
 
     private fun onListChange(listaPrenotazioni: ArrayList<Prenotazione>, isMedico: Boolean)
     {
-        listaPrenotazioni?.let {
+        listaPrenotazioni.let {
             bookingList.clear()
             if(isMedico){
                 bookingList.addAll(listaPrenotazioni)
@@ -168,8 +164,12 @@ class FragmentHome : Fragment() {
         })
     }
 
-    private fun setOsservatorePazienti()
+    private fun setObserver( isMedico: Boolean)
     {
+        // viene osservata la lista delle prenotazioni presente nel viemodel
+        viewModel.listaPrenotazioni.observe(viewLifecycleOwner){listaPrenotazioni ->
+            onListChange(listaPrenotazioni, isMedico)
+        }
         // Quando la lista dei pazienti nel viewmodel varia, l'osservatore viene notificato e
         // cambia la lista dei pazienti
         viewModel.pazienti.observe(viewLifecycleOwner) { listaPazienti ->

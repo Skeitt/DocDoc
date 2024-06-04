@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 if (it.isLoggedIn) {
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, FormActivity::class.java))
                     finish()
                 }
                 if (it.isError) {
@@ -43,15 +43,6 @@ class LoginActivity : AppCompatActivity() {
                         .show()
                 }
             }
-        }
-    }
-
-    /** nel momento in cui lancio l'activity se l'utente è già loggato lancio la Main Activity */
-    override fun onStart() {
-        super.onStart()
-        if (viewModel.isLoggedIn()) {
-            startActivity(Intent(this, FormActivity::class.java))
-            finish()
         }
     }
 
