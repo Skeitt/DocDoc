@@ -18,6 +18,13 @@ class LoginViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
+    init {
+        if (isLoggedIn())
+        {
+            _uiState.value = LoginUiState.loggedIn()
+        }
+    }
+
     /** Funzione che gestisce lo stato del login */
     fun login(email: String, password: String){
         viewModelScope.launch {

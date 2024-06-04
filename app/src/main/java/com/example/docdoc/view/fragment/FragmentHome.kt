@@ -105,11 +105,19 @@ class FragmentHome : Fragment() {
                 // TODO: Apri la pagina visualizza prenotazione
             }
         }
-        binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(viewModel.currentUser.value?.uidMedico!!))
+
+        if (!isMedico){
+            binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(viewModel.currentUser.value?.uidMedico!!))
+        }
 
         pazienteListAdapter.onItemClick = {paziente ->
             val text = paziente.nome + " " + paziente.cognome
             searchView.setQuery(text, false)
+
+            viewModel.setUser(paziente)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, FragmentProfiloPaziente())
+                .commit()
             // TODO: Apri visualizza paziente
         }
     }

@@ -16,9 +16,6 @@ class FormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // controlla che l'utente sia registrato con tutti i dati necessari o meno
-        viewModel.isInfoStored()
-
         // viewBinding
         val binding = ActivityFormBinding.inflate(layoutInflater)
         val view = binding.root

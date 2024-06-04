@@ -278,4 +278,7 @@ class UtenteViewModel : ViewModel() {
         _editUser.value!!.indirizzo = indirizzo
     }
 
+    fun setUser(user: Utente){
+        _user.value = user
+    }
 }

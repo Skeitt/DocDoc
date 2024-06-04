@@ -32,6 +32,10 @@ class FormViewModel : ViewModel() {
     private val _user = MutableLiveData<Utente>(Utente())
     val user: LiveData<Utente> get() = _user
 
+    init {
+        isInfoStored()
+    }
+
     fun pushUserData()
     {
         // setting dei parametri estratti dal codice fiscale nell'oggeetto _user
