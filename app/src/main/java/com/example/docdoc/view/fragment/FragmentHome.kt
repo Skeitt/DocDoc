@@ -170,8 +170,8 @@ class FragmentHome : Fragment() {
 
     private fun setOsservatorePazienti()
     {
-        // Quando la lista dei medici nel viewmodel varia, l'osservatore viene notificato e
-        // cambia la lista degi medici
+        // Quando la lista dei pazienti nel viewmodel varia, l'osservatore viene notificato e
+        // cambia la lista dei pazienti
         viewModel.pazienti.observe(viewLifecycleOwner) { listaPazienti ->
             listaPazienti?.let {
                 searchList.addAll(listaPazienti)

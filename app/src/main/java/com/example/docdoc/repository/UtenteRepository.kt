@@ -29,7 +29,7 @@ class UtenteRepository {
 
     fun getListaPazienti(): Query {
         return db.collection(USERS_COLLECTION)
-            .whereEqualTo("ruolo", "Paziente")
+            .whereEqualTo("medico", false)
     }
 
     /** @brief funzione che aggiorna i dati dell'utente utente presenti nel database Firestore
