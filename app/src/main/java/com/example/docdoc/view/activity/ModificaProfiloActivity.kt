@@ -12,12 +12,14 @@ import com.example.docdoc.databinding.ActivityModificaProfiloBinding
 import com.example.docdoc.model.Utente
 import com.example.docdoc.view.fragment.FragmentModificaMedico
 import com.example.docdoc.view.fragment.FragmentModificaPaziente
+import com.example.docdoc.viewmodel.ModificaProfiloViewModel
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
 
 class ModificaProfiloActivity: AppCompatActivity() {
 
-    private val viewModel: UtenteViewModel by viewModels()
+    private val viewModel: ModificaProfiloViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,13 +30,13 @@ class ModificaProfiloActivity: AppCompatActivity() {
 
         var currentUser: Utente? = null
 
-        viewModel.getCurrentUser()
+
         lifecycleScope.launch{
+            viewModel.getCurrentUserToEditData()
             viewModel.dataUiState.collect{
                 if(it.fetchData) {
-                    currentUser = viewModel.currentUser.value
-                    viewModel.getCurrentUserToEditData()
-                    if (currentUser?.medico!!){
+                    currentUser = viewModel.editUser.value
+                    if (currentUser!!.medico!!){
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, FragmentModificaMedico())
                             .commit()

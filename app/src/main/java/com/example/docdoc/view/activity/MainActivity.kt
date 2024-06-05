@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         var currentUser: Utente? = null
 
-        viewModel.getCurrentUser()
-        //viewModel.fetchMalattieFarmaciPaziente(currentUser?.uid!!)
+
         lifecycleScope.launch {
+            viewModel.getCurrentUser()
             viewModel.dataUiState.collect {
                 if (it.fetchData) {
                     currentUser = viewModel.currentUser.value

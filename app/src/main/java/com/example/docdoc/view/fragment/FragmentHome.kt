@@ -16,6 +16,7 @@ import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
 import com.example.docdoc.util.PrenotazioniUtil.Companion.calcolaSlotDisponibili
 import com.example.docdoc.view.adapter.BookingListAdapter
+import com.example.docdoc.viewmodel.ModificaMalattieFarmaciViewModel
 import com.example.docdoc.viewmodel.UtenteViewModel
 
 class FragmentHome : Fragment() {
@@ -31,6 +32,7 @@ class FragmentHome : Fragment() {
     private lateinit var pazienteListAdapter: UserListAdapter
 
     private val viewModel: UtenteViewModel by viewModels({ requireActivity() })
+    private val viewModelMalattieFarmaci: ModificaMalattieFarmaciViewModel by viewModels({ requireActivity() })
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -107,7 +109,8 @@ class FragmentHome : Fragment() {
         }
 
         if (!isMedico){
-            binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(viewModel.currentUser.value?.uidMedico!!))
+            //TODO: nel momento in cui si elimina il profilo di un medico il campo uidMedico all'interno del paziente diventa null, quindi si dovrebbe riaprire il form e l'utente dovrebbe riscegliere il suo nuovo medico
+            binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(viewModel.currentUser.value!!.uidMedico!!))
         }
 
         pazienteListAdapter.onItemClick = {paziente ->
@@ -115,10 +118,10 @@ class FragmentHome : Fragment() {
             searchView.setQuery(text, false)
 
             viewModel.setUser(paziente)
+            viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(paziente.uid!!)
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, FragmentProfiloPaziente())
                 .commit()
-            // TODO: Apri visualizza paziente
         }
     }
 
@@ -128,6 +131,9 @@ class FragmentHome : Fragment() {
         binding.buttonProfiloMedico.visibility = if(isMedico) View.INVISIBLE else View.VISIBLE
         binding.searchPaziente.visibility = if(isMedico) View.VISIBLE else View.INVISIBLE
         binding.listaPazienti.visibility = if(isMedico) View.VISIBLE else View.GONE
+        if (!isMedico){
+            viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(viewModel.currentUser.value!!.uid!!)
+        }
     }
 
     private fun goToDoctorProfile(uidMedico: String): View.OnClickListener?{

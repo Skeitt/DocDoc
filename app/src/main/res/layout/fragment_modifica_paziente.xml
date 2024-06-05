@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.docdoc.viewmodel.UtenteViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -23,7 +16,7 @@
         <android.widget.EditText
             android:id="@+id/edit_nome"
             style="@style/style_EditText"
-            android:text="@{viewModel.editUser.nome}"
+            android:hint="@string/inserisci_nome"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_nome" />
@@ -39,7 +32,7 @@
         <android.widget.EditText
             android:id="@+id/edit_cognome"
             style="@style/style_EditText"
-            android:text="@{viewModel.editUser.cognome}"
+            android:hint="@string/inserisci_cognome"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_cognome" />
@@ -55,7 +48,7 @@
         <android.widget.EditText
             android:id="@+id/edit_CF"
             style="@style/style_EditText"
-            android:text="@{viewModel.editUser.codiceFiscale}"
+            android:hint="@string/inserisci_CF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_CF" />
@@ -71,7 +64,7 @@
         <android.widget.EditText
             android:id="@+id/edit_tel"
             style="@style/style_EditText"
-            android:text="@{viewModel.editUser.numDiTelefono}"
+            android:hint="@string/inserisci_tel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_tel" />
@@ -87,10 +80,9 @@
         <android.widget.EditText
             android:id="@+id/edit_res"
             style="@style/style_EditText"
-            android:text="@{viewModel.editUser.indirizzo}"
+            android:hint="@string/inserisci_res"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_res" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

@@ -9,7 +9,6 @@ import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.LoginRepository
 import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.LoginUiState
-import com.example.docdoc.uistate.ModificaProfiloUiState
 import com.example.docdoc.uistate.UtenteUiState
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
 import com.google.firebase.firestore.QuerySnapshot
@@ -40,19 +39,6 @@ class UtenteViewModel : ViewModel() {
     private val _pazienti = MutableLiveData<ArrayList<Utente>>()
     val pazienti: LiveData<ArrayList<Utente>> get() = _pazienti
 
-    //LiveData per gestire la modifica dei dati dell'utente
-    private val _editUser = MutableLiveData<Utente>()
-    val editUser: LiveData<Utente> get() = _editUser
-
-    //LiveData per recuperare i farmaci di un paziente
-    private val _farmaci = MutableLiveData<List<String>?>()
-    val farmaci: LiveData<List<String>?> get() = _farmaci
-
-    //Livedata per recuperare le malattie di un paziente
-    private val _malattie = MutableLiveData<List<String>?>()
-    val malattie: LiveData<List<String>?> get() = _malattie
-
-
     // StateFlow per la gestione dello stato dei dati dell'utente
     private val _dataUiState = MutableStateFlow(UtenteUiState())
     val dataUiState: StateFlow<UtenteUiState> = _dataUiState.asStateFlow()
@@ -60,10 +46,6 @@ class UtenteViewModel : ViewModel() {
     // StateFlow per la gestione dello stato dei dati dell'utente
     private val _loginUiState = MutableStateFlow(LoginUiState.loggedIn())
     val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
-
-    // StateFlow per la gestione dello stato della modifica dei dati dell'utente
-    private val _modificaProfiloUiState = MutableStateFlow(ModificaProfiloUiState())
-    val modificaProfiloUiState: StateFlow<ModificaProfiloUiState> = _modificaProfiloUiState.asStateFlow()
 
 
     init {
@@ -168,107 +150,6 @@ class UtenteViewModel : ViewModel() {
         listaPazienti.add(utente)
         }
         return listaPazienti
-    }
-
-    /** @brief funzione che aggiorna il LiveData editUser una volta che recupera i dati dell'utente di cui si
-     * vogliono modificare i dati */
-    fun getCurrentUserToEditData(){
-        utenteRepository.getCurrentUser()
-            .addOnSuccessListener {
-                val utente = it.toObject<Utente>()
-                _editUser.value = utente!!
-            }
-            .addOnFailureListener{
-            }
-    }
-
-    /** @brief funzione che aggiorna il Database e il LiveData currentUser con i nuovi dati dell'utente */
-    fun updateCurrentUserData(){
-        utenteRepository.updateCurrentUserData(_editUser.value!!)
-            .addOnSuccessListener {
-                _modificaProfiloUiState.value = ModificaProfiloUiState.modified()
-                _currentUser.value = _editUser.value!!
-            }.addOnFailureListener {
-                _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-            }
-    }
-
-    /** @brief funzione che elimina l'utente corrente dal Database */
-    fun deleteCurrentUser() {
-        //caso in cui viene eliminato un medico
-        if (_currentUser.value!!.medico!!) {
-            //setto a null il campo uidMedico di tutti i pazienti che hanno come medico l'utente che si sta eliminando
-            utenteRepository.updatePatientsUidMedicoField(_currentUser.value!!.uid!!)
-                .addOnSuccessListener {
-                    //elimino il documento dell'utente nel database firestore
-                    utenteRepository.deleteCurrentUser()
-                        .addOnSuccessListener {
-                            //elimino il profilo di autenticazione dell'utente
-                            utenteRepository.deleteAuthenticationCurrentUser()
-                                .addOnSuccessListener {
-                                    _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
-                                }.addOnFailureListener{
-                                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                                }
-                        }.addOnFailureListener{
-                            _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                        }
-                }.addOnFailureListener {
-                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                }
-        } else {
-            //caso in cui viene eliminato un paziente
-            //elimino il documento dell'utente nel database firestore
-            utenteRepository.deleteCurrentUser()
-                .addOnSuccessListener {
-                    //elimino il profilo di autenticazione dell'utente
-                    utenteRepository.deleteAuthenticationCurrentUser()
-                        .addOnSuccessListener {
-                            _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
-                        }.addOnFailureListener{
-                            _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                        }
-                }.addOnFailureListener{
-                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                }
-        }
-    }
-
-    /** @brief funzione che recupera le malattie e i farmaci di uno specifico paziente
-     * @param userId id dell'utente di cui si vogliono recuperare i dati*/
-    fun fetchMalattieFarmaciPaziente(userId: String){
-        utenteRepository.getCartellaClinica(userId)
-            .addOnSuccessListener { document ->
-                val malattie = document.data?.get("malattie") as? List<String>
-                val farmaci = document.data?.get("farmaci") as? List<String>
-                if (malattie != null){
-                    _malattie.value = malattie
-                }else{
-                    _malattie.value = null
-                }
-                if (farmaci != null){
-                    _farmaci.value = farmaci
-                }else{
-                    _farmaci.value = null
-                }
-            }.addOnFailureListener{
-            }
-    }
-
-    fun setNome(nome: String) {
-        _editUser.value!!.nome = nome
-    }
-    fun setCognome(cognome: String) {
-        _editUser.value!!.cognome = cognome
-    }
-    fun setCF(cf: String) {
-        _editUser.value!!.codiceFiscale = cf
-    }
-    fun setTelefono(telefono: String) {
-        _editUser.value!!.numDiTelefono = telefono
-    }
-    fun setIndirizzo(indirizzo: String) {
-        _editUser.value!!.indirizzo = indirizzo
     }
 
     fun setUser(user: Utente){

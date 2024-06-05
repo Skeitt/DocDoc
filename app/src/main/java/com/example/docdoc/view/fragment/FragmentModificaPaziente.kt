@@ -9,12 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.docdoc.databinding.FragmentModificaPazienteBinding
+import com.example.docdoc.viewmodel.ModificaProfiloViewModel
 import com.example.docdoc.viewmodel.UtenteViewModel
 
 class FragmentModificaPaziente: Fragment() {
 
     private lateinit var binding: FragmentModificaPazienteBinding
-    private val viewModel: UtenteViewModel by viewModels({ requireActivity() })
+    private val viewModel: ModificaProfiloViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
