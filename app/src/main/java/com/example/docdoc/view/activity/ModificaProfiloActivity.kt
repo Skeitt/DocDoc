@@ -46,6 +46,26 @@ class ModificaProfiloActivity: AppCompatActivity() {
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.modificaProfiloUiState.collect{
+                if(it.isModified){
+                    //torno al fragment del profilo
+                    finish()
+                }
+                if (it.isError){
+                    //visualizzo un messaggio di errore
+                    Toast.makeText(this@ModificaProfiloActivity, "Errore", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                if(it.isEliminated){
+                    //chiudo tutte le activity e torno al login
+                    val intent = Intent(this@ModificaProfiloActivity, LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                }
+            }
+        }
 
         binding.indietroButton.setOnClickListener(goBack())
         binding.continuaButton.setOnClickListener(salvaDati())
@@ -63,41 +83,13 @@ class ModificaProfiloActivity: AppCompatActivity() {
     private fun salvaDati() : View.OnClickListener?{
         return View.OnClickListener {
             viewModel.updateCurrentUserData()
-            lifecycleScope.launch {
-                viewModel.modificaProfiloUiState.collect{
-                    if(it.isModified){
-                        //torno al fragment del profilo
-                        finish()
-                    }
-                    if (it.isError){
-                        //visualizzo un messaggio di errore
-                        Toast.makeText(this@ModificaProfiloActivity, "Errore nella modifica dei dati!!", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
+
         }
     }
 
     private fun eliminaAccount() : View.OnClickListener?{
         return View.OnClickListener {
             viewModel.deleteCurrentUser()
-            lifecycleScope.launch {
-                viewModel.modificaProfiloUiState.collect{
-                    if(it.isEliminated){
-                        //chiudo tutte le activity e torno al login
-                        val intent = Intent(this@ModificaProfiloActivity, LoginActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        }
-                        startActivity(intent)
-                    }
-                    if (it.isError){
-                        //visualizzo un messaggio di errore
-                        Toast.makeText(this@ModificaProfiloActivity, "Errore nell'eliminazione del profilo'!!", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
         }
     }
 

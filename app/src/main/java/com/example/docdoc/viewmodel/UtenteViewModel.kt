@@ -1,11 +1,8 @@
 package com.example.docdoc.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
 import com.example.docdoc.repository.FirestoreRepository
@@ -20,7 +17,6 @@ import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 class UtenteViewModel : ViewModel() {
 
@@ -77,31 +73,27 @@ class UtenteViewModel : ViewModel() {
 
     /** @brief funzione che aggiorna il LiveData currentUser una volta che recupera l'utente nel Database */
     fun getCurrentUser(){
-        viewModelScope.launch {
-            utenteRepository.getCurrentUser()
-                .addOnSuccessListener {
-                    val utente = it.toObject<Utente>()
-                    _currentUser.value = utente!!
-                    _dataUiState.value = UtenteUiState.haveData()
-                }
-                .addOnFailureListener{
-                }
-        }
+        utenteRepository.getCurrentUser()
+            .addOnSuccessListener {
+                val utente = it.toObject<Utente>()
+                _currentUser.value = utente!!
+                _dataUiState.value = UtenteUiState.haveData()
+            }
+            .addOnFailureListener{
+            }
     }
 
     /** @brief funzione che aggiorna il LiveData user una volta che recupera l'utente specificato nel Database
      * @param userId id dell'utente di cui si vogliono recuperare i dati
      */
     fun getUser(userId : String) {
-        viewModelScope.launch {
-            utenteRepository.getUser(userId)
-                .addOnSuccessListener {
-                    val utente = it.toObject<Utente>()
-                    _user.value = utente!!
-                }
-                .addOnFailureListener{
-                }
-        }
+        utenteRepository.getUser(userId)
+            .addOnSuccessListener {
+                val utente = it.toObject<Utente>()
+                _user.value = utente!!
+            }
+            .addOnFailureListener{
+            }
     }
 
     /**
@@ -181,70 +173,64 @@ class UtenteViewModel : ViewModel() {
     /** @brief funzione che aggiorna il LiveData editUser una volta che recupera i dati dell'utente di cui si
      * vogliono modificare i dati */
     fun getCurrentUserToEditData(){
-        viewModelScope.launch {
-            utenteRepository.getCurrentUser()
-                .addOnSuccessListener {
-                    val utente = it.toObject<Utente>()
-                    _editUser.value = utente!!
-                }
-                .addOnFailureListener{
-                }
-        }
+        utenteRepository.getCurrentUser()
+            .addOnSuccessListener {
+                val utente = it.toObject<Utente>()
+                _editUser.value = utente!!
+            }
+            .addOnFailureListener{
+            }
     }
 
     /** @brief funzione che aggiorna il Database e il LiveData currentUser con i nuovi dati dell'utente */
     fun updateCurrentUserData(){
-        viewModelScope.launch {
-            utenteRepository.updateCurrentUserData(_editUser.value!!)
-                .addOnSuccessListener {
-                    _modificaProfiloUiState.value = ModificaProfiloUiState.modified()
-                    _currentUser.value = _editUser.value!!
-                }.addOnFailureListener {
-                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                }
-        }
+        utenteRepository.updateCurrentUserData(_editUser.value!!)
+            .addOnSuccessListener {
+                _modificaProfiloUiState.value = ModificaProfiloUiState.modified()
+                _currentUser.value = _editUser.value!!
+            }.addOnFailureListener {
+                _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+            }
     }
 
     /** @brief funzione che elimina l'utente corrente dal Database */
     fun deleteCurrentUser() {
-        viewModelScope.launch {
-            //caso in cui viene eliminato un medico
-            if (_currentUser.value!!.medico!!) {
-                //setto a null il campo uidMedico di tutti i pazienti che hanno come medico l'utente che si sta eliminando
-                utenteRepository.updatePatientsUidMedicoField(_currentUser.value!!.uid!!)
-                    .addOnSuccessListener {
-                        //elimino il documento dell'utente nel database firestore
-                        utenteRepository.deleteCurrentUser()
-                            .addOnSuccessListener {
-                                //elimino il profilo di autenticazione dell'utente
-                                utenteRepository.deleteAuthenticationCurrentUser()
-                                    .addOnSuccessListener {
-                                        _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
-                                    }.addOnFailureListener{
-                                        _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                                    }
-                            }.addOnFailureListener{
-                                _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                            }
-                    }.addOnFailureListener {
-                        _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                    }
-            } else {
-                //caso in cui viene eliminato un paziente
-                //elimino il documento dell'utente nel database firestore
-                utenteRepository.deleteCurrentUser()
-                    .addOnSuccessListener {
-                        //elimino il profilo di autenticazione dell'utente
-                        utenteRepository.deleteAuthenticationCurrentUser()
-                            .addOnSuccessListener {
-                                _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
-                            }.addOnFailureListener{
-                                _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                            }
-                    }.addOnFailureListener{
-                        _modificaProfiloUiState.value = ModificaProfiloUiState.error()
-                    }
-            }
+        //caso in cui viene eliminato un medico
+        if (_currentUser.value!!.medico!!) {
+            //setto a null il campo uidMedico di tutti i pazienti che hanno come medico l'utente che si sta eliminando
+            utenteRepository.updatePatientsUidMedicoField(_currentUser.value!!.uid!!)
+                .addOnSuccessListener {
+                    //elimino il documento dell'utente nel database firestore
+                    utenteRepository.deleteCurrentUser()
+                        .addOnSuccessListener {
+                            //elimino il profilo di autenticazione dell'utente
+                            utenteRepository.deleteAuthenticationCurrentUser()
+                                .addOnSuccessListener {
+                                    _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
+                                }.addOnFailureListener{
+                                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+                                }
+                        }.addOnFailureListener{
+                            _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+                        }
+                }.addOnFailureListener {
+                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+                }
+        } else {
+            //caso in cui viene eliminato un paziente
+            //elimino il documento dell'utente nel database firestore
+            utenteRepository.deleteCurrentUser()
+                .addOnSuccessListener {
+                    //elimino il profilo di autenticazione dell'utente
+                    utenteRepository.deleteAuthenticationCurrentUser()
+                        .addOnSuccessListener {
+                            _modificaProfiloUiState.value = ModificaProfiloUiState.eliminated()
+                        }.addOnFailureListener{
+                            _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+                        }
+                }.addOnFailureListener{
+                    _modificaProfiloUiState.value = ModificaProfiloUiState.error()
+                }
         }
     }
 
