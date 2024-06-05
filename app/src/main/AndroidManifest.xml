@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".view.activity.ModificaProfiloActivity">
         </activity>
+        <activity android:name=".view.activity.ModificaMalattieFarmaciActivity">
+        </activity>
     </application>
 
 </manifest>
