@@ -46,10 +46,11 @@ class InputValidator() {
 
     /** @brief funzione che verifica se l'indirizzo è valido.
     * @param indirizzo indirizzo da controllare
-    * @return restituisce True nel caso in cui l'indirizzo soddisfi il pattern  */
+    * @return restituisce True nel caso in cui l'indirizzo soddisfi il pattern
+     * @sample Via Di Mezzo, 12, 65128, Pescara*/
     fun isValidIndirizzo(indirizzo : String): Boolean
     {
-        val regex = Regex("^[a-zA-Z0-9\\s',.#-]+\$")
+        val regex = Regex("^[A-Za-zÀ-ÿ\\\\s]+,\\\\s\\\\d{1,5},\\\\s\\\\d{5},\\\\s[A-Za-zÀ-ÿ\\\\s]+\$")
         return indirizzo.isNotEmpty() && regex.matches(indirizzo)
     }
 

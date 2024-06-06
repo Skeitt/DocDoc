@@ -2,6 +2,7 @@ package com.example.docdoc.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,8 @@ class FragmentProfiloMedico : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfiloMedicoBinding.inflate(inflater, container, false)
+
+        binding.indAmbulatorio.setOnClickListener { redirectToMaps(binding.indAmbulatorio.text.toString()) }
 
         if (viewModel.currentUser.value!!.medico!!) {
             //rendo visibile il pulsante per la modifica dei dati
@@ -57,6 +60,16 @@ class FragmentProfiloMedico : Fragment() {
     fun goToEditProfile() : View.OnClickListener?{
         return View.OnClickListener {
             startActivity(Intent(activity, ModificaProfiloActivity::class.java))
+        }
+    }
+
+    private fun redirectToMaps(address: String){
+        val gmmIntentUri =
+            Uri.parse("geo:0,0?q=" + Uri.encode(address))
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.resolveActivity(requireActivity().packageManager)?.let {
+            startActivity(mapIntent)
         }
     }
 
