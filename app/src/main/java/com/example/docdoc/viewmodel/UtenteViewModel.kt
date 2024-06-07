@@ -145,7 +145,10 @@ class UtenteViewModel : ViewModel() {
                 uid = document.id,
                 nome = document.data["nome"] as String?,
                 cognome = document.data["cognome"] as String?,
-                indirizzo = document.data["indirizzo"] as String?
+                indirizzo = document.data["indirizzo"] as String?,
+                codiceFiscale = document.data["codiceFiscale"] as String?,
+                dataDiNascita = document.data["dataDiNascita"] as String?,
+                numDiTelefono = document.data["numDiTelefono"] as String?,
             )
         listaPazienti.add(utente)
         }

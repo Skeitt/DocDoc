@@ -50,7 +50,7 @@ class InputValidator() {
      * @sample Via Di Mezzo, 12, 65128, Pescara*/
     fun isValidIndirizzo(indirizzo : String): Boolean
     {
-        val regex = Regex("^[A-Za-zÀ-ÿ\\\\s]+,\\\\s\\\\d{1,5},\\\\s\\\\d{5},\\\\s[A-Za-zÀ-ÿ\\\\s]+\$")
+        val regex = Regex("^[A-Za-zÀ-ÿ\\s]+,\\s\\d{1,5},\\s\\d{5},\\s[A-Za-zÀ-ÿ\\s]+$")
         return indirizzo.isNotEmpty() && regex.matches(indirizzo)
     }
 
