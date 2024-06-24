@@ -8,6 +8,7 @@ import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.SignUpRepository
 import com.example.docdoc.uistate.FormUiState
 import com.example.docdoc.util.CodiceFiscaleUtil
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -64,7 +65,20 @@ class FormViewModel : ViewModel() {
             .addOnSuccessListener {document ->
                 if(document.exists())
                 {
-                    _formUiState.value = FormUiState.infoFound()
+                    //se l'utente è un paziente
+                    if(document.data!!["medico"] == false){
+                        //se ha il campo uidMedico diverso da null
+                        if (document.data!!["uidMedico"] != null){
+                            _formUiState.value = FormUiState.infoFound()
+                        }else{
+                            //recupero i dati dell'utente e lo inserisco nel LiveData
+                            _user.value = recuperaUtente(document)
+                        }
+                    }
+                    //se l'utente è un medico
+                    if (document.data!!["medico"] == true){
+                        _formUiState.value = FormUiState.infoFound()
+                    }
                 }
             }
             .addOnFailureListener{
@@ -191,6 +205,22 @@ class FormViewModel : ViewModel() {
             listaMedici.add(utente)
         }
         return listaMedici
+    }
+    private fun recuperaUtente(document: DocumentSnapshot ) :Utente
+    {
+        val utente = Utente(
+            uid = document.id,
+            nome = document.data!!["nome"] as String?,
+            cognome = document.data!!["cognome"] as String?,
+            indirizzo = document.data!!["indirizzo"] as String?,
+            email = document.data!!["email"] as String?,
+            codiceFiscale = document.data!!["codiceFiscale"] as String?,
+            dataDiNascita = document.data!!["dataDiNascita"] as String?,
+            numDiTelefono = document.data!!["numDiTelefono"] as String?,
+            medico = document.data!!["medico"] as Boolean?,
+            uidMedico = document.data!!["uidMedico"] as String?
+        )
+       return utente
     }
 
 }

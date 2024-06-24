@@ -75,4 +75,11 @@ class UtenteRepository {
     fun getCartellaClinica(userId: String): Task<DocumentSnapshot> {
         return db.collection(CARTELLACLINICA_COLLECTION).document(userId).get()
     }
+
+    /** @brief funzione che aggiorna i dati della cartella clinica dell'utente presente nel database Firestore
+     * @param userId id del paziente a cui viene aggiornata la cartella clinica
+     * se il documento già esiste il metodo set sovrascrive i dati*/
+    fun updateCartellaClinica(userId: String, cartellaClinicaData: Map<String, Any?>): Task<Void> {
+        return db.collection(CARTELLACLINICA_COLLECTION).document(userId).set(cartellaClinicaData)
+    }
 }

@@ -2,7 +2,6 @@ package com.example.docdoc.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +73,14 @@ class FragmentProfiloPaziente : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        //quando viene riaperto il FragmentProfiloPaziente, se sono un medico riaggiorno
+        // il contenuto del viewModelMalattieFarmaci.malattie e viewModelMalattieFarmaci.farmaci
+        if (viewModel.currentUser.value!!.medico!!){
+            viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(viewModel.user.value!!.uid!!)
+        }
+    }
 
     private fun goToEditProfile() : View.OnClickListener?{
         return View.OnClickListener {
@@ -82,9 +89,11 @@ class FragmentProfiloPaziente : Fragment() {
     }
 
     private fun goToEditCartellaClinica(uidPaziente: String): View.OnClickListener? {
-        viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(uidPaziente)
+        val intent: Intent = Intent(requireActivity() ,ModificaMalattieFarmaciActivity::class.java)
+        //passo l'id del paziente all'activity che vado ad istanziare
+        intent.putExtra("uid",uidPaziente)
         return View.OnClickListener {
-            startActivity(Intent(activity, ModificaMalattieFarmaciActivity::class.java))
+            startActivity(intent)
         }
     }
 }

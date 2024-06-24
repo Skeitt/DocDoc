@@ -128,8 +128,8 @@ class UtenteViewModel : ViewModel() {
                 orario = document.data["orario"] as String,
                 data = document.data["data"] as String,
                 descrizione = document.data["descrizione"] as String,
-                nomePaziente = document.data["nome"] as String,
-                cognomePaziente = document.data["cognome"] as String
+                nomePaziente = document.data["nomePaziente"] as String,
+                cognomePaziente = document.data["cognomePaziente"] as String
             )
             bookingList.add(prenotazione)
         }

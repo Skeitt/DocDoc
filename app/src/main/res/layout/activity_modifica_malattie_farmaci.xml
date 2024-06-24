@@ -20,6 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_malattie" />
 
+    <android.widget.Button
+        android:id="@+id/button_aggiungi_malattia"
+        style="@style/style_Button.aggiungiEvento"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:drawableTop="@drawable/ic_upload"
+        android:gravity="center"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/edit_malattie"
+        app:layout_constraintTop_toBottomOf="@id/label_malattie" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_malattie"
         android:scrollbars="vertical"
@@ -44,6 +58,20 @@
         android:hint="@string/inserisci_farmaco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_farmaci" />
+
+    <android.widget.Button
+        android:id="@+id/button_aggiungi_farmaco"
+        style="@style/style_Button.aggiungiEvento"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:drawableTop="@drawable/ic_upload"
+        android:gravity="center"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/edit_farmaci"
         app:layout_constraintTop_toBottomOf="@id/label_farmaci" />
 
     <androidx.recyclerview.widget.RecyclerView
