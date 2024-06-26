@@ -46,6 +46,13 @@ class PrenotazioniUtil {
             })
         }
 
+        fun getIdUnivoco(prenotazione: Prenotazione) : String{
+            val data = prenotazione.data
+            val orario = prenotazione.orario
+            val uidMedico = prenotazione.uidMedico
+            return "${data}_${orario}_${uidMedico}"
+        }
+
         fun calcolaSlotDisponibili(listaPrenotazioni : ArrayList<Prenotazione>) : ArrayList<Prenotazione>
         {
             var slotDisponibili: ArrayList<Prenotazione> = creaSlotPrenotazioni()

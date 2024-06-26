@@ -42,7 +42,6 @@ class FragmentReg2Paz : Fragment() {
 
         // viewModel
         binding.viewModel = viewModel
-        viewModel.getListaMedici()
 
         // recyclerView
         recyclerView = binding.listaMedici
@@ -143,6 +142,7 @@ class FragmentReg2Paz : Fragment() {
         // cambia la lista degi medici
         viewModel.medici.observe(viewLifecycleOwner) { doctorsList ->
             doctorsList?.let {
+                searchList.clear()
                 searchList.addAll(doctorsList)
             }
             doctorListAdapter.notifyDataSetChanged()

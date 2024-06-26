@@ -1,5 +1,6 @@
 package com.example.docdoc.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,14 @@ import com.example.docdoc.adapter.UserListAdapter
 import com.example.docdoc.databinding.FragmentHomeBinding
 import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
+import com.example.docdoc.util.DateUtil
+import com.example.docdoc.util.DateUtil.Companion.getCurrentDate
 import com.example.docdoc.util.PrenotazioniUtil.Companion.calcolaSlotDisponibili
+import com.example.docdoc.view.activity.PrenotazioneActivity
 import com.example.docdoc.view.adapter.BookingListAdapter
 import com.example.docdoc.viewmodel.ModificaMalattieFarmaciViewModel
 import com.example.docdoc.viewmodel.UtenteViewModel
+
 
 class FragmentHome : Fragment() {
 
@@ -100,11 +105,30 @@ class FragmentHome : Fragment() {
         bookingListAdapter.onItemClick = {prenotazione ->
             if(isMedico)
             {
-                // TODO: Apri la pagina nuova prenotazione con inserito l'orario
+                val intent: Intent = Intent(
+                    requireActivity(),
+                    PrenotazioneActivity::class.java
+                )
+                intent.putExtra(
+                    "pid",
+                    prenotazione.pid
+                ) // passa l'ID della prenotazione
+
+                startActivity(intent)
             }
-            else
+            else if(!isMedico)
             {
-                // TODO: Apri la pagina visualizza prenotazione
+                val intent: Intent = Intent(
+                    requireActivity(),
+                    PrenotazioneActivity::class.java
+                )
+                val dataEOra = getCurrentDate() + "_" + prenotazione.orario
+                intent.putExtra(
+                    "dataEOra",
+                    dataEOra,
+                ) // passa l'orario della prenotazione
+
+                startActivity(intent)
             }
         }
 
@@ -133,6 +157,9 @@ class FragmentHome : Fragment() {
         binding.listaPazienti.visibility = if(isMedico) View.VISIBLE else View.GONE
         if (!isMedico){
             viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(viewModel.currentUser.value!!.uid!!)
+        }
+        if(isMedico){
+            viewModel.getListaPazienti()
         }
     }
 
@@ -191,6 +218,12 @@ class FragmentHome : Fragment() {
                 searchList.addAll(listaPazienti)
             }
             pazienteListAdapter.notifyDataSetChanged()
+        }
+
+        // quando viene settato l'utente va effettuata la scansione delle prenotazioni odierne
+        viewModel.currentUser.observe(viewLifecycleOwner)
+        {
+            viewModel.getPrenotazioniPerGiorno(giorno = DateUtil.getCurrentDate())
         }
     }
 }

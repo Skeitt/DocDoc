@@ -1,91 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.docdoc.viewmodel.PrenotazioneViewModel" />
+    </data>
 
-    <android.widget.TextView
-        android:id="@+id/label_nome"
-        style="@style/style_Label"
-        android:text="@string/nome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.widget.TextView
-        android:id="@+id/view_nome"
-        style="@style/style_TextView"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_nome" />
+        <android.widget.TextView
+            android:id="@+id/label_nome"
+            style="@style/style_Label"
+            android:text="@string/nome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <android.widget.TextView
-        android:id="@+id/label_cognome"
-        style="@style/style_Label"
-        android:text="@string/cognome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_nome" />
+        <android.widget.TextView
+            android:id="@+id/view_nome"
+            style="@style/style_TextView"
+            android:text="@{viewModel.prenotazione.nomePaziente}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_nome" />
 
-    <android.widget.TextView
-        android:id="@+id/view_cognome"
-        style="@style/style_TextView"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_cognome" />
+        <android.widget.TextView
+            android:id="@+id/label_cognome"
+            style="@style/style_Label"
+            android:text="@string/cognome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_nome" />
 
-    <android.widget.TextView
-        android:id="@+id/label_data"
-        style="@style/style_Label"
-        android:text="@string/data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_cognome" />
+        <android.widget.TextView
+            android:id="@+id/view_cognome"
+            style="@style/style_TextView"
+            android:text="@{viewModel.prenotazione.cognomePaziente}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_cognome" />
 
-    <android.widget.TextView
-        android:id="@+id/view_data"
-        style="@style/style_TextView"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_data"
-        android:drawableStart="@drawable/ic_date"
-        android:textAlignment="center" />
+        <android.widget.TextView
+            android:id="@+id/label_data"
+            style="@style/style_Label"
+            android:text="@string/data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_cognome" />
 
-    <android.widget.TextView
-        android:id="@+id/label_ora"
-        style="@style/style_Label"
-        android:text="@string/ora"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_data" />
+        <android.widget.TextView
+            android:id="@+id/view_data"
+            style="@style/style_TextView"
+            android:text="@{viewModel.prenotazione.data}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_data"
+            android:drawableStart="@drawable/ic_date"
+            android:textAlignment="center" />
 
-    <android.widget.TextView
-        android:id="@+id/view_ora"
-        style="@style/style_TextView"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_ora"
-        android:drawableStart="@drawable/ic_ora"
-        android:textAlignment="center"/>
+        <android.widget.TextView
+            android:id="@+id/label_ora"
+            style="@style/style_Label"
+            android:text="@string/ora"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_data" />
 
-    <android.widget.TextView
-        android:id="@+id/label_descrizione"
-        style="@style/style_Label"
-        android:text="@string/descrizione"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_ora" />
+        <android.widget.TextView
+            android:id="@+id/view_ora"
+            style="@style/style_TextView"
+            android:text="@{viewModel.prenotazione.orario}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_ora"
+            android:drawableStart="@drawable/ic_ora"
+            android:textAlignment="center"/>
 
-    <android.widget.TextView
-        android:id="@+id/view_descrizione"
-        style="@style/style_TextView"
-        android:text="@string/empty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_descrizione" />
+        <android.widget.TextView
+            android:id="@+id/label_descrizione"
+            style="@style/style_Label"
+            android:text="@string/descrizione"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_ora" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <android.widget.TextView
+            android:id="@+id/view_descrizione"
+            style="@style/style_TextView"
+            android:text="@{viewModel.prenotazione.descrizione}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_descrizione" />
+
+        <android.widget.GridLayout
+            style="@style/style_layout_doppio_button"
+            android:id="@+id/grid_doppio_button"
+            android:columnCount="2"
+            android:rowCount="1"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_descrizione">
+
+            <android.widget.Button
+                android:id="@+id/button_indietro"
+                style="@style/style_Button.blue"
+                android:text="@string/indietro"
+                android:layout_column="0"
+                android:layout_row="0"/>
+
+            <android.widget.Button
+                android:id="@+id/button_modifica_prenotazione"
+                style="@style/style_Button.green"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginStart="20dp"
+                android:text="@string/modifica" />
+
+        </android.widget.GridLayout>
+
+        <android.widget.Button
+            android:id="@+id/button_elimina"
+            style="@style/style_Button.magenta"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grid_doppio_button"
+            android:text="@string/elimina" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

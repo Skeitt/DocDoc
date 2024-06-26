@@ -10,6 +10,7 @@ import com.example.docdoc.repository.LoginRepository
 import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.LoginUiState
 import com.example.docdoc.uistate.UtenteUiState
+import com.example.docdoc.util.DateUtil.Companion.getCurrentDate
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.toObject
@@ -47,12 +48,6 @@ class UtenteViewModel : ViewModel() {
     private val _loginUiState = MutableStateFlow(LoginUiState.loggedIn())
     val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
 
-
-    init {
-        getPrenotazioniPerGiorno(giorno = "2024-05-31")
-        getListaPazienti()
-    }
-
     /** @brief funzione che aggiorna il LiveData currentUser una volta che recupera l'utente nel Database */
     fun getCurrentUser(){
         utenteRepository.getCurrentUser()
@@ -83,7 +78,9 @@ class UtenteViewModel : ViewModel() {
      * @param giorno String che indica il giorno di cui ottenere le prenotazioni
      */
     fun getPrenotazioniPerGiorno(giorno : String){
-        firestoreRepository.getPrenotazioniPerGiorno(giorno)
+        val uidMedico = if (_currentUser.value?.medico!!) _currentUser.value?.uid!! else _currentUser.value?.uidMedico!!
+
+        firestoreRepository.getPrenotazioniPerGiorno(giorno, uidMedico)
             // lo snapshotlistener permette di osservare continuamente i risultati
             .addSnapshotListener { documents, _->
                 if (documents != null) {
@@ -95,7 +92,7 @@ class UtenteViewModel : ViewModel() {
 
     fun getListaPazienti()
     {
-        utenteRepository.getListaPazienti()
+        utenteRepository.getListaPazienti(_currentUser.value?.uid!!)
             .addSnapshotListener{ documents, _->
                 if(documents != null)
                 {

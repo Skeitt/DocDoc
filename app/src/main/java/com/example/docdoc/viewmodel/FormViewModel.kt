@@ -34,6 +34,7 @@ class FormViewModel : ViewModel() {
     val user: LiveData<Utente> get() = _user
 
     init {
+        getListaMedici()
         isInfoStored()
     }
 

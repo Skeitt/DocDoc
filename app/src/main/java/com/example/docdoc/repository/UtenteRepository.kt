@@ -27,9 +27,13 @@ class UtenteRepository {
         return  db.collection(USERS_COLLECTION).document(userId).get()
     }
 
-    fun getListaPazienti(): Query {
+    /** @brief restituisce la lista dei pazienti di un determinato medico
+     * @param uidMedico uid del medico di cui ottenere la lista dei pazienti
+     */
+    fun getListaPazienti(uidMedico: String): Query {
         return db.collection(USERS_COLLECTION)
             .whereEqualTo("medico", false)
+            .whereEqualTo("uidMedico", uidMedico)
     }
 
     /** @brief funzione che aggiorna i dati dell'utente utente presenti nel database Firestore

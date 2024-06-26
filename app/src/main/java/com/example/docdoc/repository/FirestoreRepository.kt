@@ -1,10 +1,10 @@
 package com.example.docdoc.repository
 
+import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -43,8 +43,29 @@ class FirestoreRepository {
      * @param giorno indica il giorno della prenotazione
      * @return Restituisce un oggetto di tipo Query
      */
-    fun getPrenotazioniPerGiorno(giorno: String): Query {
+    fun getPrenotazioniPerGiorno(giorno: String, uidMedico: String): Query {
         return db.collection(BOOKING_COLLECTION)
             .whereEqualTo("data", giorno)
+            .whereEqualTo("uidMedico", uidMedico)
+    }
+
+    fun getPrenotazionePerPid(pid: String): Task<DocumentSnapshot> {
+        return db.collection(BOOKING_COLLECTION)
+            .document(pid)
+            .get()
+    }
+
+    /** @brief funzione che aggiunge i dati di una prenotazione al database Firestore
+     * @param prenotazione utente che si vuole aggiungere alla collection "users"
+     * @return true se l'aggiunta va a buon fine */
+    fun addPrenotazioneData(prenotazione: Prenotazione): Task<Void> {
+        return db.collection(BOOKING_COLLECTION)
+            .document(prenotazione.pid!!)
+            .set(prenotazione)
+    }
+
+    fun deletePrenotazione(pid : String): Task<Void> {
+        return db.collection(BOOKING_COLLECTION).document(pid)
+            .delete()
     }
 }

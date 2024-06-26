@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                R.id.add_prenotazione -> {}
+                R.id.add_prenotazione -> {
+                    startActivity(Intent(this, PrenotazioneActivity::class.java))
+                }
                 else -> {}
             }
             true
