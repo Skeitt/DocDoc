@@ -31,24 +31,19 @@ class EventoActivity: AppCompatActivity() {
 
         val fragment_type: String = intent.getStringExtra("FRAGMENT_TYPE")!!
 
-        //in base alla stringa passata all'interno dell'Intent carico il Fragment
-        val fragment: Fragment = when (fragment_type) {
-            "INSERT" -> FragmentInserisciEvento()
-            "EDIT" -> FragmentModificaEvento()
-            else -> FragmentInserisciEvento() // caso: Default (non lo avremo mai)
-        }
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
-
-
         if (fragment_type == "INSERT"){
+            //carico il fragment per l'inserimento dell'evento
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, FragmentInserisciEvento())
+                .commit()
+
             binding.btnBlue.text = "Indietro"
             binding.btnBlue.setOnClickListener(goBack())
             binding.btnGreen.text = "Aggiungi"
             binding.btnGreen.setOnClickListener(inserisciDatiEvento())
         }else{
+            //gli passo l'id dell'evento che ho selezionato nella recyclerView presente in fragment_type
+            viewModel.getEventToEditData(fragment_type)
             binding.btnBlue.text = "Elimina"
             binding.btnBlue.setOnClickListener(deleteEvento())
             binding.btnGreen.text = "Continua"
@@ -57,6 +52,12 @@ class EventoActivity: AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.eventoUiState.collect{
+                if (it.fetchData){
+                    //carico il fragment per la modifica dell'evento
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentModificaEvento())
+                        .commit()
+                }
                 if (it.isCreated){
                     //torno al fragment del profilo
                     finish()
@@ -100,13 +101,19 @@ class EventoActivity: AppCompatActivity() {
 
     private fun salvaDatiEvento() : View.OnClickListener{
         return View.OnClickListener {
-            //viewModel.updateEventData()
+            if(viewModel.checkInputToEditEvent()){
+                viewModel.updateEventData()
+            }else{
+                Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun deleteEvento() : View.OnClickListener{
         return View.OnClickListener {
-            //viewModel.deleteEventData()
+            //gli passo l'id dell'evento che ho selezionato nella recyclerView presente nell'intent
+            val eventId: String = intent.getStringExtra("FRAGMENT_TYPE")!!
+            viewModel.deleteEvent(eventId)
         }
     }
 }

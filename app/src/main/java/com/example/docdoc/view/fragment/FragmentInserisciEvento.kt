@@ -41,6 +41,7 @@ class FragmentInserisciEvento : Fragment() {
             showDatePickerDialog()
         }
 
+        //TODO: manca tutta la parte della recyclerView per i file
 
         return binding.root
     }

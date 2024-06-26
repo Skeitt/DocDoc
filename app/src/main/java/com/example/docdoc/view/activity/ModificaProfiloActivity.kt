@@ -13,7 +13,6 @@ import com.example.docdoc.model.Utente
 import com.example.docdoc.view.fragment.FragmentModificaMedico
 import com.example.docdoc.view.fragment.FragmentModificaPaziente
 import com.example.docdoc.viewmodel.ModificaProfiloViewModel
-import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
 
 class ModificaProfiloActivity: AppCompatActivity() {
@@ -45,6 +44,11 @@ class ModificaProfiloActivity: AppCompatActivity() {
                             .replace(R.id.fragment_container, FragmentModificaPaziente())
                             .commit()
                     }
+                }
+                if (it.isError){
+                    //visualizzo un messaggio di errore
+                    Toast.makeText(this@ModificaProfiloActivity, "Errore nel recupero dei dati dell'utente", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

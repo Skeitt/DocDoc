@@ -41,6 +41,7 @@ class ModificaProfiloViewModel : ViewModel() {
                 _editUser.value = utente!!
                 _dataUiState.value = UtenteUiState.haveData()
             }.addOnFailureListener{
+                _dataUiState.value = UtenteUiState.error()
             }
     }
 
