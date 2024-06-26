@@ -36,6 +36,8 @@
         </activity>
         <activity android:name=".view.activity.PrenotazioneActivity">
         </activity>
+        <activity android:name=".view.activity.EventoActivity">
+        </activity>
     </application>
 
 </manifest>

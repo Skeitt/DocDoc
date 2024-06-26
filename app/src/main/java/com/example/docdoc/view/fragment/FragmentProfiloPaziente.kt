@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.docdoc.databinding.FragmentProfiloPazienteBinding
+import com.example.docdoc.view.activity.EventoActivity
 import com.example.docdoc.view.activity.ModificaMalattieFarmaciActivity
 import com.example.docdoc.view.activity.ModificaProfiloActivity
 import com.example.docdoc.viewmodel.ModificaMalattieFarmaciViewModel
@@ -69,6 +70,28 @@ class FragmentProfiloPaziente : Fragment() {
                         farmaci?.joinToString(", ") )
             })
         })
+
+        //sia medico che paziente possono aggiungere un evento
+        //nel momento in cui viene cliccato il button viene startata l'activity: EventoActivity
+        //e viene caricato il fragment: FragmentInserisciEvento all'interno  dell'activity
+        binding.buttonAggEvento.setOnClickListener {
+            val intent = Intent(activity, EventoActivity::class.java)
+            intent.putExtra("FRAGMENT_TYPE", "INSERT")
+            //se è un medico che vuole aggiungere l'evento
+            if (viewModel.currentUser.value!!.medico!!){
+                intent.putExtra("UID_PAZIENTE",viewModel.user.value!!.uid)
+            }else{ //se è un paziente che vuole aggiungere l'evento
+                intent.putExtra("UID_PAZIENTE",viewModel.currentUser.value!!.uid)
+            }
+            startActivity(intent)
+        }
+
+        //TODO: per quanto riguarda la modifica di un Evento, mettere questo
+//        binding.buttonEditEvento.setOnClickListener{
+//            val intent = Intent(activity, EventoActivity::class.java)
+//            intent.putExtra("FRAGMENT_TYPE", "EDIT")
+//            startActivity(intent)
+//        }
 
         return binding.root
     }
