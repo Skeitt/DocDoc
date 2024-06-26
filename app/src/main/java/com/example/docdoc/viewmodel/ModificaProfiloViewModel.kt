@@ -7,6 +7,7 @@ import com.example.docdoc.model.Utente
 import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.ModificaProfiloUiState
 import com.example.docdoc.uistate.UtenteUiState
+import com.example.docdoc.util.InputValidator
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class ModificaProfiloViewModel : ViewModel() {
 
     private val utenteRepository = UtenteRepository()
+    private val inputValidator = InputValidator()
 
 
     //LiveData per gestire la modifica dei dati dell'utente
@@ -109,6 +111,16 @@ class ModificaProfiloViewModel : ViewModel() {
     }
     fun setIndirizzo(indirizzo: String) {
         _editUser.value!!.indirizzo = indirizzo
+    }
+
+    fun checkInput(): Boolean{
+        var flag = false
+        if (_editUser.value?.nome != "" && _editUser.value?.cognome != "" && _editUser.value?.codiceFiscale != ""
+            && inputValidator.isValidCodiceFiscale(_editUser.value?.codiceFiscale.toString()) &&
+            _editUser.value?.numDiTelefono != "" && inputValidator.isValidNumeroDiTelefono(_editUser.value?.numDiTelefono.toString())
+            && _editUser.value?.indirizzo != "" && inputValidator.isValidIndirizzo(_editUser.value?.indirizzo.toString()))
+            flag = true
+        return flag
     }
 
 }

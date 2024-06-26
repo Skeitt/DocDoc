@@ -84,8 +84,12 @@ class ModificaProfiloActivity: AppCompatActivity() {
 
     private fun salvaDati() : View.OnClickListener?{
         return View.OnClickListener {
-            viewModel.updateCurrentUserData()
-
+            if(viewModel.checkInput()){
+                viewModel.updateCurrentUserData()
+            }else{
+                Toast.makeText(this@ModificaProfiloActivity, "Errore, campi vuoti e/o non validi", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 

@@ -76,7 +76,6 @@ class EventoActivity: AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun goBack() : View.OnClickListener{
@@ -91,7 +90,11 @@ class EventoActivity: AppCompatActivity() {
             val uidPaziente: String = intent.getStringExtra("UID_PAZIENTE")!!
             viewModel.setEventID()
             viewModel.setUidPaziente(uidPaziente)
-            viewModel.setEventData()
+            if(viewModel.checkInput()){
+                viewModel.setEventData()
+            }else{
+                Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docdoc.databinding.ActivityModificaMalattieFarmaciBinding
+import com.example.docdoc.util.InputValidator
 import com.example.docdoc.view.adapter.FarmaciAdapter
 import com.example.docdoc.view.adapter.MalattieAdapter
 import com.example.docdoc.viewmodel.ModificaMalattieFarmaciViewModel
@@ -18,6 +19,9 @@ import kotlinx.coroutines.launch
 class ModificaMalattieFarmaciActivity: AppCompatActivity() {
 
     private val viewModel: ModificaMalattieFarmaciViewModel by viewModels()
+    private val inputValidator = InputValidator()
+    private val EMPTY_FIELD_ERROR = "Compila il campo"
+
     private lateinit var malattieAdapter: MalattieAdapter
     private lateinit var farmaciAdapter: FarmaciAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,12 +68,20 @@ class ModificaMalattieFarmaciActivity: AppCompatActivity() {
 
         btnAddMalattia.setOnClickListener {
             val newMalattia = binding.editMalattie.text
-            viewModel.addMalattia(newMalattia.toString())
+            if (inputValidator.isFieldEmpty(newMalattia.toString())){
+                binding.editMalattie.error = EMPTY_FIELD_ERROR
+            }else{
+                viewModel.addMalattia(newMalattia.toString())
+            }
         }
 
         btnAddFarmaco.setOnClickListener {
             val newFarmaco = binding.editFarmaci.text
-            viewModel.addFarmaco(newFarmaco.toString())
+            if(inputValidator.isFieldEmpty(newFarmaco.toString())){
+                binding.editFarmaci.error = EMPTY_FIELD_ERROR
+            }else{
+                viewModel.addFarmaco(newFarmaco.toString())
+            }
         }
 
         lifecycleScope.launch {
