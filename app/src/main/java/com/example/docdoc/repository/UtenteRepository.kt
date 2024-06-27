@@ -56,16 +56,20 @@ class UtenteRepository {
     /** @brief funzione che setta a null il campo: uidMedico dei pazienti nel momento in cui viene
      *  eliminato il profilo del dottore ad essi collegati */
     fun updatePatientsUidMedicoField(uidMedico: String): Task<Void> {
+        //il batch ci consente di eseguire più operazioni di scrittura in Firestore come un'unica operazione
         val batch = db.batch()
-        return db.collection("users")
+        return db.collection(USERS_COLLECTION)
             .whereEqualTo("uidMedico", uidMedico)
             .get()
+            //ottengo tutti i documenti in cui il campo uidMedico è uguale al valore passato come parametro alla funzione
             .continueWithTask { task ->
                 if (task.isSuccessful && task.result != null) {
                     for (document in task.result!!) {
                         val docRef = document.reference
+                        //aggiunge un'operazione al batch per aggiornare il campo uidMedico impostandolo a null
                         batch.update(docRef, "uidMedico", null)
                     }
+                    //il batch di operazioni viene eseguito con batch.commit() che restituisce un Task<Void> che rappresenta l'operazione di commit
                     batch.commit()
                 } else {
                     Tasks.forException(task.exception ?: Exception("Errore nel recuperare i Pazienti"))

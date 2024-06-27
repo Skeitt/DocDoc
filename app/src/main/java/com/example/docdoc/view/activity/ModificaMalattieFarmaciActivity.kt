@@ -59,11 +59,15 @@ class ModificaMalattieFarmaciActivity: AppCompatActivity() {
         recyclerViewFarmaci.adapter = farmaciAdapter
 
         viewModel.malattie.observe(this) { malattie ->
-            malattieAdapter.updateData(malattie!!)
+            if (malattie != null) {
+                malattieAdapter.updateData(malattie)
+            }
         }
 
         viewModel.farmaci.observe(this) { farmaci ->
-            farmaciAdapter.updateData(farmaci!!)
+            if (farmaci != null) {
+                farmaciAdapter.updateData(farmaci)
+            }
         }
 
         btnAddMalattia.setOnClickListener {

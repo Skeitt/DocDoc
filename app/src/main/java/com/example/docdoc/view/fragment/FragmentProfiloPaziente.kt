@@ -38,7 +38,6 @@ class FragmentProfiloPaziente : Fragment() {
     private lateinit var eventList: ArrayList<Evento>
     private lateinit var eventListAdapter: EventListAdapter
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,6 +89,7 @@ class FragmentProfiloPaziente : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView(){
         viewModel.getListaEventi()
         if (viewModel.currentUser.value!!.medico!!){
@@ -137,6 +137,7 @@ class FragmentProfiloPaziente : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setObserver(){
         //visualizzo nella textView le malattie e i farmaci del paziente che sono presenti all'interno di viewModel.farmaci e viewModel.malattie
         viewModelMalattieFarmaci.malattie.observe(viewLifecycleOwner, Observer { malattie ->

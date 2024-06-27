@@ -24,8 +24,6 @@ class EventoViewModel : ViewModel() {
 
     private var uriList = arrayListOf<Uri>()
 
-
-
     // StateFlow per la gestione dello stato dell'evento legato all'utente
     private val _eventoUiState = MutableStateFlow(EventoUiState())
     val eventoUiState: StateFlow<EventoUiState> = _eventoUiState.asStateFlow()
@@ -48,25 +46,6 @@ class EventoViewModel : ViewModel() {
         }
     }
 
-
-    fun setMotivo(motivo: String) {
-        _event.value?.let {
-            it.motivo = motivo
-            _event.value = it
-        }
-    }
-    fun setDescrizione(descrizione: String) {
-        _event.value?.let {
-            it.descrizione = descrizione
-            _event.value = it
-        }
-    }
-    fun setData(data: String) {
-        _event.value?.let {
-            it.data = data
-            _event.value = it
-        }
-    }
     fun setEventID(){
         _event.value?.let {
             it.eid = eventoRepository.generateId()
