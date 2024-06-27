@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docdoc.R
 
-class FileListAdapter(private val fileList: List<String>): RecyclerView.Adapter<FileListAdapter.ViewHolderClass>() {
+class FileListAdapter(private val fileList: List<String>, private val trashIcon: Boolean = false): RecyclerView.Adapter<FileListAdapter.ViewHolderClass>() {
 
     var onItemClick: ((String) -> Unit)? = null
 

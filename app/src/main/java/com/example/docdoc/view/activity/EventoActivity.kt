@@ -6,12 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.docdoc.R
 import com.example.docdoc.databinding.ActivityEventoBinding
 import com.example.docdoc.view.fragment.FragmentInserisciEvento
-import com.example.docdoc.view.fragment.FragmentModificaEvento
 import com.example.docdoc.viewmodel.EventoViewModel
 import kotlinx.coroutines.launch
 
@@ -55,7 +53,7 @@ class EventoActivity: AppCompatActivity() {
                 if (it.fetchData){
                     //carico il fragment per la modifica dell'evento
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentModificaEvento())
+                        .replace(R.id.container, FragmentInserisciEvento())
                         .commit()
                 }
                 if (it.isCreated){
@@ -103,7 +101,7 @@ class EventoActivity: AppCompatActivity() {
     private fun salvaDatiEvento() : View.OnClickListener{
         return View.OnClickListener {
             if(viewModel.checkInputToEditEvent()){
-                viewModel.updateEventData()
+                viewModel.setEventData()
             }else{
                 Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
             }

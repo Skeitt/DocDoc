@@ -66,17 +66,6 @@ class FragmentInserisciEvento : Fragment() {
             fileListAdapter.notifyDataSetChanged()
         }
 
-        //  Aggiorna il ViewModel quando cambia il testo negli EditText
-        binding.editMotivo.addTextChangedListener {
-            viewModel.setMotivo(it.toString())
-        }
-        binding.editData.addTextChangedListener{
-            viewModel.setData(it.toString())
-        }
-        binding.editDescrizione.addTextChangedListener {
-            viewModel.setDescrizione(it.toString())
-        }
-
         binding.buttonEditData.setOnClickListener {
             showDatePickerDialog()
         }

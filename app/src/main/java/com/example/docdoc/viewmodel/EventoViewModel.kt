@@ -22,10 +22,6 @@ class EventoViewModel : ViewModel() {
     private val _event = MutableLiveData<Evento>(Evento())
     val event: LiveData<Evento> get() = _event
 
-    //LiveData per recuperare l'evento da modificare
-    private val _editEvent = MutableLiveData<Evento>()
-    val editEvent: LiveData<Evento> get() = _editEvent
-
     private var uriList = arrayListOf<Uri>()
 
 
@@ -83,15 +79,6 @@ class EventoViewModel : ViewModel() {
             _event.value = it
         }
     }
-    fun setMotivoToEditEvent(motivo: String) {
-        _editEvent.value!!.motivo = motivo
-    }
-    fun setDescrizioneToEditEvent(descrizione: String) {
-        _editEvent.value!!.descrizione = descrizione
-    }
-    fun setDataToEditEvent(data: String) {
-        _editEvent.value!!.data = data
-    }
 
     /** @brief funzione che inserisce l'evento nel Database */
     fun setEventData(){
@@ -109,19 +96,9 @@ class EventoViewModel : ViewModel() {
         eventoRepository.getEventData(eventId)
             .addOnSuccessListener {
                 val evento = it.toObject<Evento>()
-                _editEvent.value = evento!!
+                _event.value = evento!!
                 _eventoUiState.value = EventoUiState.haveData()
             }.addOnFailureListener{
-                _eventoUiState.value = EventoUiState.error()
-            }
-    }
-
-    /** @brief funzione che aggiorna il Database e il LiveData currentUser con i nuovi dati dell'utente */
-    fun updateEventData(){
-        eventoRepository.updateEventData(_editEvent.value!!)
-            .addOnSuccessListener {
-                _eventoUiState.value = EventoUiState.modified()
-            }.addOnFailureListener {
                 _eventoUiState.value = EventoUiState.error()
             }
     }
@@ -147,7 +124,7 @@ class EventoViewModel : ViewModel() {
     /** @brief funzione che controlla se i campi inseriti dall'utente sono vuoti */
     fun checkInputToEditEvent(): Boolean{
         var flag = false
-        if (_editEvent.value?.motivo != "" && _editEvent.value?.data != "" && _editEvent.value?.descrizione != "")
+        if (_event.value?.motivo != "" && _event.value?.data != "" && _event.value?.descrizione != "")
             flag = true
         return flag
     }
