@@ -215,6 +215,7 @@ class FragmentHome : Fragment() {
         // cambia la lista dei pazienti
         viewModel.pazienti.observe(viewLifecycleOwner) { listaPazienti ->
             listaPazienti?.let {
+                searchList.clear()
                 searchList.addAll(listaPazienti)
             }
             pazienteListAdapter.notifyDataSetChanged()
