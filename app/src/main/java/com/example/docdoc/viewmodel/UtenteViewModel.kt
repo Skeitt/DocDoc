@@ -3,26 +3,29 @@ package com.example.docdoc.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.docdoc.model.Evento
 import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
 import com.example.docdoc.repository.FirestoreRepository
 import com.example.docdoc.repository.LoginRepository
+import com.example.docdoc.repository.StorageRepository
 import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.LoginUiState
 import com.example.docdoc.uistate.UtenteUiState
-import com.example.docdoc.util.DateUtil.Companion.getCurrentDate
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.File
 
 class UtenteViewModel : ViewModel() {
 
     private val utenteRepository = UtenteRepository()
     private val firestoreRepository = FirestoreRepository()
     private val loginRepository = LoginRepository()
+    private val storageRepository = StorageRepository()
 
     //LiveData per recuperare l'utente corrente nel DataBase
     private val _currentUser = MutableLiveData<Utente>()
@@ -39,6 +42,14 @@ class UtenteViewModel : ViewModel() {
     // pazienti
     private val _pazienti = MutableLiveData<ArrayList<Utente>>()
     val pazienti: LiveData<ArrayList<Utente>> get() = _pazienti
+
+    // eventi
+    private val _listaEventi = MutableLiveData<ArrayList<Evento>>()
+    val listaEventi: LiveData<ArrayList<Evento>> get() = _listaEventi
+
+    // file da aprire
+    private val _filePath = MutableLiveData<String>()
+    val filePath: LiveData<String> get() = _filePath
 
     // StateFlow per la gestione dello stato dei dati dell'utente
     private val _dataUiState = MutableStateFlow(UtenteUiState())
@@ -160,5 +171,60 @@ class UtenteViewModel : ViewModel() {
     {
         loginRepository.logout()
         _loginUiState.value = LoginUiState.logOut()
+    }
+
+    fun getListaEventi()
+    {
+        // se chi visualizza è un medico allora lo uid è dato da _user che è l'utente visualizzato
+        // altrimenti significa che è lo user che ha effettuato l'accesso all'app (paziente) che sta
+        // chiedendo gli eventi
+        val uidPaziente = if (_currentUser.value?.medico!!) _user.value?.uid else _currentUser.value?.uid
+        firestoreRepository.getEventsList(uidPaziente!!)
+            .addSnapshotListener{ documents, _->
+                if(documents != null)
+                {
+                    // aggiorno la lista dei pazienti
+                    setListaEventi(parseEventi(documents))
+                }
+            }
+    }
+
+    private fun setListaEventi(lista: ArrayList<Evento>){
+        _listaEventi.value = (_listaEventi.value ?: arrayListOf()).apply {
+            clear()
+            addAll(lista)
+        }
+    }
+
+    private fun parseEventi(documents: QuerySnapshot) :ArrayList<Evento>
+    {
+        val listaEventi = ArrayList<Evento>()
+        for(document in documents)
+        {
+            val evento = Evento(
+                eid = document.id,
+                motivo = document.data["motivo"] as String?,
+                descrizione = document.data["descrizione"] as String?,
+                data = document.data["data"] as String?,
+                uidPaziente = document.data["uidPaziente"] as String?,
+                listaFile = document.data["listaFile"] as? ArrayList<String> ?: ArrayList()
+                )
+            listaEventi.add(evento)
+        }
+        return listaEventi
+    }
+
+    private fun setFilePath(filePath: String ){
+        _filePath.let {
+            it.value = filePath
+        }
+    }
+
+    fun getFile(eid: String, filename: String, localFile : File)
+    {
+        storageRepository.downloadFile(eid,filename,localFile)
+            .addOnSuccessListener {
+                setFilePath(localFile.absolutePath)
+            }
     }
 }

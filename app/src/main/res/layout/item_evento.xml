@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/evento"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/rounded_rectangle"
+    android:layout_marginTop="10dp"
+    android:padding="8dp">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/lista_file"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_weight="1" />
+        <TextView
+            android:id = "@+id/data_visita"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="@string/data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <ImageButton
-            android:id="@+id/button_delete_item"
-            android:layout_width="35dp"
-            android:background="@color/transparent"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_modify" />
+        <ImageView
+            android:id="@+id/modifica_evento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_modify"/>
+
     </LinearLayout>
 
+    <View style="@style/Divider"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_files"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:scrollbars="horizontal"
+        android:layout_height="wrap_content"/>
+
     <TextView
-        style="@style/style_Label"
         android:id = "@+id/motivo_visita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
-        style="@style/style_Label"
         android:id = "@+id/desc_visita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TextView
-        style="@style/style_Label"
-        android:id = "@+id/data_e_ora_visita"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 </LinearLayout>

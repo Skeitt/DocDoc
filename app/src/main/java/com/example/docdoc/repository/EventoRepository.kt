@@ -37,4 +37,15 @@ class EventoRepository {
         return db.collection(EVENTS_COLLECTION).document(eventID).delete()
     }
 
+    fun generateId(): String{
+        // Get the collection reference
+        val collectionRef = db.collection(EVENTS_COLLECTION);
+
+        // Generate "locally" a new document for the given collection reference
+        val docRef = collectionRef.document()
+
+        // Get the new document Id
+        return docRef.id;
+    }
+
 }

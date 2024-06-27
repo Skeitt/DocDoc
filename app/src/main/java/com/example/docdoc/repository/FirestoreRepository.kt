@@ -13,6 +13,7 @@ class FirestoreRepository {
 
     private val USERS_COLLECTION = "users"
     private val BOOKING_COLLECTION = "prenotazioni"
+    private val EVENT_COLLECTION = "events"
 
     /** @brief funzione che aggiunge i dati di un utente al database Firestore
     * @param user utente che si vuole aggiungere alla collection "users"
@@ -28,6 +29,16 @@ class FirestoreRepository {
     fun getDoctorList(): Query {
         return db.collection(USERS_COLLECTION)
             .whereEqualTo("medico", true)
+    }
+
+    /**
+     * @brief Questa funzione restituisce la lista degli eventi di un paziente
+     * @param uidPaziente String che indica lo uid del paziente di cui si richiedono gli eventi
+     * @return rstituisce un document nel caso di successo oppure una exception
+     */
+    fun getEventsList(uidPaziente: String): Query {
+        return db.collection(EVENT_COLLECTION)
+            .whereEqualTo("uidPaziente", uidPaziente)
     }
 
     /**

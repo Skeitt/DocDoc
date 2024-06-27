@@ -1,12 +1,13 @@
 package com.example.docdoc.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.docdoc.model.Evento
 import com.example.docdoc.repository.EventoRepository
+import com.example.docdoc.repository.StorageRepository
 import com.example.docdoc.uistate.EventoUiState
-import com.example.docdoc.util.EventoUtil
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class EventoViewModel : ViewModel() {
 
     private val eventoRepository = EventoRepository()
-    private val eventoUtil = EventoUtil
+    private val storageRepository = StorageRepository()
 
     //LiveData per l'inserimento dell'evento nel Database
     private val _event = MutableLiveData<Evento>(Evento())
@@ -25,9 +26,31 @@ class EventoViewModel : ViewModel() {
     private val _editEvent = MutableLiveData<Evento>()
     val editEvent: LiveData<Evento> get() = _editEvent
 
+    private var uriList = arrayListOf<Uri>()
+
+
+
     // StateFlow per la gestione dello stato dell'evento legato all'utente
     private val _eventoUiState = MutableStateFlow(EventoUiState())
     val eventoUiState: StateFlow<EventoUiState> = _eventoUiState.asStateFlow()
+
+
+    fun addFile(filename: String, uri: Uri){
+        var lista = _event.value?.listaFile
+        if (lista == null) {
+            lista = arrayListOf()
+        }
+
+        //se la lista contiene già il file con lo stesso nome non viene caricato
+        if (!lista.contains(filename)) {
+            lista.add(filename)
+            _event.value?.let{
+                it.listaFile = lista
+                _event.value = it
+                uriList.add(uri)
+            }
+        }
+    }
 
 
     fun setMotivo(motivo: String) {
@@ -50,7 +73,7 @@ class EventoViewModel : ViewModel() {
     }
     fun setEventID(){
         _event.value?.let {
-            it.eid = eventoUtil.generateId()
+            it.eid = eventoRepository.generateId()
             _event.value = it
         }
     }
@@ -129,4 +152,13 @@ class EventoViewModel : ViewModel() {
         return flag
     }
 
+    fun loadFiles() {
+        // per ogni file si fa a effettuare l'upload sullo storage
+        uriList.forEachIndexed { index, uri ->
+            storageRepository.uploadFile(uri, event.value?.eid!!, event.value?.listaFile!![index])
+                .addOnFailureListener {
+                    _eventoUiState.value = EventoUiState.error()
+                }
+        }
+    }
 }

@@ -93,6 +93,7 @@ class EventoActivity: AppCompatActivity() {
             viewModel.setUidPaziente(uidPaziente)
             if(viewModel.checkInput()){
                 viewModel.setEventData()
+                viewModel.loadFiles()
             }else{
                 Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
             }
