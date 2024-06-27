@@ -68,6 +68,7 @@ class UtenteViewModel : ViewModel() {
                 _dataUiState.value = UtenteUiState.haveData()
             }
             .addOnFailureListener{
+                _dataUiState.value = UtenteUiState.error()
             }
     }
 

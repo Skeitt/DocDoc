@@ -142,8 +142,9 @@ class FragmentProfiloPaziente : Fragment() {
         viewModelMalattieFarmaci.malattie.observe(viewLifecycleOwner, Observer { malattie ->
             // Popola le TextView con i dati del paziente
             viewModelMalattieFarmaci.farmaci.observe(viewLifecycleOwner, Observer{farmaci ->
-                binding.tvMalEFarm.setText("Malattie: " + malattie?.joinToString(", ") + "\nFarmaci: " +
-                        farmaci?.joinToString(", ") )
+                //prima di popolare la textView delle malattie e dei farmaci verifico che non siano vuoti
+                binding.tvMalEFarm.setText("Malattie: " + if (malattie?.isNotEmpty() == true) { malattie.joinToString(", ") }else{" Nessuna "} +
+                        "\nFarmaci: " + if (farmaci?.isNotEmpty() == true) { farmaci.joinToString(", ") }else{" Nessuno "} )
             })
         })
 
