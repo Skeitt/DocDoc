@@ -60,10 +60,6 @@ class EventoActivity: AppCompatActivity() {
                     //torno al fragment del profilo
                     finish()
                 }
-                if (it.isModified){
-                    //torno al fragment del profilo
-                    finish()
-                }
                 if (it.isEliminated){
                     //torno al fragment del profilo
                     finish()
