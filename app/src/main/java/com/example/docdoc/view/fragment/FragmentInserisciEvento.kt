@@ -100,7 +100,7 @@ class FragmentInserisciEvento : Fragment() {
 
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
             val selectedDate = (selectedYear.toString() + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + selectedDay.toString())
-            binding.editData.text = selectedDate
+            binding.buttonEditData.text = selectedDate
         }, year, month, day).show()
     }
 

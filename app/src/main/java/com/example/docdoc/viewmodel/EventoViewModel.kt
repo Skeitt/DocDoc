@@ -116,7 +116,7 @@ class EventoViewModel : ViewModel() {
     /** @brief funzione che controlla se i campi inseriti dall'utente sono vuoti */
     fun checkInput(): Boolean{
         var flag = false
-        if (_event.value?.motivo != null && _event.value?.data != null && _event.value?.descrizione != null)
+        if (_event.value?.motivo != null && _event.value?.motivo!= "" && _event.value?.data != null && _event.value?.descrizione != null && _event.value?.descrizione != "")
             flag = true
         return flag
     }
