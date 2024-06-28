@@ -172,27 +172,15 @@ class FragmentProfiloPaziente : Fragment() {
     }
 
     private fun openFile(filePath: String) {
-        try {
-            val file = File(filePath)
-            val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
+        val file = File(filePath)
+        val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, null)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-
-            // Verifica che ci sia almeno un'activity che può gestire l'intent
-            if (intent.resolveActivity(requireContext().packageManager) != null) {
-                startActivity(intent)
-            } else {
-                // Gestisci il caso in cui non ci sia un'activity disponibile per gestire l'intent
-                Toast.makeText(requireContext(), "Nessuna applicazione trovata per aprire il file", Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception) {
-            // Gestisci eventuali eccezioni
-            Toast.makeText(requireContext(), "Impossibile aprire il file", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, null)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
+
+        this.startActivity(intent)
     }
 
     private fun setRvOnClick(){

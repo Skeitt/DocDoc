@@ -152,13 +152,7 @@ class EventoViewModel : ViewModel() {
         if(_event.value?.eid != null){
             val eid = _event.value?.eid!!
             storageRepository.deleteFileOnStorage(eid,filename)
-                .addOnSuccessListener{
-                    cancellaFileDallaLista(filename)
-                }
         }
-        else
-        {
-            cancellaFileDallaLista(filename)
-        }
+        cancellaFileDallaLista(filename)
     }
 }
