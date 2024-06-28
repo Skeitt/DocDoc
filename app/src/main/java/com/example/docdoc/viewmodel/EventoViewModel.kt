@@ -86,7 +86,13 @@ class EventoViewModel : ViewModel() {
     fun deleteEvent(eventId: String) {
         eventoRepository.deleteEvent(eventId)
             .addOnSuccessListener {
-                _eventoUiState.value = EventoUiState.eliminated()
+                storageRepository.deleteAllFiles(eventId)
+                    .addOnSuccessListener {
+                        _eventoUiState.value = EventoUiState.eliminated()
+                    }
+                    .addOnFailureListener{
+                        _eventoUiState.value = EventoUiState.error()
+                    }
             }.addOnFailureListener {
                 _eventoUiState.value = EventoUiState.error()
             }
