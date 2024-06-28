@@ -43,18 +43,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_data"
-            android:text="@string/seleziona_data"
+            android:hint="@string/seleziona_data"
+            android:text="@={viewModel.event.data}"
             android:textColor="@color/black70"
             android:drawableStart="@drawable/ic_date" />
-
-        <android.widget.TextView
-            android:id="@+id/edit_data"
-            style="@style/style_Label"
-            android:hint="Data non selezionata"
-            android:text="@={viewModel.event.data}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_editData" />
 
         <android.widget.TextView
             android:id="@+id/label_descrizione"
@@ -62,7 +54,7 @@
             android:text="@string/descrizione"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_data" />
+            app:layout_constraintTop_toBottomOf="@id/button_editData" />
 
         <android.widget.EditText
             android:id="@+id/edit_descrizione"
