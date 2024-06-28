@@ -60,6 +60,11 @@ class FirestoreRepository {
             .whereEqualTo("uidMedico", uidMedico)
     }
 
+    fun getPrenotazioniPerUtente(filter: String, uid : String): Query {
+        return db.collection(BOOKING_COLLECTION)
+            .whereEqualTo(filter, uid)
+    }
+
     fun getPrenotazionePerPid(pid: String): Task<DocumentSnapshot> {
         return db.collection(BOOKING_COLLECTION)
             .document(pid)

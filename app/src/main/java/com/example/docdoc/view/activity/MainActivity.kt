@@ -11,6 +11,7 @@ import com.example.docdoc.R
 import com.example.docdoc.databinding.ActivityMainBinding
 import com.example.docdoc.model.Utente
 import com.example.docdoc.view.fragment.FragmentHome
+import com.example.docdoc.view.fragment.FragmentListaPrenotazioni
 import com.example.docdoc.view.fragment.FragmentProfiloMedico
 import com.example.docdoc.view.fragment.FragmentProfiloPaziente
 import com.example.docdoc.viewmodel.UtenteViewModel
@@ -70,6 +71,10 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.add_prenotazione -> {
                     startActivity(Intent(this, PrenotazioneActivity::class.java))
+                }
+
+                R.id.prenotazioni -> {
+                    impostaFragment(FragmentListaPrenotazioni())
                 }
                 else -> {}
             }

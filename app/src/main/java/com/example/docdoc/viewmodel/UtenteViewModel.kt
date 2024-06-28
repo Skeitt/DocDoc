@@ -13,6 +13,7 @@ import com.example.docdoc.repository.UtenteRepository
 import com.example.docdoc.uistate.LoginUiState
 import com.example.docdoc.uistate.UtenteUiState
 import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerOrario
+import com.example.docdoc.util.PrenotazioniUtil.Companion.ordinaListaPerData
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,8 +37,12 @@ class UtenteViewModel : ViewModel() {
     val user: LiveData<Utente> get() = _user
 
     //LiveData per la lista di prenotazioni
-    private val _listaPrenotazioni = MutableLiveData<ArrayList<Prenotazione>>()
-    val listaPrenotazioni: LiveData<ArrayList<Prenotazione>> get() = _listaPrenotazioni
+    private val _listaPrenotazioniOdierne = MutableLiveData<ArrayList<Prenotazione>>()
+    val listaPrenotazioniOdierne: LiveData<ArrayList<Prenotazione>> get() = _listaPrenotazioniOdierne
+
+    //LiveData per la lista di prenotazioni
+    private val _listaPrenotazioniUtente = MutableLiveData<ArrayList<Prenotazione>>()
+    val listaPrenotazioniUtente: LiveData<ArrayList<Prenotazione>> get() = _listaPrenotazioniUtente
 
     // pazienti
     private val _pazienti = MutableLiveData<ArrayList<Utente>>()
@@ -97,7 +102,20 @@ class UtenteViewModel : ViewModel() {
             .addSnapshotListener { documents, _->
                 if (documents != null) {
                     // cambia la lista delle prenotazioni
-                    setListaPrenotazioni(ordinaListaPerOrario(parsePrenotazioni(documents)))
+                    setListaPrenotazioniOdierne(ordinaListaPerOrario(parsePrenotazioni(documents)))
+                }
+            }
+    }
+
+    fun getPrenotazioniUtente(isMedico : Boolean)
+    {
+        val filter = if(isMedico) "uidMedico" else "uidPaziente"
+
+        firestoreRepository.getPrenotazioniPerUtente(filter, _currentUser.value?.uid!!)
+            .addSnapshotListener{ documents,_ ->
+                if (documents != null) {
+                    // cambia la lista delle prenotazioni
+                    setListaPrenotazioniUtente(ordinaListaPerData(parsePrenotazioni(documents)))
                 }
             }
     }
@@ -114,8 +132,15 @@ class UtenteViewModel : ViewModel() {
             }
     }
 
-    private fun setListaPrenotazioni(lista: ArrayList<Prenotazione>){
-        _listaPrenotazioni.value = (_listaPrenotazioni.value ?: arrayListOf()).apply {
+    private fun setListaPrenotazioniOdierne(lista: ArrayList<Prenotazione>){
+        _listaPrenotazioniOdierne.value = (_listaPrenotazioniOdierne.value ?: arrayListOf()).apply {
+            clear()
+            addAll(lista)
+        }
+    }
+
+    private fun setListaPrenotazioniUtente(lista: ArrayList<Prenotazione>){
+        _listaPrenotazioniUtente.value = (_listaPrenotazioniOdierne.value ?: arrayListOf()).apply {
             clear()
             addAll(lista)
         }

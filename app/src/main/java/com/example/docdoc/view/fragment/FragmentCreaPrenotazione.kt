@@ -73,7 +73,7 @@ class FragmentCreaPrenotazione: Fragment() {
             requireContext(),
             { view, year, monthOfYear, dayOfMonth ->
                 // viene settata la data del button
-                val data = (year.toString() + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + dayOfMonth.toString())
+                val data = (year.toString() + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth))
                 binding.buttonEditData.setText(data)
                 binding.buttonEditOra.setText("")
                 viewModel.getPrenotazioniPerGiorno(giorno = binding.buttonEditData.text.toString())

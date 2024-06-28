@@ -5,6 +5,10 @@
         android:title="@string/prenota"
         android:icon="@drawable/ic_aggiungi"/>
     <item
+        android:id="@+id/prenotazioni"
+        android:title="@string/prenotazioni"
+        android:icon="@drawable/ic_list"/>
+    <item
         android:id="@+id/home"
         android:title="@string/home"
         android:icon="@drawable/ic_home"/>

@@ -15,7 +15,6 @@ import com.example.docdoc.adapter.UserListAdapter
 import com.example.docdoc.databinding.FragmentHomeBinding
 import com.example.docdoc.model.Prenotazione
 import com.example.docdoc.model.Utente
-import com.example.docdoc.util.DateUtil
 import com.example.docdoc.util.DateUtil.Companion.getCurrentDate
 import com.example.docdoc.util.PrenotazioniUtil.Companion.calcolaSlotDisponibili
 import com.example.docdoc.view.activity.PrenotazioneActivity
@@ -66,8 +65,7 @@ class FragmentHome : Fragment() {
 
         // imposto l'adapter e lo lego al dataset delle prenotazioni
         bookingListAdapter = BookingListAdapter(
-            bookingList = bookingList,
-            isMedico = isMedico
+            bookingList = bookingList
         )
         bookingRecyclerView.adapter = bookingListAdapter
 
@@ -133,7 +131,6 @@ class FragmentHome : Fragment() {
         }
 
         if (!isMedico){
-            //TODO: nel momento in cui si elimina il profilo di un medico il campo uidMedico all'interno del paziente diventa null, quindi si dovrebbe riaprire il form e l'utente dovrebbe riscegliere il suo nuovo medico
             binding.buttonProfiloMedico.setOnClickListener(goToDoctorProfile(viewModel.currentUser.value!!.uidMedico!!))
         }
 
@@ -208,7 +205,7 @@ class FragmentHome : Fragment() {
     private fun setObserver( isMedico: Boolean)
     {
         // viene osservata la lista delle prenotazioni presente nel viemodel
-        viewModel.listaPrenotazioni.observe(viewLifecycleOwner){listaPrenotazioni ->
+        viewModel.listaPrenotazioniOdierne.observe(viewLifecycleOwner){ listaPrenotazioni ->
             onListChange(listaPrenotazioni, isMedico)
         }
         // Quando la lista dei pazienti nel viewmodel varia, l'osservatore viene notificato e
@@ -224,7 +221,7 @@ class FragmentHome : Fragment() {
         // quando viene settato l'utente va effettuata la scansione delle prenotazioni odierne
         viewModel.currentUser.observe(viewLifecycleOwner)
         {
-            viewModel.getPrenotazioniPerGiorno(giorno = DateUtil.getCurrentDate())
+            viewModel.getPrenotazioniPerGiorno(giorno = getCurrentDate())
         }
     }
 }

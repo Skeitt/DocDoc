@@ -46,6 +46,16 @@ class PrenotazioniUtil {
             })
         }
 
+        /**
+         * @brief data una lista di prenotazioni essa viene ordinata in base alla data
+         */
+        fun ordinaListaPerData(prenotazioni: ArrayList<Prenotazione>): ArrayList<Prenotazione> {
+            // Utilizzo il metodo sortedBy per ordinare le prenotazioni in base alla data
+            return ArrayList(prenotazioni.sortedBy { prenotazione ->
+                prenotazione.data
+            })
+        }
+
         fun getIdUnivoco(prenotazione: Prenotazione) : String{
             val data = prenotazione.data
             val orario = prenotazione.orario
