@@ -38,14 +38,14 @@ class EventoActivity: AppCompatActivity() {
             binding.btnBlue.text = "Indietro"
             binding.btnBlue.setOnClickListener(goBack())
             binding.btnGreen.text = "Aggiungi"
-            binding.btnGreen.setOnClickListener(inserisciDatiEvento())
+            binding.btnGreen.setOnClickListener(inserisciDatiEvento(modifica = false))
         }else{
             //gli passo l'id dell'evento che ho selezionato nella recyclerView presente in fragment_type
             viewModel.getEventToEditData(fragment_type)
             binding.btnBlue.text = "Elimina"
             binding.btnBlue.setOnClickListener(deleteEvento())
             binding.btnGreen.text = "Continua"
-            binding.btnGreen.setOnClickListener(salvaDatiEvento())
+            binding.btnGreen.setOnClickListener(inserisciDatiEvento(modifica = true))
         }
 
         lifecycleScope.launch {
@@ -80,24 +80,17 @@ class EventoActivity: AppCompatActivity() {
         }
     }
 
-    private fun inserisciDatiEvento() : View.OnClickListener{
+    private fun inserisciDatiEvento(modifica: Boolean) : View.OnClickListener{
         return View.OnClickListener {
-            val uidPaziente: String = intent.getStringExtra("UID_PAZIENTE")!!
-            viewModel.setEventID()
-            viewModel.setUidPaziente(uidPaziente)
+            if(!modifica){
+                val uidPaziente: String = intent.getStringExtra("UID_PAZIENTE")!!
+                viewModel.setEventID()
+                viewModel.setUidPaziente(uidPaziente)
+            }
+
             if(viewModel.checkInput()){
                 viewModel.setEventData()
                 viewModel.loadFiles()
-            }else{
-                Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun salvaDatiEvento() : View.OnClickListener{
-        return View.OnClickListener {
-            if(viewModel.checkInputToEditEvent()){
-                viewModel.setEventData()
             }else{
                 Toast.makeText(this@EventoActivity, "Errore, Alcuni campi sono vuoti", Toast.LENGTH_SHORT).show()
             }

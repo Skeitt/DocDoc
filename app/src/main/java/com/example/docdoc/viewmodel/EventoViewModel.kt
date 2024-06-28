@@ -23,6 +23,16 @@ class EventoViewModel : ViewModel() {
     val event: LiveData<Evento> get() = _event
 
     private var uriList = arrayListOf<Uri>()
+    private val EMPTYURI = Uri.parse("")
+    private fun pariLista(){
+        var lista = _event.value?.listaFile
+        if (lista != null) {
+            // viene aggiunto un uri vuoto per ogni elemento già presente in lista file
+            for (item in lista){
+                uriList.add(EMPTYURI)
+            }
+        }
+    }
 
     // StateFlow per la gestione dello stato dell'evento legato all'utente
     private val _eventoUiState = MutableStateFlow(EventoUiState())
@@ -38,11 +48,15 @@ class EventoViewModel : ViewModel() {
         //se la lista contiene già il file con lo stesso nome non viene caricato
         if (!lista.contains(filename)) {
             lista.add(filename)
-            _event.value?.let{
-                it.listaFile = lista
-                _event.value = it
-                uriList.add(uri)
-            }
+            setListaFile(lista)
+            uriList.add(uri)
+        }
+    }
+
+    private fun setListaFile(lista: ArrayList<String>){
+        _event.value?.let {
+            it.listaFile = lista
+            _event.value = it
         }
     }
 
@@ -77,6 +91,7 @@ class EventoViewModel : ViewModel() {
                 val evento = it.toObject<Evento>()
                 _event.value = evento!!
                 _eventoUiState.value = EventoUiState.haveData()
+                pariLista()
             }.addOnFailureListener{
                 _eventoUiState.value = EventoUiState.error()
             }
@@ -106,21 +121,44 @@ class EventoViewModel : ViewModel() {
         return flag
     }
 
-    /** @brief funzione che controlla se i campi inseriti dall'utente sono vuoti */
-    fun checkInputToEditEvent(): Boolean{
-        var flag = false
-        if (_event.value?.motivo != "" && _event.value?.data != "" && _event.value?.descrizione != "")
-            flag = true
-        return flag
-    }
-
     fun loadFiles() {
         // per ogni file si fa a effettuare l'upload sullo storage
         uriList.forEachIndexed { index, uri ->
-            storageRepository.uploadFile(uri, event.value?.eid!!, event.value?.listaFile!![index])
-                .addOnFailureListener {
-                    _eventoUiState.value = EventoUiState.error()
+            if(uri != EMPTYURI){
+                storageRepository.uploadFile(uri, event.value?.eid!!, event.value?.listaFile!![index])
+                    .addOnFailureListener {
+                        _eventoUiState.value = EventoUiState.error()
+                    }
+            }
+        }
+    }
+
+    private fun cancellaFileDallaLista(filename: String){
+        var lista = _event.value?.listaFile
+
+        try {
+            val index = lista!!.indexOf(filename)
+            uriList.removeAt(index)
+            lista.removeAt(index)
+            setListaFile(lista)
+        }
+        catch (e :NullPointerException){
+            _eventoUiState.value = EventoUiState.error()
+        }
+
+    }
+
+    fun deleteStorageFile(filename: String){
+        if(_event.value?.eid != null){
+            val eid = _event.value?.eid!!
+            storageRepository.deleteFileOnStorage(eid,filename)
+                .addOnSuccessListener{
+                    cancellaFileDallaLista(filename)
                 }
+        }
+        else
+        {
+            cancellaFileDallaLista(filename)
         }
     }
 }

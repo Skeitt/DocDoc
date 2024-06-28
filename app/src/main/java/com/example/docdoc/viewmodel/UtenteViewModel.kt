@@ -179,7 +179,7 @@ class UtenteViewModel : ViewModel() {
         // se chi visualizza è un medico allora lo uid è dato da _user che è l'utente visualizzato
         // altrimenti significa che è lo user che ha effettuato l'accesso all'app (paziente) che sta
         // chiedendo gli eventi
-        val uidPaziente = if (_currentUser.value?.medico!!) _user.value?.uid else _currentUser.value?.uid
+        val uidPaziente = if (!_currentUser.value?.medico!!) _currentUser.value?.uid else _user.value?.uid
         firestoreRepository.getEventsList(uidPaziente!!)
             .addSnapshotListener{ documents, _->
                 if(documents != null)

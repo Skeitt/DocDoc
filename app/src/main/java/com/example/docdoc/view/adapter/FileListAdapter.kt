@@ -7,6 +7,7 @@ import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docdoc.R
@@ -14,10 +15,11 @@ import com.example.docdoc.R
 class FileListAdapter(private val fileList: List<String>, private val trashIcon: Boolean = false): RecyclerView.Adapter<FileListAdapter.ViewHolderClass>() {
 
     var onItemClick: ((String) -> Unit)? = null
+    var onTrashClick: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_file, parent, false)
-        return ViewHolderClass(itemView)
+        return ViewHolderClass(itemView,trashIcon)
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
@@ -28,33 +30,22 @@ class FileListAdapter(private val fileList: List<String>, private val trashIcon:
             // al click dell'elemento viene restituito lo stesso al metodo onItemClick
             onItemClick?.invoke(fileItem)
         }
+
+        holder.rvTrash.setOnClickListener{
+            onTrashClick?.invoke(fileItem)
+        }
     }
 
     override fun getItemCount(): Int {
         return fileList.size
     }
 
-    class ViewHolderClass(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolderClass(itemView: View,trashIcon : Boolean): RecyclerView.ViewHolder(itemView) {
         val fileName: TextView = itemView.findViewById(R.id.filename)
-    }
-
-    fun getFileNameFromUri(context: Context, uri: Uri): kotlin.String? {
-        var fileName: kotlin.String? = null
-
-        if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
-            val cursor = context.contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    if (nameIndex != -1) {
-                        fileName = it.getString(nameIndex)
-                    }
-                }
-            }
-        } else if (uri.scheme == ContentResolver.SCHEME_FILE) {
-            fileName = uri.lastPathSegment
+        val rvTrash: ImageView = itemView.findViewById(R.id.img_trash_icon)
+        init {
+            if(trashIcon)
+                rvTrash.visibility = View.VISIBLE
         }
-
-        return fileName
     }
 }

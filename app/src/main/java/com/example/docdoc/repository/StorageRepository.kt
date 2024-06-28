@@ -22,7 +22,6 @@ class StorageRepository {
     fun downloadFile(eventId: String, filename: String, localFile: File): FileDownloadTask {
         return storage.reference.child("files/$eventId/$filename").getFile(localFile)
     }
-
     /** Funzione che elimina nello storage di Firebase tutti i file di un determinato evento, eliminando
      *  successivamente anche la cartella*/
     fun deleteAllFiles(eventId: String): Task<Void> {
@@ -37,5 +36,9 @@ class StorageRepository {
             // individuali saranno completati. Questo Task aggregato è quello che viene restituito dalla funzione
             Tasks.whenAll(deleteTasks)
         }
+    }
+
+    fun deleteFileOnStorage(eventId: String, filename: String): Task<Void> {
+        return storage.reference.child("files/$eventId/$filename").delete()
     }
 }

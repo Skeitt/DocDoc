@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docdoc.databinding.FragmentInserisciEventoBinding
+import com.example.docdoc.view.activity.EventoActivity
 import com.example.docdoc.view.adapter.FileListAdapter
 import com.example.docdoc.viewmodel.EventoViewModel
 import java.io.File
@@ -55,7 +57,7 @@ class FragmentInserisciEvento : Fragment() {
         fileList = arrayListOf<String>()
 
         // imposto l'adapter e lo lego al dataset
-        fileListAdapter = FileListAdapter(fileList)
+        fileListAdapter = FileListAdapter(fileList, true)
         recyclerView.adapter = fileListAdapter
 
         viewModel.event.observe(viewLifecycleOwner) { evento ->
@@ -65,6 +67,8 @@ class FragmentInserisciEvento : Fragment() {
             }
             fileListAdapter.notifyDataSetChanged()
         }
+
+        setRvOnClick()
 
         binding.buttonEditData.setOnClickListener {
             showDatePickerDialog()
@@ -131,4 +135,10 @@ class FragmentInserisciEvento : Fragment() {
 
         return fileName
     }
+    private fun setRvOnClick(){
+        fileListAdapter.onTrashClick = {filename ->
+            viewModel.deleteStorageFile(filename)
+        }
+    }
+
 }

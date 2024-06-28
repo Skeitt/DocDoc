@@ -121,12 +121,12 @@ class FragmentProfiloPaziente : Fragment() {
                         "\nIndirizzo: " + user.indirizzo)
             })
 
-            viewModel.filePath.observe(viewLifecycleOwner){filePath ->
-                openFile(filePath)
-            }
-
             binding.buttonModificaProfilo.setOnClickListener(goToEditProfile())
             binding.buttonLogout.setOnClickListener{viewModel.logout()}
+        }
+
+        viewModel.filePath.observe(viewLifecycleOwner){filePath ->
+            openFile(filePath)
         }
 
         //sia medico che paziente possono aggiungere un evento
@@ -177,7 +177,7 @@ class FragmentProfiloPaziente : Fragment() {
             val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
 
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, "application/pdf")
+                setDataAndType(uri, null)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
@@ -198,7 +198,7 @@ class FragmentProfiloPaziente : Fragment() {
     private fun setRvOnClick(){
         eventListAdapter.onFileItemClick = { evento, filename ->
             val downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val localFile = File.createTempFile(filename.split(".")[0], ".pdf", downloadFolder)
+            val localFile = File.createTempFile(filename.split(".")[0], "."+filename.split(".")[1], downloadFolder)
             viewModel.getFile(evento.eid!!, filename, localFile)
         }
 
