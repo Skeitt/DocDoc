@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.docdoc.R
@@ -16,6 +17,7 @@ import com.example.docdoc.view.fragment.FragmentProfiloMedico
 import com.example.docdoc.view.fragment.FragmentProfiloPaziente
 import com.example.docdoc.viewmodel.UtenteViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,6 +82,12 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        viewModel.filePath.observe(this){filePath ->
+            openFile(filePath)
+        }
+
+
     }
 
     override fun onStart() {
@@ -92,5 +100,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    private fun openFile(filePath: String) {
+        val file = File(filePath)
+        val uri = FileProvider.getUriForFile(this, "${this.packageName}.provider", file)
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, null)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        this.startActivity(intent)
     }
 }

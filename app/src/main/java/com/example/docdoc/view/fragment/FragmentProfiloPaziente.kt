@@ -125,10 +125,6 @@ class FragmentProfiloPaziente : Fragment() {
             binding.buttonLogout.setOnClickListener{viewModel.logout()}
         }
 
-        viewModel.filePath.observe(viewLifecycleOwner){filePath ->
-            openFile(filePath)
-        }
-
         //sia medico che paziente possono aggiungere un evento
         //nel momento in cui viene cliccato il button viene startata l'activity: EventoActivity
         //e viene caricato il fragment: FragmentInserisciEvento all'interno  dell'activity
@@ -169,18 +165,6 @@ class FragmentProfiloPaziente : Fragment() {
             intent.putExtra("UID_PAZIENTE",viewModel.currentUser.value!!.uid)
         }
         startActivity(intent)
-    }
-
-    private fun openFile(filePath: String) {
-        val file = File(filePath)
-        val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
-
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, null)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-
-        this.startActivity(intent)
     }
 
     private fun setRvOnClick(){
