@@ -148,9 +148,10 @@ class FragmentHome : Fragment() {
 
     private fun initView(isMedico: Boolean)
     {
-        binding.recyclerViewTitle.text = if (isMedico) "Prenotazioni Odierne" else "Prenota"
+        binding.recyclerViewTitle.text = if (isMedico) "Prenotazioni Odierne" else "Prenota per Oggi"
         binding.buttonProfiloMedico.visibility = if(isMedico) View.INVISIBLE else View.VISIBLE
         binding.searchPaziente.visibility = if(isMedico) View.VISIBLE else View.INVISIBLE
+        binding.mieiPazienti.visibility = if(isMedico) View.VISIBLE else View.INVISIBLE
         binding.listaPazienti.visibility = if(isMedico) View.VISIBLE else View.GONE
         if (!isMedico){
             viewModelMalattieFarmaci.fetchMalattieFarmaciPaziente(viewModel.currentUser.value!!.uid!!)

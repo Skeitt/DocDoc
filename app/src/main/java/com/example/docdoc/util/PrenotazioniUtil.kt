@@ -1,6 +1,8 @@
 package com.example.docdoc.util
 
 import com.example.docdoc.model.Prenotazione
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class PrenotazioniUtil {
     companion object{
@@ -66,14 +68,26 @@ class PrenotazioniUtil {
         fun calcolaSlotDisponibili(listaPrenotazioni : ArrayList<Prenotazione>) : ArrayList<Prenotazione>
         {
             var slotDisponibili: ArrayList<Prenotazione> = creaSlotPrenotazioni()
+            val currentTime = LocalTime.now()
+            val formatter = DateTimeFormatter.ofPattern("HH:mm")
             for (prenotazione in listaPrenotazioni)
             {
                 slotDisponibili.removeIf {
                     it.orario == prenotazione.orario
+                    //se l'orario it.orario è già passato rispetto all'orario corrente lo rimuovo dagli slot disponibili
+                    isTimeLessThan(it.orario.toString(), currentTime.format(formatter).toString())
                 }
             }
 
             return slotDisponibili
+        }
+
+        /** Funzione che controlla che l'orario: time1 sia passato rispetto all'orario: time2 */
+        fun isTimeLessThan(time1: String, time2: String): Boolean {
+            val formatter = DateTimeFormatter.ofPattern("HH:mm")
+            val t1 = LocalTime.parse(time1, formatter)
+            val t2 = LocalTime.parse(time2, formatter)
+            return t1.isBefore(t2)
         }
 
     }

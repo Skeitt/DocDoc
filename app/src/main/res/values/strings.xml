@@ -46,6 +46,7 @@
     <string name="orario_random">10:00</string>
     <string name="filename">filename.txt</string>
     <string name="prenotazioni">Le tue prenotazioni...</string>
+    <string name="list_pazienti">I miei Pazienti...</string>
 
 
     <!-- stringhe per hints (placholders) -->
@@ -71,8 +72,8 @@
     <string name="sono_medico">Sono un medico</string>
 
     <!-- stringhe per pulsanti home -->
-    <string name="prenota">prenota</string>
+    <string name="prenota">Prenota</string>
     <string name="home">Home</string>
     <string name="Profilo">Profilo</string>
-    <string name="modifica">modifica</string>
+    <string name="modifica">Modifica</string>
 </resources>
