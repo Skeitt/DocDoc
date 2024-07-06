@@ -74,9 +74,12 @@ class PrenotazioniUtil {
             {
                 slotDisponibili.removeIf {
                     it.orario == prenotazione.orario
-                    //se l'orario it.orario è già passato rispetto all'orario corrente lo rimuovo dagli slot disponibili
-                    isTimeLessThan(it.orario.toString(), currentTime.format(formatter).toString())
                 }
+            }
+
+            //se l'orario slot.orario è già passato rispetto all'orario corrente lo rimuovo dagli slot disponibili
+            slotDisponibili.removeIf{slot ->
+                isTimeLessThan(slot.orario.toString(), currentTime.format(formatter).toString())
             }
 
             return slotDisponibili
