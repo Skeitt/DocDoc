@@ -1,8 +1,12 @@
 package com.example.docdoc.util
 
 import com.example.docdoc.model.Prenotazione
+import com.google.type.DateTime
+import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 class PrenotazioniUtil {
     companion object{
@@ -65,7 +69,7 @@ class PrenotazioniUtil {
             return "${data}_${orario}_${uidMedico}"
         }
 
-        fun calcolaSlotDisponibili(listaPrenotazioni : ArrayList<Prenotazione>) : ArrayList<Prenotazione>
+        fun calcolaSlotDisponibili(listaPrenotazioni : ArrayList<Prenotazione>, data : String) : ArrayList<Prenotazione>
         {
             var slotDisponibili: ArrayList<Prenotazione> = creaSlotPrenotazioni()
             val currentTime = LocalTime.now()
@@ -77,9 +81,16 @@ class PrenotazioniUtil {
                 }
             }
 
-            //se l'orario slot.orario è già passato rispetto all'orario corrente lo rimuovo dagli slot disponibili
-            slotDisponibili.removeIf{slot ->
-                isTimeLessThan(slot.orario.toString(), currentTime.format(formatter).toString())
+            // data di oggi
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val today = Date()
+            val todayString = dateFormat.format(today)
+
+            if(data == todayString){
+                //se l'orario slot.orario è già passato rispetto all'orario corrente lo rimuovo dagli slot disponibili
+                slotDisponibili.removeIf{slot ->
+                    isTimeLessThan(slot.orario.toString(), currentTime.format(formatter).toString())
+                }
             }
 
             return slotDisponibili

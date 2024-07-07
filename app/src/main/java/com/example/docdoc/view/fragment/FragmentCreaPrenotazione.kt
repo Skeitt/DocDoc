@@ -93,7 +93,7 @@ class FragmentCreaPrenotazione: Fragment() {
         val myList: ArrayList<String> = arrayListOf()
 
         if (viewModel.listaPrenotazioni.value != null) {
-            for (item in calcolaSlotDisponibili(viewModel.listaPrenotazioni.value!!)) {
+            for (item in calcolaSlotDisponibili(viewModel.listaPrenotazioni.value!!, binding.buttonEditData.text.toString())) {
                 myList.add(item.orario!!)
             }
         }

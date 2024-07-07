@@ -7,6 +7,9 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import com.example.docdoc.view.activity.LoginActivity
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiSelector
 import org.junit.Before
 import org.junit.Test
 
@@ -28,7 +31,7 @@ class PrenotazioneActivityInstrumentedTest {
         password1 = "Provaprova.1"
         nome = "ProvaPrenotazione"
         cognome = "ProvaPrenotazione"
-        ora = "15:00"
+        ora = "16:30"
         descrizione = "Descrizione ProvaPrenotazione"
     }
 
@@ -61,8 +64,22 @@ class PrenotazioneActivityInstrumentedTest {
             .perform(ViewActions.typeText(cognome), ViewActions.closeSoftKeyboard())
         //click sul button per inserire la data
         Espresso.onView(ViewMatchers.withId(R.id.button_editData)).perform(ViewActions.click())
-        //setto la data corrente nel DatePickerDialog
-        Espresso.onView(withText("OK")).perform(ViewActions.click())
+        //setto nel DatePickerDialog la data al 10 del mese corrente dell'anno 2025
+
+        // Usa UiAutomator per interagire con il DatePickerDialog
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        // Imposta l'anno
+        val yearPicker = device.findObject(UiSelector().resourceId("android:id/date_picker_header_year"))
+        yearPicker.click()
+        val year = device.findObject(UiSelector().text("2025"))
+        year.click()
+        // Imposta il giorno
+        val day = device.findObject(UiSelector().text("10"))
+        day.click()
+        // Conferma la selezione
+        val okButton = device.findObject(UiSelector().text("OK"))
+        okButton.click()
+
         //click sul button per inserire l'ora
         Espresso.onView(ViewMatchers.withId(R.id.button_editOra)).perform(ViewActions.click())
         //setto l'ora prestabilita nel AlertDialog

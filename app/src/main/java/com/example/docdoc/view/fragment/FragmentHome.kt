@@ -21,6 +21,9 @@ import com.example.docdoc.view.activity.PrenotazioneActivity
 import com.example.docdoc.view.adapter.BookingListAdapter
 import com.example.docdoc.viewmodel.ModificaMalattieFarmaciViewModel
 import com.example.docdoc.viewmodel.UtenteViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class FragmentHome : Fragment() {
@@ -92,7 +95,11 @@ class FragmentHome : Fragment() {
                 bookingList.addAll(listaPrenotazioni)
             }
             else{
-                bookingList.addAll(calcolaSlotDisponibili(listaPrenotazioni))
+                // data di oggi
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val today = Date()
+                val todayString = dateFormat.format(today)
+                bookingList.addAll(calcolaSlotDisponibili(listaPrenotazioni, todayString))
             }
         }
         bookingListAdapter.notifyDataSetChanged()

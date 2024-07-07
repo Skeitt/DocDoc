@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.lifecycle.compiler)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.uiautomator)
     val lifecycle_version = "2.7.0"
     val activity_version = "1.9.0"
 
