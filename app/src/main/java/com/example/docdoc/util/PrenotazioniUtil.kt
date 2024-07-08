@@ -59,7 +59,7 @@ class PrenotazioniUtil {
          */
         fun ordinaListaPerData(prenotazioni: ArrayList<Prenotazione>): ArrayList<Prenotazione> {
             // Utilizzo il metodo sortedBy per ordinare le prenotazioni in base alla data
-            return ArrayList(prenotazioni.sortedBy { prenotazione ->
+            return ArrayList(prenotazioni.sortedByDescending { prenotazione ->
                 prenotazione.data
             })
         }
