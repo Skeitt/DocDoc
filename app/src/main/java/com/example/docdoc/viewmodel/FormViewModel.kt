@@ -22,7 +22,7 @@ class FormViewModel : ViewModel() {
 
     // LiveData per lo stato dell'UI
     // StateFlow per la gestione dello stato del login
-    private val _formUiState = MutableStateFlow(FormUiState())
+    private val _formUiState = MutableStateFlow<FormUiState>(FormUiState.loading())
     val formUiState: StateFlow<FormUiState> = _formUiState.asStateFlow()
 
     // medici
@@ -34,8 +34,8 @@ class FormViewModel : ViewModel() {
     val user: LiveData<Utente> get() = _user
 
     init {
-        getListaMedici()
         isInfoStored()
+        getListaMedici()
     }
 
     fun pushUserData()
@@ -74,12 +74,17 @@ class FormViewModel : ViewModel() {
                         }else{
                             //recupero i dati dell'utente e lo inserisco nel LiveData
                             _user.value = recuperaUtente(document)
+                            _formUiState.value = FormUiState()
                         }
                     }
                     //se l'utente è un medico
                     if (document.data!!["medico"] == true){
                         _formUiState.value = FormUiState.infoFound()
                     }
+                }
+                else
+                {
+                    _formUiState.value = FormUiState()
                 }
             }
             .addOnFailureListener{

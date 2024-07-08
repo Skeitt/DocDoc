@@ -22,26 +22,34 @@
         tools:targetApi="31">
         <activity
             android:name=".view.activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.SignUpActivity">
+        <activity android:name=".view.activity.SignUpActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.FormActivity">
+        <activity android:name=".view.activity.FormActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ModificaProfiloActivity">
+        <activity android:name=".view.activity.ModificaProfiloActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ModificaMalattieFarmaciActivity">
+        <activity android:name=".view.activity.ModificaMalattieFarmaciActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.PrenotazioneActivity">
+        <activity android:name=".view.activity.PrenotazioneActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.EventoActivity">
+        <activity android:name=".view.activity.EventoActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <provider

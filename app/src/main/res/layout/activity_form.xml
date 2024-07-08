@@ -14,12 +14,27 @@
         tools:context=".view.activity.FormActivity"
         android:background="@drawable/gradient_background">
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/caricamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            app:indicatorSize="48dp"
+            app:indicatorColor="@color/black70"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:navGraph = "@navigation/my_nav"
+            android:visibility="gone"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
