@@ -76,6 +76,7 @@ class ModificaMalattieFarmaciActivity: AppCompatActivity() {
                 binding.editMalattie.error = EMPTY_FIELD_ERROR
             }else{
                 viewModel.addMalattia(newMalattia.toString())
+                binding.editMalattie.text.clear()
             }
         }
 
@@ -85,6 +86,7 @@ class ModificaMalattieFarmaciActivity: AppCompatActivity() {
                 binding.editFarmaci.error = EMPTY_FIELD_ERROR
             }else{
                 viewModel.addFarmaco(newFarmaco.toString())
+                binding.editFarmaci.text.clear()
             }
         }
 

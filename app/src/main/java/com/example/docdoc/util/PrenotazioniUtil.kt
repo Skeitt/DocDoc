@@ -1,8 +1,10 @@
 package com.example.docdoc.util
 
+import android.util.Log
 import com.example.docdoc.model.Prenotazione
 import com.google.type.DateTime
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -102,6 +104,17 @@ class PrenotazioniUtil {
             val t1 = LocalTime.parse(time1, formatter)
             val t2 = LocalTime.parse(time2, formatter)
             return t1.isBefore(t2)
+        }
+
+        fun isDateMinoreDiOggi(date: String, time: String): Boolean {
+            // Parsing della data e dell'ora dai parametri di input
+            val dataOra = LocalDateTime.parse("$date $time", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+
+            // Ottenere la data e l'ora corrente
+            val currentDateTime = LocalDateTime.now()
+
+            // Confronto tra la data e l'ora corrente con quelle dei parametri
+            return currentDateTime.isAfter(dataOra)
         }
 
     }
