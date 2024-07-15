@@ -117,8 +117,11 @@ class FragmentCreaPrenotazione: Fragment() {
         else if(inputValidator.isFieldEmpty(binding.buttonEditData.text.toString())){
             binding.buttonEditData.error = EMPTY_FIELD_ERROR
         }
-        else if(inputValidator.isFieldEmpty(binding.editNome.text.toString())){
-            binding.editNome.error = EMPTY_FIELD_ERROR
+        else if(inputValidator.isFieldEmpty(binding.buttonEditOra.text.toString())){
+            binding.buttonEditOra.error = EMPTY_FIELD_ERROR
+        }
+        else if(inputValidator.isFieldEmpty(binding.editDescrizione.text.toString())){
+            binding.editDescrizione.error = EMPTY_FIELD_ERROR
         }
         else{
             viewModel.addPrenotazioneData()

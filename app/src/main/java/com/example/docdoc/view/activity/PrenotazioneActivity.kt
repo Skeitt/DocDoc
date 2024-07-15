@@ -60,8 +60,6 @@ class PrenotazioneActivity : AppCompatActivity(){
                 }
             }
         }
-
-        // TODO: Osservatore della prenotazione
     }
 
     private fun impostaFragment(fragment: Fragment) {
