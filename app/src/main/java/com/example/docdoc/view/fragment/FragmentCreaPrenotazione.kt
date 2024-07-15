@@ -46,8 +46,6 @@ class FragmentCreaPrenotazione: Fragment() {
             aggiungiPrenotazione()
         }
 
-        // on below line we are adding
-        // click listener for our edit text.
         binding.buttonEditData.setOnClickListener{
             showCalendarDialog()
         }
